@@ -1,0 +1,24 @@
+-----------------------------Clone repo-------------------------
+1. In eclipse from the top menu select window>show view>other...
+2.In the popup select Git>Git Repositories and select Ok.
+3.In the Git Repositories view select clone a repository
+4. Open the repo in github and select the clone or download button, then select use HTTPS and copy the link.
+5. Open eclipse again and paste the link in the URI field.
+6. put your github username and password for user and password
+7. Select finish to clone the repo into eclipse.
+8. Right click inside the package explorer and select New>project
+9. Select a project type and hit next.
+10. Uncheck "Use default location", then browse for a location and select the folder that you just cloned the repo into.
+11. Select Finish
+
+----------------------------Commit/push changes--------------------
+1. Make code changes and save them.
+2. Open a terminal and change directory to the project directory.
+3. In the terminal run 'git stash'
+4. Inside of eclipse, right click the project in the project explorer and select team>pull.
+5. In the terminal run 'git stash pop'
+6. Handle any merge conflicts using eclipse by right clicking files with a red diamond and selecting team>merge tool.
+7. After the conflict is resolved, right click the file and select team > add to index.
+8. Under the Git staging view, click and drag the files you changed from unstaged to staged.
+9. Add a commit message in the git staging view.
+10. Select commit and push in the git staging view.
