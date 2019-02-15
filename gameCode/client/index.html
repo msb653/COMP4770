@@ -1,1 +1,169 @@
-Hello World
+<html>
+  <head>
+    <title>Conquest of the Legend</title>
+    <link rel="stylesheet" type="text/css" href="../client/indexStyle.css" />
+  </head>
+  <body>
+    <div class="loginContainer">
+      <img src="../client/images/avatar.png" class="avatar" />
+      <div id="signIn">
+        <h1 class="loginHeader">
+          Login
+        </h1>
+        <!-- <form> -->
+        <p>Username</p>
+        <input
+          id="signDiv-username"
+          type="text"
+          name="user_name"
+          placeholder="Enter Username"
+        />
+        <br /><br />
+        <p>Password</p>
+        <input
+          id="signDiv-password"
+          type="password"
+          name="user_password"
+          placeholder="Enter Password"
+        />
+        <br /><br />
+        <input id="signDiv-signIn" type="submit" value="Login" />
+        <a href="javascript:SwapDivsWithClick('signIn','recoverPassword')"
+          >Lost your password?</a
+        ><br />
+        <a href="javascript:SwapDivsWithClick('signIn','signUp')">
+          Don't have an account?
+        </a>
+        <!-- </form> -->
+      </div>
+      <div id="signUp" style="display: none">
+        <h1 class="signUpHeader">
+          Create Account
+        </h1>
+        <!-- <form> -->
+        <p>Username</p>
+        <input
+          id="signDiv-createUsername"
+          type="text"
+          name=""
+          placeholder="Enter New Username"
+        />
+        <br /><br />
+        <p>Password</p>
+        <input
+          id="signDiv-createPassword"
+          type="password"
+          name=""
+          placeholder="Choose New Password"
+        />
+        <br /><br />
+        <input id="signDiv-signUp" type="submit" name="" value="Create" />
+        <a href="javascript:SwapDivsWithClick('signIn','signUp')">
+          Already have an account?
+        </a>
+        <!-- <form> -->
+      </div>
+      <div id="recoverPassword" style="display: none">
+        <h1 class="signUpHeader">
+          Recover Password
+        </h1>
+        <!-- <form> -->
+        <p>Username</p>
+        <input
+          id="signDiv-recoverUsername"
+          type="text"
+          name=""
+          placeholder="Enter Username"
+        />
+        <br /><br />
+        <p>Password</p>
+        <input
+          id="signDiv-recoverPassword"
+          type="password"
+          name=""
+          placeholder="Enter New Password"
+        />
+        <br /><br />
+        <input type="submit" name="" value="Login" />
+        <a href="javascript:SwapDivsWithClick('signIn','recoverPassword')"
+          >I remember my password!</a
+        ><br />
+        <a href="javascript:SwapDivsWithClick('recoverPassword','signUp')">
+          Don't have an account?
+        </a>
+        <!-- <form> -->
+      </div>
+    </div>
+
+    <div class="gameMenuDiv">
+      <button id="level">level 1</button>
+      <h1>Game Here</h1>
+      <p id="text">Your levels</p>
+    </div>
+
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script type="text/javascript">
+      function SwapDivsWithClick(div1, div2) {
+        d1 = document.getElementById(div1);
+        d2 = document.getElementById(div2);
+        if (d2.style.display == 'none') {
+          d1.style.display = 'none';
+          d2.style.display = 'block';
+        } else {
+          d1.style.display = 'block';
+          d2.style.display = 'none';
+        }
+      }
+    </script>
+
+    <script>
+      var socket = io();
+      var loginContainer = document.getElementById('loginContainer');
+      var signDivUsername = document.getElementById('signDiv-username');
+      var signDivPassword = document.getElementById('signDiv-password');
+      var signDivSignIn = document.getElementById('signDiv-signIn'); //Sign-In submit input
+      var signDivCreateUserName = document.getElementById(
+        'signDiv-createUsername'
+      );
+      var signDivCreatePassword = document.getElementById(
+        'signDiv-createPassword'
+      );
+      var signDivSignUp = document.getElementById('signDiv-signUp'); //Sign-Up submit input
+      var forgotDiv = document.getElementById('recoverPassword');
+      var recoverUsername = document.getElementById('signDiv-recoverUsername');
+      var recoverPassword = document.getElementById('signDiv-recoverPassword');
+
+      signDivSignIn.onclick = function() {
+        socket.emit('signIn', {
+          username: signDivUsername.value,
+          password: signDivPassword.value
+        });
+      };
+
+      signDivSignUp.onclick = function() {
+        socket.emit('signUp', {
+          username: signDivCreateUserName.value,
+          password: signDivCreatePassword.value
+        });
+      };
+
+      socket.on('signInResponse', function(data) {
+        if (data.success) {
+          // loginContainer.hidden = true;
+          location.href = '../gameCode/client/gameMenu.html';
+        } else alert('Sign in unsuccessful.');
+      });
+
+      socket.on('signUpResponse', function(data) {
+        if (data.success) {
+          // alert('Sign up successul.');
+          location.href = '../gameCode/client/gameMenu.html';
+        } else alert('Sign up unsuccessul.');
+      });
+
+      // socket.on('serverMsg', function(data) {
+      //   console.log(data.msg);
+      // });
+    </script>
+  </body>
+</html>
