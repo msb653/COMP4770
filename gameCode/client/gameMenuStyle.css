@@ -37,6 +37,13 @@ body {
   cursor: pointer;
   background: #ffc107;
   color: #000;
+  overflow: hidden;
+  transform: scale(1.1, 1.1);
+  -webkit-transition-duration: 1s;
+  -moz-transition-duration: 1s;
+  -o-transition-duration: 1s;
+  transition-duration: 1s;
+  z-index: 5;
 }
 
 .avatar {

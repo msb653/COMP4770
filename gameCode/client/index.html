@@ -118,6 +118,8 @@
 
     <script>
       var socket = io();
+
+      // Sign-in
       var loginContainer = document.getElementById('loginContainer');
       var signDivUsername = document.getElementById('signDiv-username');
       var signDivPassword = document.getElementById('signDiv-password');
@@ -160,10 +162,6 @@
           location.href = '../gameCode/client/gameMenu.html';
         } else alert('Sign up unsuccessul.');
       });
-
-      // socket.on('serverMsg', function(data) {
-      //   console.log(data.msg);
-      // });
     </script>
   </body>
 </html>
