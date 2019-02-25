@@ -12,7 +12,7 @@
       <input id="levelEditor" type="submit" class="levelEditorButton" value="Level Editor"></input><br><br>
       <input id="overworld" type="submit" class="overworldButton" value="Play Overworld"></input><br><br>
       <input id="achievements" type="submit" class="achievementsButton" value="Achievements"></input><br><br>
-      <input id="changeDetail" type="submit" class="changePassword" value="Change Password"></input><br><br>
+      <input id="options" type="submit" class="changePassword" value="Options"></input><br><br>
       <input id="logout" type="submit" class="logoutButton" value="Logout"></input><br><br><br>
     </div>
 <!-- 
@@ -34,7 +34,7 @@
       var levelEditor = document.getElementById('levelEditor');
       var overworld = document.getElementById('overworld');
       var achievements = document.getElementById('Achievements');
-      var changeDetail = document.getElementById('changeDetail');
+      var options = document.getElementById('options');
       var logout = document.getElementById('logout');
       var achievementsMenu = document.getElementById('achievementsMenu');
       var lev  = document.getElementById('lev');
@@ -45,8 +45,14 @@
       }
 
       logout.onclick = function(){
-        socket.disconnect
+        socket.emit('disconnect');
+        location.href = "/";
       }
+
+      // socket.on('serverMsg', function(data) {
+      //   console.log(data.msg);
+      // });
+
     </script>
   </body>
 </html>
