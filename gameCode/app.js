@@ -17,6 +17,9 @@ app.get('/', function(req, res) {
 app.get('/gameCode/client/gameMenu.html', function(req, res) {
   res.sendFile(__dirname + '/client/gameMenu.html');
 });
+app.get('/gameCode/client/levelEditor.html', function(req, res) {
+	  res.sendFile(__dirname + '/client/levelEditor.html');
+	});
 app.get('/gameCode/client/campaignMode.html', function(req, res) {
   res.sendFile(__dirname + '/client/campaignMode.html');
 });
@@ -36,6 +39,9 @@ app.get('/gameCode/client/images/avatar.png', function(req, res) {
 });
 app.get('/gameCode/client/images/shoot.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/shoot.png');
+});
+app.get('/gameCode/client/images/castleTiles.png', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/castleTiles.png');
 });
 app.use('/client', express.static(__dirname + '/client'));
 
