@@ -19,7 +19,7 @@ app.get('/gameCode/client/gameMenu.html', function(req, res) {
 });
 app.get('/gameCode/client/levelEditor.html', function(req, res) {
 	  res.sendFile(__dirname + '/client/levelEditor.html');
-	});
+	}); 
 app.get('/gameCode/client/campaignMode.html', function(req, res) {
   res.sendFile(__dirname + '/client/campaignMode.html');
 });
@@ -28,6 +28,9 @@ app.get('/gameCode/client/gameMenuStyle.css', function(req, res) {
 });
 app.get('/gameCode/client/campaign.css', function(req, res) {
   res.sendFile(__dirname + '/client/campaign.css');
+});
+app.get('/gameCode/client/levelEditor.css', function(req, res) {
+  res.sendFile(__dirname + '/client/LevelEditor.css');
 });
 
 //Images
@@ -42,6 +45,18 @@ app.get('/gameCode/client/images/shoot.png', function(req, res) {
 });
 app.get('/gameCode/client/images/castleTiles.png', function(req, res) {
 	  res.sendFile(__dirname + '/client/images/castleTiles.png');
+});
+app.get('/gameCode/client/images/dark_forest.png', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/dark_forest.png');
+});
+app.get('/gameCode/client/images/underwater.png', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/underwater.png');
+});
+app.get('/gameCode/client/images/cave.png', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/cave.png');
+});
+app.get('/gameCode/client/images/cave_tileset.png', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/cave_tileset.png');
 });
 app.use('/client', express.static(__dirname + '/client'));
 

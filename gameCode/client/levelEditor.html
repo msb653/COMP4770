@@ -1,97 +1,186 @@
 <html>
+
+<head>
+    <title>Level Editor</title>
+    <link rel="stylesheet" type="text/css" href="../client/levelEditor.css" />
+</head>
+
 <body>
-<canvas id='myCanvas' width='1000' height='800' style='position:absolute; left:0; top:0'></canvas>
-<label id='result' style='position:absolute; left:0; top:850'>Click on the image at the bottom to select a tile, then click on the grid to draw.</label>
-<script>
-let image = new Image();
-image.src = '../client/images/castleTiles.png';
-const tileWidth = 32,
-  tileHeight = 32;
-const mapRows = 8,
-  mapColumns = 80;
-const sourceWidth = 512,
-  sourceHeight = 512;
-let tiles = new Array(mapColumns * mapRows);
-let mapHeight = mapRows * tileHeight;
-let mapWidth = mapColumns * tileWidth;
-let sourceX, sourceY, sourceTile;
-let canvas = document.getElementById('myCanvas');
-let context = canvas.getContext('2d');
-canvas.addEventListener('click', doMouseClick);
-canvas.addEventListener('mousemove', doMouseMove);
-image.addEventListener('load', redrawSource);
-// draw the grid
-for (let i = 0; i <= mapColumns; i++) {
-  context.moveTo(i * tileWidth, 0);
-  context.lineTo(i * tileWidth, mapHeight);
-}
-context.stroke();
-for (let i = 0; i <= mapRows; i++) {
-  context.moveTo(0, i * tileHeight);
-  context.lineTo(mapWidth, i * tileHeight);
-}
-context.stroke();
- 
-function redrawSource() {
-  context.drawImage(image, 0, 0, sourceWidth, sourceHeight, 0, mapHeight, sourceWidth, sourceHeight);
-}
- 
-function doMouseClick(e) {
-  let x = e.clientX;
-  let y = e.clientY;
-  let gridX = Math.floor(x / tileWidth) * tileWidth;
-  let gridY = Math.floor(y / tileHeight) * tileHeight;
- 
-  if (y > mapHeight && y < (mapHeight + sourceHeight) && x < sourceWidth) { // source
-    let tileX = Math.floor(x / tileWidth);
-    let tileY = Math.floor((y - mapHeight) / tileHeight);
-    sourceTile = tileY * (sourceWidth / tileWidth) + tileX;
-    sourceX = gridX;
-    sourceY = gridY - mapHeight;
-    redrawSource();
-    drawBox();
-  }
- 
-  if (y < mapHeight && x < mapWidth) { // target
-    context.clearRect(gridX, gridY, tileWidth, tileHeight);
-    context.drawImage(image, sourceX, sourceY, tileWidth, tileHeight, gridX, gridY, tileWidth, tileHeight);
-    let tileX = Math.floor(x / tileWidth);
-    let tileY = Math.floor(y / tileHeight);
-    let targetTile = tileY * mapColumns + tileX;
-    tiles[targetTile] = sourceTile;
-    // update the string    
-    let string = 'let tiles = [';
-    for (let i = 0; i < mapColumns * mapRows; i++) {
-      if (tiles[i] != undefined) string = string + tiles[i];
-      string = string + ',';
-    }
-    string = string + '];';
-    document.getElementById('result').innerHTML = string;
-  }
-}
- 
-function doMouseMove(e) {
-  let x = e.clientX;
-  let y = e.clientY;
- 
-  if (y > mapHeight && y < (mapHeight + sourceHeight) && x < sourceWidth) { // source
-    let gridX = Math.floor(x / tileWidth) * tileWidth;
-    let gridY = Math.floor(y / tileHeight) * tileHeight;
-    context.clearRect(0, mapHeight, sourceWidth, sourceHeight);
-    redrawSource();
-    context.beginPath();
-    context.strokeStyle = 'blue';
-    context.rect(gridX, gridY, tileWidth, tileHeight);
-    context.stroke();
-    drawBox();
-  }
-}
- 
-function drawBox() {
-  context.beginPath();
-  context.strokeStyle = 'red';
-  context.rect(sourceX, sourceY + mapHeight, tileWidth, tileHeight);
-  context.stroke();
-}
-</script>
-</body></html>
+    <div>
+        <div class="tab">
+            <button class="tablinks active" id="defaultOpen" onclick="openTab(event,'scenery')">Scenery</button>
+            <button class="tablinks" onclick="openTab(event,'platforms')">Platforms</button>
+            <button class="tablinks" onclick="openTab(event,'enemies')">Enemies</button>
+            <button class="tablinks" onclick="openTab(event,'powerups')">Power Ups</button>
+            <button class="tablinks" onclick="openTab(event,'gameplayobjects')">Gameplay Objects</button>
+        </div>
+        <div id="scenery" class="tabcontent">
+            <select>
+                <option value="castle">Castle</option>
+                <option value="forest">Forest</option>
+                <option value="underwater">Underwater</option>
+                <option value="cave">Cave</option>
+            </select>
+        </div>
+        <div id="platforms" class="tabcontent">
+            platforms
+        </div>
+        <div id="enemies" class="tabcontent">
+            enemies
+        </div>
+        <div id="powerups" class="tabcontent">
+            powerups
+        </div>
+        <div id="gameplayobjects" class="tabcontent">
+            gameplay objects
+        </div>
+        <canvas id='myCanvas' width='1000' height='800'></canvas>
+        <label id='result'>Click on the image at the bottom to select a
+            tile, then click on the grid to draw.</label>
+    </div>
+    <script>
+        let sourceWidth = 512,
+            sourceHeight = 512;
+        let image = new Image();
+        image.src = '../client/images/castleTiles.png';
+
+
+        //tabs
+
+        document.getElementById("defaultOpen").click();
+
+        sceneryOptions = document.getElementsByTagName("select")[0];
+        sceneryOptions.onclick = function () {
+            if (sceneryOptions.selectedIndex == 0) {
+                changeImage(512, 512, '../client/images/castleTiles.png');
+            }
+            else if (sceneryOptions.selectedIndex == 1) {
+                changeImage(256, 608, '../client/images/dark_forest.png');
+            }
+            else if (sceneryOptions.selectedIndex == 2) {
+                changeImage(512, 512, '../client/images/underwater.png');
+            }
+            else if (sceneryOptions.selectedIndex == 3) {
+                changeImage(256, 336, '../client/images/cave_tileset.png');
+            }
+        }
+
+        function changeImage(sw, sh, imageSrc) {
+            image.src = imageSrc;
+            context.clearRect(0, mapHeight, sourceWidth, sourceHeight);
+            sourceWidth = sw;
+            sourceHeight = sh;
+            redrawSource();
+        }
+
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+
+        }
+
+
+
+        const tileWidth = 32,
+            tileHeight = 32;
+        const mapRows = 8,
+            mapColumns = 80;
+
+        let tiles = new Array(mapColumns * mapRows);
+        let mapHeight = mapRows * tileHeight;
+        let mapWidth = mapColumns * tileWidth;
+        let sourceX, sourceY, sourceTile;
+        let canvas = document.getElementById('myCanvas');
+        let context = canvas.getContext('2d');
+        canvas.addEventListener('click', doMouseClick);
+        canvas.addEventListener('mousemove', doMouseMove);
+        image.addEventListener('load', redrawSource);
+        // draw the grid
+        for (let i = 0; i <= mapColumns; i++) {
+            context.moveTo(i * tileWidth, 0);
+            context.lineTo(i * tileWidth, mapHeight);
+        }
+        context.stroke();
+        for (let i = 0; i <= mapRows; i++) {
+            context.moveTo(0, i * tileHeight);
+            context.lineTo(mapWidth, i * tileHeight);
+        }
+        context.stroke();
+
+        function redrawSource() {
+            context.drawImage(image, 0, 0, sourceWidth, sourceHeight, 0, mapHeight, sourceWidth, sourceHeight);
+        }
+
+        function doMouseClick(e) {
+            let x = e.clientX;
+            let y = e.clientY;
+            let gridX = Math.floor(x / tileWidth) * tileWidth;
+            let gridY = Math.floor(y / tileHeight) * tileHeight;
+
+            if (y > mapHeight && y < (mapHeight + sourceHeight) && x < sourceWidth) { // source
+                let tileX = Math.floor(x / tileWidth);
+                let tileY = Math.floor((y - mapHeight) / tileHeight);
+                sourceTile = tileY * (sourceWidth / tileWidth) + tileX;
+                sourceX = gridX;
+                sourceY = gridY - mapHeight;
+                redrawSource();
+                drawBox();
+            }
+
+            if (y < mapHeight && x < mapWidth) { // target
+                // context.clearRect(gridX, gridY, tileWidth, tileHeight);
+                context.drawImage(image, sourceX, sourceY, tileWidth, tileHeight, gridX, gridY, tileWidth, tileHeight);
+                let tileX = Math.floor(x / tileWidth);
+                let tileY = Math.floor(y / tileHeight);
+                let targetTile = tileY * mapColumns + tileX;
+                tiles[targetTile] = sourceTile;
+                // update the string    
+                let string = 'let tiles = [';
+                for (let i = 0; i < mapColumns * mapRows; i++) {
+                    if (tiles[i] != undefined) string = string + tiles[i];
+                    string = string + ',';
+                }
+                string = string + '];';
+                document.getElementById('result').innerHTML = string;
+            }
+        }
+
+        function doMouseMove(e) {
+            let x = e.clientX;
+            let y = e.clientY;
+
+            if (y > mapHeight && y < (mapHeight + sourceHeight) && x < sourceWidth) { // source
+                let gridX = Math.floor(x / tileWidth) * tileWidth;
+                let gridY = Math.floor(y / tileHeight) * tileHeight;
+                context.clearRect(0, mapHeight, sourceWidth, sourceHeight);
+                redrawSource();
+                context.beginPath();
+                context.strokeStyle = 'blue';
+                context.rect(gridX, gridY, tileWidth, tileHeight);
+                context.stroke();
+                drawBox();
+            }
+        }
+
+        function drawBox() {
+            context.beginPath();
+            context.strokeStyle = 'red';
+            context.rect(sourceX, sourceY + mapHeight, tileWidth, tileHeight);
+            context.stroke();
+        }
+    </script>
+</body>
+
+</html>
