@@ -35,10 +35,18 @@
             gameplay objects
         </div>
         <canvas id='myCanvas' width='1000' height='800'></canvas>
-        <label id='result'>Click on the image at the bottom to select a
-            tile, then click on the grid to draw.</label>
+        <label id='result'></label>
+        <label id='castleResult'></label>
+        <label id='forestResult'></label>
+        <label id='underwaterResult'></label>
+        <label id='caveResult'></label>
     </div>
     <script>
+
+
+
+
+
         let sourceWidth = 512,
             sourceHeight = 512;
         let image = new Image();
@@ -49,20 +57,41 @@
 
         document.getElementById("defaultOpen").click();
 
+        var incorporateTiles = function (oldTiles, newTiles) {
+            for (let i = 0; i < mapRows; i++) {
+                for (let j = 0; j < mapColumns; j++) {
+                    if (newTiles[i][j] != undefined) {
+                        oldTiles[i][j] = newTiles[i][j];
+                    }
+                }
+            }
+        }
+
         sceneryOptions = document.getElementsByTagName("select")[0];
+        let sceneryIndex = sceneryOptions.selectedIndex;
         sceneryOptions.onclick = function () {
+            sceneryIndex = sceneryOptions.selectedIndex;
             if (sceneryOptions.selectedIndex == 0) {
                 changeImage(512, 512, '../client/images/castleTiles.png');
+                incorporateTiles(castleTiles, tiles);
+                tiles = refreshTiles();
             }
             else if (sceneryOptions.selectedIndex == 1) {
                 changeImage(256, 608, '../client/images/dark_forest.png');
+                incorporateTiles(forestTiles, tiles);
+                tiles = refreshTiles();
             }
             else if (sceneryOptions.selectedIndex == 2) {
                 changeImage(512, 512, '../client/images/underwater.png');
+                incorporateTiles(underwaterTiles, tiles);
+                tiles = refreshTiles();
             }
             else if (sceneryOptions.selectedIndex == 3) {
                 changeImage(256, 336, '../client/images/cave_tileset.png');
+                incorporateTiles(caveTiles, tiles);
+                tiles = refreshTiles();
             }
+
         }
 
         function changeImage(sw, sh, imageSrc) {
@@ -98,9 +127,24 @@
         const mapRows = 8,
             mapColumns = 80;
 
-        let tiles = new Array(mapColumns * mapRows);
+        var refreshTiles = function () {
+            let tiles = new Array(mapRows);
+
+            for (i = 0; i < mapRows; i++) {
+                tiles[i] = new Array(mapColumns);
+            }
+            return tiles;
+        }
+
+        let tiles = refreshTiles();
+        let castleTiles = refreshTiles();
+        let forestTiles = refreshTiles();
+        let underwaterTiles = refreshTiles();
+        let caveTiles = refreshTiles();
+
         let mapHeight = mapRows * tileHeight;
         let mapWidth = mapColumns * tileWidth;
+        let topOffset = document.getElementById("myCanvas").offsetTop;
         let sourceX, sourceY, sourceTile;
         let canvas = document.getElementById('myCanvas');
         let context = canvas.getContext('2d');
@@ -124,8 +168,9 @@
         }
 
         function doMouseClick(e) {
+
             let x = e.clientX;
-            let y = e.clientY;
+            let y = e.clientY + pageYOffset - topOffset;
             let gridX = Math.floor(x / tileWidth) * tileWidth;
             let gridY = Math.floor(y / tileHeight) * tileHeight;
 
@@ -145,21 +190,64 @@
                 let tileX = Math.floor(x / tileWidth);
                 let tileY = Math.floor(y / tileHeight);
                 let targetTile = tileY * mapColumns + tileX;
-                tiles[targetTile] = sourceTile;
+                tiles[tileY][tileX] = sourceTile;
                 // update the string    
                 let string = 'let tiles = [';
-                for (let i = 0; i < mapColumns * mapRows; i++) {
-                    if (tiles[i] != undefined) string = string + tiles[i];
-                    string = string + ',';
+                for (let i = 0; i < mapRows; i++) {
+                    for (let j = 0; j < mapColumns; j++) {
+                        if (tiles[i][j] != undefined) string = string + tiles[i][j];
+                        string = string + ',';
+                    }
                 }
                 string = string + '];';
                 document.getElementById('result').innerHTML = string;
+
+                let castleString = 'let tiles = [';
+                for (let i = 0; i < mapRows; i++) {
+                    for (let j = 0; j < mapColumns; j++) {
+                        if (castleTiles[i][j] != undefined) castleString = castleString + castleTiles[i][j];
+                        castleString = castleString + ',';
+                    }
+                }
+                castleString = castleString + '];';
+                document.getElementById('castleResult').innerHTML = "castle" + castleString;
+
+                let forestString = 'let tiles = [';
+                for (let i = 0; i < mapRows; i++) {
+                    for (let j = 0; j < mapColumns; j++) {
+                        if (forestTiles[i][j] != undefined) forestString = forestString + forestTiles[i][j];
+                        forestString = forestString + ',';
+                    }
+                }
+                forestString = forestString + '];';
+                document.getElementById('forestResult').innerHTML = "forest" + forestString;
+
+                let underwaterString = 'let tiles = [';
+                for (let i = 0; i < mapRows; i++) {
+                    for (let j = 0; j < mapColumns; j++) {
+                        if (underwaterTiles[i][j] != undefined) underwaterString = underwaterString + underwaterTiles[i][j];
+                        underwaterString = underwaterString + ',';
+                    }
+                }
+                underwaterString = underwaterString + '];';
+                document.getElementById('underwaterResult').innerHTML = "underwater" + underwaterString;
+
+                let caveString = 'let tiles = [';
+                for (let i = 0; i < mapRows; i++) {
+                    for (let j = 0; j < mapColumns; j++) {
+                        if (caveTiles[i][j] != undefined) caveString = caveString + caveTiles[i][j];
+                        caveString = caveString + ',';
+                    }
+                }
+                string = string + '];';
+                document.getElementById('caveResult').innerHTML = "cave" + caveString;
+
             }
         }
 
         function doMouseMove(e) {
             let x = e.clientX;
-            let y = e.clientY;
+            let y = e.clientY + pageYOffset - topOffset;
 
             if (y > mapHeight && y < (mapHeight + sourceHeight) && x < sourceWidth) { // source
                 let gridX = Math.floor(x / tileWidth) * tileWidth;
@@ -180,6 +268,12 @@
             context.rect(sourceX, sourceY + mapHeight, tileWidth, tileHeight);
             context.stroke();
         }
+
+
+        //level object
+        var level = {
+
+        };
     </script>
 </body>
 
