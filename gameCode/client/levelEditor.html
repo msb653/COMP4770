@@ -3,6 +3,7 @@
 <head>
     <title>Level Editor</title>
     <link rel="stylesheet" type="text/css" href="../client/levelEditor.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 </head>
 
 <body>
@@ -21,6 +22,10 @@
                 <option value="underwater">Underwater</option>
                 <option value="cave">Cave</option>
             </select>
+            <input id="backgroundColor" type="color"> Background Colour
+            <button id="applyColor">Apply Colour</button>
+            <input id="levelName" type="text">Level Name
+            <button id="save">Save</button>
         </div>
         <div id="platforms" class="tabcontent">
             platforms
@@ -34,18 +39,17 @@
         <div id="gameplayobjects" class="tabcontent">
             gameplay objects
         </div>
-        <canvas id='myCanvas' width='1000' height='800'></canvas>
-        <label id='result'></label>
-        <label id='castleResult'></label>
-        <label id='forestResult'></label>
-        <label id='underwaterResult'></label>
-        <label id='caveResult'></label>
+        <canvas id="myCanvas" width="1000" height="800"></canvas>
+        <label id="result"></label>
+        <label id="castleResult"></label>
+        <label id="forestResult"></label>
+        <label id="underwaterResult"></label>
+        <label id="caveResult"></label>
     </div>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script>
 
-
-
-
+        var socket = io();
 
         let sourceWidth = 512,
             sourceHeight = 512;
@@ -91,7 +95,6 @@
                 incorporateTiles(caveTiles, tiles);
                 tiles = refreshTiles();
             }
-
         }
 
         function changeImage(sw, sh, imageSrc) {
@@ -120,8 +123,6 @@
 
         }
 
-
-
         const tileWidth = 32,
             tileHeight = 32;
         const mapRows = 8,
@@ -142,6 +143,23 @@
         let underwaterTiles = refreshTiles();
         let caveTiles = refreshTiles();
 
+        document.getElementById("save").onclick = function () {
+            socket.emit('saveLevel', {
+                name: document.getElementById("levelName").value,
+                castleArray: castleTiles,
+                forestArray: forestTiles,
+                underwaterArray: underwaterTiles,
+                caveArray: caveTiles,
+                background: bgColor
+            });
+        };
+        socket.on('saveLevelResponse', function (data) {
+            if (data.success) {
+                alert('Save successful.');
+            } else alert('Save unsuccessful.');
+        });
+
+
         let mapHeight = mapRows * tileHeight;
         let mapWidth = mapColumns * tileWidth;
         let topOffset = document.getElementById("myCanvas").offsetTop;
@@ -151,17 +169,60 @@
         canvas.addEventListener('click', doMouseClick);
         canvas.addEventListener('mousemove', doMouseMove);
         image.addEventListener('load', redrawSource);
+
         // draw the grid
-        for (let i = 0; i <= mapColumns; i++) {
-            context.moveTo(i * tileWidth, 0);
-            context.lineTo(i * tileWidth, mapHeight);
+        var drawGrid = function () {
+            context.strokeStyle = "black";
+            for (let i = 0; i <= mapColumns; i++) {
+                context.moveTo(i * tileWidth, 0);
+                context.lineTo(i * tileWidth, mapHeight);
+            }
+            context.stroke();
+            for (let i = 0; i <= mapRows; i++) {
+                context.moveTo(0, i * tileHeight);
+                context.lineTo(mapWidth, i * tileHeight);
+            }
+            context.stroke();
         }
-        context.stroke();
-        for (let i = 0; i <= mapRows; i++) {
-            context.moveTo(0, i * tileHeight);
-            context.lineTo(mapWidth, i * tileHeight);
+
+        drawGrid();
+
+        var colorPicker = document.getElementById("backgroundColor");
+        var applyColor = document.getElementById("applyColor");
+        var bgColor = "#ffffff";
+
+        applyColor.onclick = function () {
+            bgColor = colorPicker.value;
+            context.fillStyle = colorPicker.value;
+            context.fillRect(0, 0, mapWidth, mapHeight);
+            drawGrid();
+            loadTiles(castleTiles, 512, "../client/images/castleTiles.png");
+            loadTiles(forestTiles, 256, "../client/images/dark_forest.png");
+            loadTiles(underwaterTiles, 512, "../client/images/underwater.png");
+            loadTiles(caveTiles, 256, "../client/images/cave_tileset.png");
         }
-        context.stroke();
+
+        function loadTiles(tileArray, srcWidth, img) {
+            let image = new Image();
+            image.src = img;
+            image.onload = function () {
+                for (var i = 0; i < mapRows; i++) {
+                    for (var j = 0; j < mapColumns; j++) {
+                        if (tileArray[i][j] != undefined) {
+                            let tileY = Math.floor(tileArray[i][j] / (srcWidth / tileWidth)) * tileHeight;
+                            let tileX = tileArray[i][j] * tileWidth;
+                            if (tileY != 0) {
+                                tileX = (tileArray[i][j] - (Math.floor(tileArray[i][j] / (srcWidth / tileWidth)) * (srcWidth / tileWidth))) * tileWidth;
+                            }
+                            let gridi = i * tileWidth;
+                            let gridj = j * tileHeight;
+                            context.drawImage(image, tileX, tileY, tileWidth, tileHeight, gridj, gridi, tileWidth, tileHeight);
+                        }
+                    }
+                }
+            }
+        }
+
 
         function redrawSource() {
             context.drawImage(image, 0, 0, sourceWidth, sourceHeight, 0, mapHeight, sourceWidth, sourceHeight);
@@ -191,58 +252,40 @@
                 let tileY = Math.floor(y / tileHeight);
                 let targetTile = tileY * mapColumns + tileX;
                 tiles[tileY][tileX] = sourceTile;
+
+                if (sceneryOptions.selectedIndex == 0) {
+                    incorporateTiles(castleTiles, tiles);
+                }
+                else if (sceneryOptions.selectedIndex == 1) {
+                    incorporateTiles(forestTiles, tiles);
+                }
+                else if (sceneryOptions.selectedIndex == 2) {
+                    incorporateTiles(underwaterTiles, tiles);
+                }
+                else if (sceneryOptions.selectedIndex == 3) {
+                    incorporateTiles(caveTiles, tiles);
+                }
+
                 // update the string    
-                let string = 'let tiles = [';
-                for (let i = 0; i < mapRows; i++) {
-                    for (let j = 0; j < mapColumns; j++) {
-                        if (tiles[i][j] != undefined) string = string + tiles[i][j];
-                        string = string + ',';
-                    }
-                }
-                string = string + '];';
-                document.getElementById('result').innerHTML = string;
-
-                let castleString = 'let tiles = [';
-                for (let i = 0; i < mapRows; i++) {
-                    for (let j = 0; j < mapColumns; j++) {
-                        if (castleTiles[i][j] != undefined) castleString = castleString + castleTiles[i][j];
-                        castleString = castleString + ',';
-                    }
-                }
-                castleString = castleString + '];';
-                document.getElementById('castleResult').innerHTML = "castle" + castleString;
-
-                let forestString = 'let tiles = [';
-                for (let i = 0; i < mapRows; i++) {
-                    for (let j = 0; j < mapColumns; j++) {
-                        if (forestTiles[i][j] != undefined) forestString = forestString + forestTiles[i][j];
-                        forestString = forestString + ',';
-                    }
-                }
-                forestString = forestString + '];';
-                document.getElementById('forestResult').innerHTML = "forest" + forestString;
-
-                let underwaterString = 'let tiles = [';
-                for (let i = 0; i < mapRows; i++) {
-                    for (let j = 0; j < mapColumns; j++) {
-                        if (underwaterTiles[i][j] != undefined) underwaterString = underwaterString + underwaterTiles[i][j];
-                        underwaterString = underwaterString + ',';
-                    }
-                }
-                underwaterString = underwaterString + '];';
-                document.getElementById('underwaterResult').innerHTML = "underwater" + underwaterString;
-
-                let caveString = 'let tiles = [';
-                for (let i = 0; i < mapRows; i++) {
-                    for (let j = 0; j < mapColumns; j++) {
-                        if (caveTiles[i][j] != undefined) caveString = caveString + caveTiles[i][j];
-                        caveString = caveString + ',';
-                    }
-                }
-                string = string + '];';
-                document.getElementById('caveResult').innerHTML = "cave" + caveString;
+                updateString(document.getElementById("result"), tiles);
+                updateString(document.getElementById("castleResult"), castleTiles);
+                updateString(document.getElementById("forestResult"), forestTiles);
+                updateString(document.getElementById("underwaterResult"), underwaterTiles);
+                updateString(document.getElementById("caveResult"), caveTiles);
 
             }
+        }
+
+        var updateString = function (holder, tileArray) {
+            let string = 'let tiles = [';
+            for (let i = 0; i < mapRows; i++) {
+                for (let j = 0; j < mapColumns; j++) {
+                    if (tileArray[i][j] != undefined) string = string + tileArray[i][j];
+                    string = string + ',';
+                }
+            }
+            string = string + '];';
+            holder.innerHTML = string;
         }
 
         function doMouseMove(e) {
@@ -272,7 +315,11 @@
 
         //level object
         var level = {
-
+            castleArray: castleTiles,
+            forestArray: forestTiles,
+            underwaterArray: underwaterTiles,
+            caveArray: caveTiles,
+            background: bgColor
         };
     </script>
 </body>

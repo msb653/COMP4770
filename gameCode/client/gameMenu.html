@@ -1,26 +1,30 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Menu</title>
     <link rel="stylesheet" type="text/css" href="../client/gameMenuStyle.css" />
-  </head>
-  <body>
+</head>
+
+<body>
     <p class="welcomeMessage">Welcome Back!!</p>
     <div class="menuContainer">
-      <img src="../client/images/avatar.png" class="avatar" />
-      <input id="playCampaign" type="submit" class="playStoryButton" value="Play Campaign"></input><br><br>
-      <input id="levelEditor" type="submit" class="levelEditorButton" value="Level Editor"></input><br><br>
-      <input id="overworld" type="submit" class="overworldButton" value="Play Overworld"></input><br><br>
-      <input id="achievements" type="submit" class="achievementsButton" value="Achievements"></input><br><br>
-      <input id="options" type="submit" class="changePassword" value="Options"></input><br><br>
-      <input id="logout" type="submit" class="logoutButton" value="Logout"></input><br><br><br>
+        <img src="../client/images/avatar.png" class="avatar" />
+        <input id="playCampaign" type="submit" class="playStoryButton" value="Play Campaign"></input><br><br>
+        <input id="levelEditor" type="submit" class="levelEditorButton" value="Level Editor"></input><br><br>
+        <input id="loadLevel" type="submit" class="loadLevelButton" value="Load Level"></input><br><br>
+        <input id="overworld" type="submit" class="overworldButton" value="Play Overworld"></input><br><br>
+        <input id="achievements" type="submit" class="achievementsButton" value="Achievements"></input><br><br>
+        <input id="options" type="submit" class="changePassword" value="Options"></input><br><br>
+        <input id="logout" type="submit" class="logoutButton" value="Logout"></input><br><br><br>
     </div>
-<!-- 
+    <!-- 
     <div id="levelChoose">
       <p id="theLevels"> Levels go here </p>
       <br><br>
     </div> -->
-  
+
     <!-- <div id="achievementsMenu">
       <h1 style="color: white;"> Achievements </h1>
       <p id  = "lev">  </p>
@@ -28,35 +32,41 @@
 
     <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <script>
-      var socket = io();
-      var menuContainer = document.getElementById('menuContainer');
-      var playCampaign = document.getElementById('playCampaign');
-      var levelEditor = document.getElementById('levelEditor');
-      var overworld = document.getElementById('overworld');
-      var achievements = document.getElementById('Achievements');
-      var options = document.getElementById('options');
-      var logout = document.getElementById('logout');
-      var achievementsMenu = document.getElementById('achievementsMenu');
-      var lev  = document.getElementById('lev');
-      var levelChoose = document.getElementById('levelChoose');
+        var socket = io();
+        var menuContainer = document.getElementById('menuContainer');
+        var playCampaign = document.getElementById('playCampaign');
+        var levelEditor = document.getElementById('levelEditor');
+        var LoadLevel = document.getElementById('loadLevel');
+        var overworld = document.getElementById('overworld');
+        var achievements = document.getElementById('Achievements');
+        var options = document.getElementById('options');
+        var logout = document.getElementById('logout');
+        var achievementsMenu = document.getElementById('achievementsMenu');
+        var lev = document.getElementById('lev');
+        var levelChoose = document.getElementById('levelChoose');
 
-      playCampaign.onclick = function(){
-        location.href = "../client/campaignMode.html";
-      }
-      
-      levelEditor.onclick = function(){
-          location.href = "../client/levelEditor.html";
+        playCampaign.onclick = function () {
+            location.href = "../client/campaignMode.html";
         }
 
-      logout.onclick = function(){
-        socket.emit('disconnect');
-        location.href = "/";
-      }
+        loadLevel.onclick = function () {
+            location.href = "../client/loadLevel.html";
+        }
+
+        levelEditor.onclick = function () {
+            location.href = "../client/levelEditor.html";
+        }
+
+        logout.onclick = function () {
+            socket.emit('disconnect');
+            location.href = "/";
+        }
 
       // socket.on('serverMsg', function(data) {
       //   console.log(data.msg);
       // });
 
     </script>
-  </body>
+</body>
+
 </html>

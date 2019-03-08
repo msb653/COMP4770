@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Load Level</title>
+</head>
+<div id="levelHolder">
+</div>
+<canvas id="myCanvas" width="1000" height="800"></canvas>
+
+<body>
+
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script>
+        var socket = io();
+        socket.emit('requestLevels', {});
+        let levels;
+
+        const tileWidth = 32,
+            tileHeight = 32;
+        const mapRows = 8,
+            mapColumns = 80;
+
+        let mapHeight = mapRows * tileHeight;
+        let mapWidth = mapColumns * tileWidth;
+        let topOffset = document.getElementById("myCanvas").offsetTop;
+        let sourceX, sourceY, sourceTile;
+        let canvas = document.getElementById('myCanvas');
+        let context = canvas.getContext('2d');
+
+        let castleImage = new Image();
+        castleImage.src = '../client/images/castleTiles.png';
+        let castlesw = 512;
+        let castlesh = 512;
+
+        let forestImage = new Image();
+        forestImage.src = '../client/images/dark_forest.png';
+        let forestsw = 256;
+        let forestsh = 608;
+
+        let underwaterImage = new Image();
+        underwaterImage.src = '../client/images/underwater.png';
+        let underwatersw = 512;
+        let underwatersh = 512;
+
+        let caveImage = new Image();
+        caveImage.src = '../client/images/cave_tileset.png';
+        let cavesw = 256;
+        let cavesh = 336;
+
+        socket.on('levelsResponse', function (data) {
+            if (data.success) {
+                levels = data.levels;
+                loadLevelList();
+            } else alert('Request unsuccessful.');
+        });
+
+        var loadLevelList = function () {
+            var string = "<table id='levelsTable'><tr><th>Levels</th></tr>";
+            for (var i = 0; i < levels.length; i++) {
+                string = string + "<tr><td><button id='" + levels[i].name + "Button' onclick=loadLevel(" + i + ");>" + levels[i].name + "</button></td></tr>";
+            }
+            document.getElementById("levelHolder").innerHTML = string;
+        }
+
+        function loadLevel(i) {
+            let level = levels[i];
+
+            let name = level.name;
+            let castleTiles = level.castleArray;
+            let forestTiles = level.forestArray;
+            let underwaterTiles = level.underwaterArray;
+            let caveTiles = level.caveArray;
+            let background = level.background;
+
+            context.fillStyle = background;
+            context.fillRect(0, 0, mapWidth, mapHeight);
+            loadTiles(castleTiles, castlesw, castleImage);
+            loadTiles(forestTiles, forestsw, forestImage);
+            loadTiles(underwaterTiles, underwatersw, underwaterImage);
+            loadTiles(caveTiles, cavesw, caveImage);
+
+            document.getElementById("levelHolder").innerHTML = "";
+        }
+
+        function loadTiles(tileArray, srcWidth, img) {
+            for (var i = 0; i < mapRows; i++) {
+                for (var j = 0; j < mapColumns; j++) {
+                    if (tileArray[i][j] != undefined) {
+                        let tileY = Math.floor(tileArray[i][j] / (srcWidth / tileWidth)) * tileHeight;
+                        let tileX = tileArray[i][j] * tileWidth;
+                        if (tileY != 0) {
+                            tileX = (tileArray[i][j] - (Math.floor(tileArray[i][j] / (srcWidth / tileWidth)) * (srcWidth / tileWidth))) * tileWidth;
+                        }
+                        let gridi = i * tileWidth;
+                        let gridj = j * tileHeight;
+                        context.drawImage(img, tileX, tileY, tileWidth, tileHeight, gridj, gridi, tileWidth, tileHeight);
+                    }
+                }
+            }
+        }
+
+    </script>
+</body>
+
+</html>
