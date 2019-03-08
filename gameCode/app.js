@@ -210,7 +210,7 @@ var isValidPassword = function (data, cb) {
         { username: data.username, password: data.password },
         function (err, res) {
             if (res.length > 0) {
-                cb(true);
+                cb(true,{user: data.username});
             } else cb(false);
         }
     );
@@ -219,7 +219,7 @@ var isValidPassword = function (data, cb) {
 var isUsernameTaken = function (data, cb) {
     db.account.find({ username: data.username }, function (err, res) {
         if (res.length > 0) {
-            cb(true);
+            cb(true,{user: data.username});
         } else cb(false);
     });
 };
@@ -233,7 +233,7 @@ var isLevelnameTaken = function (data, cb) {
 };
 
 var getLevels = function (data, cb) {
-    db.level.find({}).toArray(function(err, result) {
+    db.level.find({user: data.user}).toArray(function(err, result) {
     cb(result);
   });
 };
@@ -249,7 +249,8 @@ var addUser = function (data, cb) {
 
 var addLevel = function (data, cb) {
     db.level.insert(
-        {
+        { 
+            user: data.user,
             name: data.name,
             castleArray: data.castleArray,
             forestArray: data.forestArray,
@@ -271,10 +272,10 @@ io.sockets.on('connection', function (socket) {
     // create a player with a socket id
 
     socket.on('signIn', function (data) {
-        isValidPassword(data, function (res) {
+        isValidPassword(data, function (res,user) {
             if (res) {
                 Player.onConnect(socket);
-                socket.emit('signInResponse', { success: true });
+                socket.emit('signInResponse', { success: true, user: user.user });
             } else {
                 socket.emit('signInResponse', { success: false });
             }
@@ -282,9 +283,9 @@ io.sockets.on('connection', function (socket) {
     });
 
     socket.on('signUp', function (data) {
-        isUsernameTaken(data, function (res) {
+        isUsernameTaken(data, function (res,user) {
             if (res) {
-                socket.emit('signUpResponse', { success: false });
+                socket.emit('signUpResponse', { success: false, user: user.user });
             } else {
                 addUser(data, function () {
                     socket.emit('signUpResponse', { success: true });

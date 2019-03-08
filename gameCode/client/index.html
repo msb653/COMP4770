@@ -153,6 +153,7 @@
         if (data.success) {
           // loginContainer.hidden = true;
           location.href = '../gameCode/client/gameMenu.html';
+          sessionStorage.setItem("username", data.user);
         } else alert('Sign in unsuccessful.');
       });
 
@@ -160,6 +161,7 @@
         if (data.success) {
           // alert('Sign up successul.');
           location.href = '../gameCode/client/gameMenu.html';
+          sessionStorage.setItem("username", data.user);
         } else alert('Sign up unsuccessul.');
       });
     </script>
