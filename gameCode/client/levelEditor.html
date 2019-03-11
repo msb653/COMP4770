@@ -51,12 +51,39 @@
 
         var socket = io();
 
-        let sourceWidth = 512,
-            sourceHeight = 512;
+        let castleImage = new Image();
+        castleImage.src = '../client/images/castle.png';
+        let castlesw = 1920;
+        let castlesh = 918;
+
+        let forestImage = new Image();
+        forestImage.src = '../client/images/forest.png';
+        let forestsw = 700;
+        let forestsh = 400;
+
+        let underwaterImage = new Image();
+        underwaterImage.src = '../client/images/lava.png';
+        let underwatersw = 720;
+        let underwatersh = 320;
+
+        let caveImage = new Image();
+        caveImage.src = '../client/images/cave.png';
+        let cavesw = 1000;
+        let cavesh = 500;
+
+        let tilemapImage = new Image();
+        tilemapImage.src = '../client/images/tilemap.png';
+        let tilemapsw = 416;
+        let tilemapsh = 32;
+
+        let sourceWidth = tilemapsw,
+            sourceHeight = tilemapsh;
         let image = new Image();
-        image.src = '../client/images/castleTiles.png';
+        image.src = tilemapImage.src;
 
-
+        let backgroundImage = castleImage.src;
+        let bgiSw = castlesw;
+        let bgiSh = castlesh;
         //tabs
 
         document.getElementById("defaultOpen").click();
@@ -71,29 +98,47 @@
             }
         }
 
+        changeBackgroundImage(castlesw, castlesh, castleImage.src);
+
         sceneryOptions = document.getElementsByTagName("select")[0];
         let sceneryIndex = sceneryOptions.selectedIndex;
-        sceneryOptions.onclick = function () {
+        sceneryOptions.onchange = function () {
             sceneryIndex = sceneryOptions.selectedIndex;
             if (sceneryOptions.selectedIndex == 0) {
-                changeImage(512, 512, '../client/images/castleTiles.png');
+                changeBackgroundImage(castlesw, castlesh, castleImage.src);
+                // changeImage(512, 512, '../client/images/castleTiles.png');
                 incorporateTiles(castleTiles, tiles);
                 tiles = refreshTiles();
+                backgroundImage = castleImage.src;
+                bgiSw = castlesw;
+                bgiSh = castlesh;
             }
             else if (sceneryOptions.selectedIndex == 1) {
-                changeImage(256, 608, '../client/images/dark_forest.png');
+                changeBackgroundImage(forestsw, forestsh, forestImage.src);
+                // changeImage(256, 608, '../client/images/dark_forest.png');
                 incorporateTiles(forestTiles, tiles);
                 tiles = refreshTiles();
+                backgroundImage = forestImage.src;
+                bgiSw = forestsw;
+                bgiSh = forestsh;
             }
             else if (sceneryOptions.selectedIndex == 2) {
-                changeImage(512, 512, '../client/images/underwater.png');
+                changeBackgroundImage(underwatersw, underwatersh, underwaterImage.src);
+                // changeImage(512, 512, '../client/images/underwater.png');
                 incorporateTiles(underwaterTiles, tiles);
                 tiles = refreshTiles();
+                backgroundImage = underwaterImage.src;
+                bgiSw = underwatersw;
+                bgiSh = underwatersh;
             }
             else if (sceneryOptions.selectedIndex == 3) {
-                changeImage(256, 336, '../client/images/cave_tileset.png');
+                changeBackgroundImage(cavesw, cavesh, caveImage.src);
+                // changeImage(256, 336, '../client/images/cave_tileset.png');
                 incorporateTiles(caveTiles, tiles);
                 tiles = refreshTiles();
+                backgroundImage = caveImage.src;
+                bgiSw = cavesw;
+                bgiSh = cavesh;
             }
         }
 
@@ -103,6 +148,17 @@
             sourceWidth = sw;
             sourceHeight = sh;
             redrawSource();
+        }
+
+        function changeBackgroundImage(sw, sh, imageSrc) {
+            let i = new Image();
+            i.src = imageSrc;
+            i.onload = function () {
+                context.clearRect(0, 0, mapWidth, mapHeight);
+                context.drawImage(i, 0, 0, sw, sh, 0, 0, mapWidth, mapHeight);
+                drawGrid();
+                loadTiles(realTiles, 416, "../client/images/tilemap.png");
+            }
         }
 
         function openTab(evt, tabName) {
@@ -138,6 +194,7 @@
         }
 
         let tiles = refreshTiles();
+        let realTiles = refreshTiles();
         let castleTiles = refreshTiles();
         let forestTiles = refreshTiles();
         let underwaterTiles = refreshTiles();
@@ -151,7 +208,11 @@
                 forestArray: forestTiles,
                 underwaterArray: underwaterTiles,
                 caveArray: caveTiles,
-                background: bgColor
+                background: bgColor,
+                backgroundImage: backgroundImage,
+                bgiSw: bgiSw,
+                bgiSh: bgiSh,
+                realArray: realTiles
             });
         };
         socket.on('saveLevelResponse', function (data) {
@@ -197,10 +258,11 @@
             context.fillStyle = colorPicker.value;
             context.fillRect(0, 0, mapWidth, mapHeight);
             drawGrid();
-            loadTiles(castleTiles, 512, "../client/images/castleTiles.png");
-            loadTiles(forestTiles, 256, "../client/images/dark_forest.png");
-            loadTiles(underwaterTiles, 512, "../client/images/underwater.png");
-            loadTiles(caveTiles, 256, "../client/images/cave_tileset.png");
+            loadTiles(realTiles, 416, "../client/images/tilemap.png");
+            // loadTiles(castleTiles, 512, "../client/images/castleTiles.png");
+            // loadTiles(forestTiles, 256, "../client/images/dark_forest.png");
+            // loadTiles(underwaterTiles, 512, "../client/images/underwater.png");
+            // loadTiles(caveTiles, 256, "../client/images/cave_tileset.png");
         }
 
         function loadTiles(tileArray, srcWidth, img) {
@@ -254,25 +316,27 @@
                 let targetTile = tileY * mapColumns + tileX;
                 tiles[tileY][tileX] = sourceTile;
 
-                if (sceneryOptions.selectedIndex == 0) {
-                    incorporateTiles(castleTiles, tiles);
-                }
-                else if (sceneryOptions.selectedIndex == 1) {
-                    incorporateTiles(forestTiles, tiles);
-                }
-                else if (sceneryOptions.selectedIndex == 2) {
-                    incorporateTiles(underwaterTiles, tiles);
-                }
-                else if (sceneryOptions.selectedIndex == 3) {
-                    incorporateTiles(caveTiles, tiles);
-                }
+                incorporateTiles(realTiles, tiles);
+
+                // if (sceneryOptions.selectedIndex == 0) {
+                //     incorporateTiles(castleTiles, tiles);
+                // }
+                // else if (sceneryOptions.selectedIndex == 1) {
+                //     incorporateTiles(forestTiles, tiles);
+                // }
+                // else if (sceneryOptions.selectedIndex == 2) {
+                //     incorporateTiles(underwaterTiles, tiles);
+                // }
+                // else if (sceneryOptions.selectedIndex == 3) {
+                //     incorporateTiles(caveTiles, tiles);
+                // }
 
                 // update the string    
-                updateString(document.getElementById("result"), tiles);
-                updateString(document.getElementById("castleResult"), castleTiles);
-                updateString(document.getElementById("forestResult"), forestTiles);
-                updateString(document.getElementById("underwaterResult"), underwaterTiles);
-                updateString(document.getElementById("caveResult"), caveTiles);
+                // updateString(document.getElementById("result"), tiles);
+                // updateString(document.getElementById("castleResult"), castleTiles);
+                // updateString(document.getElementById("forestResult"), forestTiles);
+                // updateString(document.getElementById("underwaterResult"), underwaterTiles);
+                // updateString(document.getElementById("caveResult"), caveTiles);
 
             }
         }

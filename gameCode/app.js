@@ -62,6 +62,21 @@ app.get('/gameCode/client/images/cave.png', function (req, res) {
 app.get('/gameCode/client/images/cave_tileset.png', function (req, res) {
     res.sendFile(__dirname + '/client/images/cave_tileset.png');
 });
+app.get('/gameCode/client/images/tilemap.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/tilemap.png');
+});
+app.get('/gameCode/client/images/cave.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/cave.png');
+});
+app.get('/gameCode/client/images/castle.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/castle.png');
+});
+app.get('/gameCode/client/images/forest.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/forest.png');
+});
+app.get('/gameCode/client/images/lava.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/lava.png');
+});
 app.use('/client', express.static(__dirname + '/client'));
 
 serv.listen(2000);
@@ -256,7 +271,11 @@ var addLevel = function (data, cb) {
             forestArray: data.forestArray,
             underwaterArray: data.underwaterArray,
             caveArray: data.caveArray,
-            background: data.background
+            background: data.background,
+            backgroundImage: data.backgroundImage,
+            bgiSw: data.bgiSw,
+            bgiSh: data.bgiSh,
+            realArray: data.realArray
         },
         function (err) {
             cb();

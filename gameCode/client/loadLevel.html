@@ -32,24 +32,29 @@
         let context = canvas.getContext('2d');
 
         let castleImage = new Image();
-        castleImage.src = '../client/images/castleTiles.png';
-        let castlesw = 512;
-        let castlesh = 512;
+        castleImage.src = '../client/images/castle.png';
+        let castlesw = 1920;
+        let castlesh = 918;
 
         let forestImage = new Image();
-        forestImage.src = '../client/images/dark_forest.png';
-        let forestsw = 256;
-        let forestsh = 608;
+        forestImage.src = '../client/images/forest.png';
+        let forestsw = 700;
+        let forestsh = 400;
 
         let underwaterImage = new Image();
-        underwaterImage.src = '../client/images/underwater.png';
-        let underwatersw = 512;
-        let underwatersh = 512;
+        underwaterImage.src = '../client/images/lava.png';
+        let underwatersw = 720;
+        let underwatersh = 320;
 
         let caveImage = new Image();
-        caveImage.src = '../client/images/cave_tileset.png';
-        let cavesw = 256;
-        let cavesh = 336;
+        caveImage.src = '../client/images/cave.png';
+        let cavesw = 1000;
+        let cavesh = 500;
+
+        let tilemapImage = new Image();
+        tilemapImage.src = '../client/images/tilemap.png';
+        let tilemapsw = 416;
+        let tilemapsh = 32;
 
         socket.on('levelsResponse', function (data) {
             if (data.success) {
@@ -70,20 +75,36 @@
             let level = levels[i];
 
             let name = level.name;
+            let realTiles = level.realArray;
             let castleTiles = level.castleArray;
             let forestTiles = level.forestArray;
             let underwaterTiles = level.underwaterArray;
             let caveTiles = level.caveArray;
             let background = level.background;
+            let backgroundImage = level.backgroundImage;
+            let bgiSw = level.bgiSw;
+            let bgiSh = level.bgiSh;
 
-            context.fillStyle = background;
-            context.fillRect(0, 0, mapWidth, mapHeight);
-            loadTiles(castleTiles, castlesw, castleImage);
-            loadTiles(forestTiles, forestsw, forestImage);
-            loadTiles(underwaterTiles, underwatersw, underwaterImage);
-            loadTiles(caveTiles, cavesw, caveImage);
+            // context.fillStyle = background;
+            // context.fillRect(0, 0, mapWidth, mapHeight);
+            changeBackgroundImage(bgiSw, bgiSh, backgroundImage, realTiles);
+            
+            // loadTiles(castleTiles, castlesw, castleImage);
+            // loadTiles(forestTiles, forestsw, forestImage);
+            // loadTiles(underwaterTiles, underwatersw, underwaterImage);
+            // loadTiles(caveTiles, cavesw, caveImage);
 
             document.getElementById("levelHolder").innerHTML = "";
+        }
+
+        function changeBackgroundImage(sw, sh, imageSrc, tiles) {
+            let i = new Image();
+            i.src = imageSrc;
+            i.onload = function () {
+                context.clearRect(0, 0, mapWidth, mapHeight);
+                context.drawImage(i, 0, 0, sw, sh, 0, 0, mapWidth, mapHeight);
+                loadTiles(tiles, tilemapsw, tilemapImage);
+            }
         }
 
         function loadTiles(tileArray, srcWidth, img) {
