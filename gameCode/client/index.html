@@ -152,16 +152,16 @@
       socket.on('signInResponse', function(data) {
         if (data.success) {
           // loginContainer.hidden = true;
-          location.href = '../gameCode/client/gameMenu.html';
           sessionStorage.setItem("username", data.user);
+          location.href = '../gameCode/client/gameMenu.html';
         } else alert('Sign in unsuccessful.');
       });
 
       socket.on('signUpResponse', function(data) {
         if (data.success) {
           // alert('Sign up successul.');
-          location.href = '../gameCode/client/gameMenu.html';
           sessionStorage.setItem("username", data.user);
+          location.href = '../gameCode/client/gameMenu.html';
         } else alert('Sign up unsuccessul.');
       });
     </script>

@@ -234,8 +234,8 @@ var isValidPassword = function (data, cb) {
 var isUsernameTaken = function (data, cb) {
     db.account.find({ username: data.username }, function (err, res) {
         if (res.length > 0) {
-            cb(true,{user: data.username});
-        } else cb(false);
+            cb(true);
+        } else cb(false,{user: data.username});
     });
 };
 
@@ -249,6 +249,7 @@ var isLevelnameTaken = function (data, cb) {
 
 var getLevels = function (data, cb) {
     db.level.find({user: data.user}).toArray(function(err, result) {
+        // console.log(result);
     cb(result);
   });
 };
@@ -304,10 +305,10 @@ io.sockets.on('connection', function (socket) {
     socket.on('signUp', function (data) {
         isUsernameTaken(data, function (res,user) {
             if (res) {
-                socket.emit('signUpResponse', { success: false, user: user.user });
+                socket.emit('signUpResponse', { success: false});
             } else {
                 addUser(data, function () {
-                    socket.emit('signUpResponse', { success: true });
+                    socket.emit('signUpResponse', { success: true, user: user.user });
                 });
             }
         });
