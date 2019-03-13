@@ -26,6 +26,8 @@
             <button id="applyColor">Apply Colour</button>
             <input id="levelName" type="text">Level Name
             <button id="save">Save</button>
+            <br>
+            <p>Left click and drag to place tiles, right click and drag to remove tiles.</p>
         </div>
         <div id="platforms" class="tabcontent">
             platforms
@@ -91,9 +93,9 @@
         var incorporateTiles = function (oldTiles, newTiles) {
             for (let i = 0; i < mapRows; i++) {
                 for (let j = 0; j < mapColumns; j++) {
-                    if (newTiles[i][j] != undefined) {
+                    // if (newTiles[i][j] != undefined) {
                         oldTiles[i][j] = newTiles[i][j];
-                    }
+                    // }
                 }
             }
         }
@@ -157,7 +159,7 @@
                 context.clearRect(0, 0, mapWidth, mapHeight);
                 context.drawImage(i, 0, 0, sw, sh, 0, 0, mapWidth, mapHeight);
                 drawGrid();
-                loadTiles(realTiles, 416, "../client/images/tilemap.png");
+                loadTiles(tiles, 416, "../client/images/tilemap.png");
             }
         }
 
@@ -212,7 +214,7 @@
                 backgroundImage: backgroundImage,
                 bgiSw: bgiSw,
                 bgiSh: bgiSh,
-                realArray: realTiles
+                realArray: tiles
             });
         };
         socket.on('saveLevelResponse', function (data) {
@@ -226,10 +228,15 @@
         let mapWidth = mapColumns * tileWidth;
         let topOffset = document.getElementById("myCanvas").offsetTop;
         let sourceX, sourceY, sourceTile;
+        let holder = document.getElementById("result");
         let canvas = document.getElementById('myCanvas');
         let context = canvas.getContext('2d');
+        let mouseDown;
+        canvas.addEventListener('mousedown', doMouseDown);
+        document.addEventListener('contextmenu', event => event.preventDefault());
         canvas.addEventListener('click', doMouseClick);
         canvas.addEventListener('mousemove', doMouseMove);
+        canvas.addEventListener('mouseup', doMouseUp);
         image.addEventListener('load', redrawSource);
 
         // draw the grid
@@ -258,7 +265,7 @@
             context.fillStyle = colorPicker.value;
             context.fillRect(0, 0, mapWidth, mapHeight);
             drawGrid();
-            loadTiles(realTiles, 416, "../client/images/tilemap.png");
+            loadTiles(tiles, 416, "../client/images/tilemap.png");
             // loadTiles(castleTiles, 512, "../client/images/castleTiles.png");
             // loadTiles(forestTiles, 256, "../client/images/dark_forest.png");
             // loadTiles(underwaterTiles, 512, "../client/images/underwater.png");
@@ -271,7 +278,7 @@
             image.onload = function () {
                 for (var i = 0; i < mapRows; i++) {
                     for (var j = 0; j < mapColumns; j++) {
-                        if (tileArray[i][j] != undefined) {
+                        if (tileArray[i][j] != undefined && tileArray[i][j] !== null) {
                             let tileY = Math.floor(tileArray[i][j] / (srcWidth / tileWidth)) * tileHeight;
                             let tileX = tileArray[i][j] * tileWidth;
                             if (tileY != 0) {
@@ -291,6 +298,11 @@
             context.drawImage(image, 0, 0, sourceWidth, sourceHeight, 0, mapHeight, sourceWidth, sourceHeight);
         }
 
+
+        function doMouseUp(e){
+            mouseDown = false;
+        }
+
         function doMouseClick(e) {
 
             let x = e.clientX;
@@ -308,49 +320,37 @@
                 drawBox();
             }
 
-            if (y < mapHeight && x < mapWidth) { // target
-                // context.clearRect(gridX, gridY, tileWidth, tileHeight);
-                context.drawImage(image, sourceX, sourceY, tileWidth, tileHeight, gridX, gridY, tileWidth, tileHeight);
-                let tileX = Math.floor(x / tileWidth);
-                let tileY = Math.floor(y / tileHeight);
-                let targetTile = tileY * mapColumns + tileX;
-                tiles[tileY][tileX] = sourceTile;
-
-                incorporateTiles(realTiles, tiles);
-
-                // if (sceneryOptions.selectedIndex == 0) {
-                //     incorporateTiles(castleTiles, tiles);
-                // }
-                // else if (sceneryOptions.selectedIndex == 1) {
-                //     incorporateTiles(forestTiles, tiles);
-                // }
-                // else if (sceneryOptions.selectedIndex == 2) {
-                //     incorporateTiles(underwaterTiles, tiles);
-                // }
-                // else if (sceneryOptions.selectedIndex == 3) {
-                //     incorporateTiles(caveTiles, tiles);
-                // }
-
-                // update the string    
-                // updateString(document.getElementById("result"), tiles);
-                // updateString(document.getElementById("castleResult"), castleTiles);
-                // updateString(document.getElementById("forestResult"), forestTiles);
-                // updateString(document.getElementById("underwaterResult"), underwaterTiles);
-                // updateString(document.getElementById("caveResult"), caveTiles);
-
-            }
+            drawTile(e);
         }
 
         var updateString = function (holder, tileArray) {
             let string = 'let tiles = [';
             for (let i = 0; i < mapRows; i++) {
                 for (let j = 0; j < mapColumns; j++) {
-                    if (tileArray[i][j] != undefined) string = string + tileArray[i][j];
+                    if (tileArray[i][j] != undefined && tileArray[i][j] !== null) string = string + tileArray[i][j];
                     string = string + ',';
                 }
             }
             string = string + '];';
             holder.innerHTML = string;
+        }
+
+        function doMouseDown(e){
+            mouseDown = true;
+            let x = e.clientX;
+            let y = e.clientY + pageYOffset - topOffset;
+            let gridX = Math.floor(x / tileWidth) * tileWidth;
+            let gridY = Math.floor(y / tileHeight) * tileHeight;
+
+            if (y > mapHeight && y < (mapHeight + sourceHeight) && x < sourceWidth) { // source
+                let tileX = Math.floor(x / tileWidth);
+                let tileY = Math.floor((y - mapHeight) / tileHeight);
+                sourceTile = tileY * (sourceWidth / tileWidth) + tileX;
+                sourceX = gridX;
+                sourceY = gridY - mapHeight;
+                redrawSource();
+                drawBox();
+            }
         }
 
         function doMouseMove(e) {
@@ -368,7 +368,36 @@
                 context.stroke();
                 drawBox();
             }
+
+            if (mouseDown == true){
+                drawTile(e);
+            }
         }
+
+        function drawTile(e) {
+                let x = e.clientX;
+                let y = e.clientY + pageYOffset - topOffset;
+                let gridX = Math.floor(x / tileWidth) * tileWidth;
+                let gridY = Math.floor(y / tileHeight) * tileHeight;
+                if (y < mapHeight && x < mapWidth) { // target
+                    // context.clearRect(gridX, gridY, tileWidth, tileHeight);
+                    context.drawImage(image, sourceX, sourceY, tileWidth, tileHeight, gridX, gridY, tileWidth, tileHeight);
+                    let tileX = Math.floor(x / tileWidth);
+                    let tileY = Math.floor(y / tileHeight);
+                    let targetTile = tileY * mapColumns + tileX;
+                    tiles[tileY][tileX] = sourceTile;
+                    if (e.buttons == 2) {
+                        context.clearRect(gridX, gridY, tileWidth, tileHeight);
+                        context.beginPath();
+                        context.strokeStyle = 'black';
+                        context.rect(gridX, gridY, tileWidth, tileHeight);
+                        context.stroke();
+                        tiles[tileY][tileX] = null;
+                        changeBackgroundImage(bgiSw, bgiSh, backgroundImage);
+                        
+                    };
+                }
+            }
 
         function drawBox() {
             context.beginPath();

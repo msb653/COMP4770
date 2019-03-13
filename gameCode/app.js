@@ -240,7 +240,7 @@ var isUsernameTaken = function (data, cb) {
 };
 
 var isLevelnameTaken = function (data, cb) {
-    db.level.find({ name: data.name }, function (err, res) {
+    db.level.find({ name: data.name, user: data.user }, function (err, res) {
         if (res.length > 0) {
             cb(true);
         } else cb(false);
