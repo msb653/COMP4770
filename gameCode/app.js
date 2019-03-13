@@ -77,6 +77,9 @@ app.get('/gameCode/client/images/forest.png', function (req, res) {
 app.get('/gameCode/client/images/lava.png', function (req, res) {
     res.sendFile(__dirname + '/client/images/lava.png');
 });
+app.get('/gameCode/client/images/arrowBack.png', function (req, res) {
+   res.sendFile(__dirname + '/client/images/arrowBack.png');
+});
 app.use('/client', express.static(__dirname + '/client'));
 
 serv.listen(2000);

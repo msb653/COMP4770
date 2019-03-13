@@ -1,4 +1,4 @@
-/* Style the tab */
+* Style the tab */
 .tab {
   overflow: hidden;
   border: 1px solid #ccc;
@@ -12,8 +12,9 @@
   border: none;
   outline: none;
   cursor: pointer;
-  padding: 14px 16px;
+  padding: 5px 5px;
   transition: 0.3s;
+  border-radius: 15%;
 }
 
 /* Change background color of buttons on hover */
@@ -32,4 +33,10 @@
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
+}
+
+.val {
+  position: absolute;
+  top: 3;
+  right: 10;
 }

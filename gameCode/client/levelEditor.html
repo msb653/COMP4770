@@ -4,17 +4,33 @@
     <title>Level Editor</title>
     <link rel="stylesheet" type="text/css" href="../client/levelEditor.css" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
 </head>
 
 <body>
     <div>
-        <div class="tab">
+        <!-- <div class="tab">
             <button class="tablinks active" id="defaultOpen" onclick="openTab(event,'scenery')">Scenery</button>
             <button class="tablinks" onclick="openTab(event,'platforms')">Platforms</button>
             <button class="tablinks" onclick="openTab(event,'enemies')">Enemies</button>
             <button class="tablinks" onclick="openTab(event,'powerups')">Power Ups</button>
             <button class="tablinks" onclick="openTab(event,'gameplayobjects')">Gameplay Objects</button>
-        </div>
+        </div> -->
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+     <ul class="navbar-nav">
+       <div class="tab">
+           <button type="button" class="tablinks active" id="defaultOpen" onclick="openTab(event,'scenery')">
+               Scenery
+           </button>
+       <div>
+       <li class="val">
+         <a class="nav-link" href="../client/gameMenu.html">
+           <img src="../client/images/arrowBack.png" alt="Back arrow" width="30" height="30" />
+           Back
+         </a>
+       </li>
+     </ul>
+   </nav>
         <div id="scenery" class="tabcontent">
             <select>
                 <option value="castle">Castle</option>
@@ -22,8 +38,8 @@
                 <option value="underwater">Underwater</option>
                 <option value="cave">Cave</option>
             </select>
-            <input id="backgroundColor" type="color"> Background Colour
-            <button id="applyColor">Apply Colour</button>
+            <!-- <input id="backgroundColor" type="color"> Background Colour -->
+            <!-- <button id="applyColor">Apply Colour</button> -->
             <input id="levelName" type="text">Level Name
             <button id="save">Save</button>
             <br>
