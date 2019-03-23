@@ -2,8 +2,8 @@ body {
   margin: 0;
   padding: 0;
   background-image: url('./images/menuBackground.jpg');
-  /* background-size: 100%; */
-  background-size: cover;
+  background-size: 100%;
+  /* background-size: cover; */
   font-family: sans-serif;
 }
 

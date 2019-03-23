@@ -71,15 +71,164 @@ app.get('/gameCode/client/images/cave.png', function (req, res) {
 app.get('/gameCode/client/images/castle.png', function (req, res) {
     res.sendFile(__dirname + '/client/images/castle.png');
 });
+app.get('/gameCode/client/images/gem.gif', function (req, res) {
+    res.sendFile(__dirname + '/client/images/gem.gif');
+});
 app.get('/gameCode/client/images/forest.png', function (req, res) {
     res.sendFile(__dirname + '/client/images/forest.png');
 });
 app.get('/gameCode/client/images/lava.png', function (req, res) {
     res.sendFile(__dirname + '/client/images/lava.png');
 });
-app.get('/gameCode/client/images/arrowBack.png', function (req, res) {
-   res.sendFile(__dirname + '/client/images/arrowBack.png');
+app.get('/gameCode/client/images/openChest.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/openChest.png');
 });
+
+// Testing
+app.get('/gameCode/client/js/View.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/View.js');
+});
+app.get('/gameCode/client/js/GameUI.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/GameUI.js');
+});
+app.get('/gameCode/client/js/mainGame/GameSound.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/mainGame/GameSound.js');
+});
+app.get('/gameCode/client/js/mainGame/Element.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/mainGame/Element.js');
+});
+app.get('/gameCode/client/js/mainGame/PowerUp.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/mainGame/PowerUp.js');
+});
+app.get('/gameCode/client/js/mainGame/Enemy.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/mainGame/Enemy.js');
+});
+app.get('/gameCode/client/js/mainGame/Bullet.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/mainGame/Bullet.js');
+});
+app.get('/gameCode/client/js/mainGame/King.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/mainGame/King.js');
+});
+app.get('/gameCode/client/js/mainGame/Score.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/mainGame/Score.js');
+});
+app.get('/gameCode/client/js/mainGame/KingGame.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/mainGame/KingGame.js');
+});
+app.get('/gameCode/client/js/levelEditor/Storage.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/levelEditor/Storage.js');
+});
+app.get('/gameCode/client/js/levelEditor/Editor.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/levelEditor/Editor.js');
+});
+app.get('/gameCode/client/js/levelEditor/CreatedLevels.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/levelEditor/CreatedLevels.js');
+});
+app.get('/gameCode/client/js/KingMaker.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/KingMaker.js');
+});
+app.get('/gameCode/client/js/Preloader.js', function (req, res) {
+    res.sendFile(__dirname + '/client/js/Preloader.js');
+});
+
+app.get('/gameCode/client/css/reset.css', function (req, res) {
+    res.sendFile(__dirname + '/client/css/reset.css');
+});
+app.get('/gameCode/client/css/style.css', function (req, res) {
+    res.sendFile(__dirname + '/client/css/style.css');
+});
+
+app.get('/gameCode/client/images/back-btn.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/back-btn.png');
+});
+app.get('/gameCode/client/images/bg.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/bg.png');
+});
+app.get('/gameCode/client/images/arrow.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/arrow.png');
+});
+app.get('/gameCode/client/images/clear-map-btn.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/clear-map-btn.png');
+});
+app.get('/gameCode/client/images/coin.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/coin.png');
+});
+app.get('/gameCode/client/images/delete-all-btn.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/delete-all-btn.png');
+});
+app.get('/gameCode/client/images/editor-btn.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/editor-btn.png');
+});
+app.get('/gameCode/client/images/elements.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/elements.png');
+});
+app.get('/gameCode/client/images/enemy.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/enemy.png');
+});
+app.get('/gameCode/client/images/start-screen.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/start-screen.png');
+});
+app.get('/gameCode/client/images/grid-large-btn.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/grid-large-btn.png');
+});
+app.get('/gameCode/client/images/grid-medium-btn.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/grid-medium-btn.png');
+});
+app.get('/gameCode/client/images/grid-small-btn.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/grid-small-btn.png');
+});
+app.get('/gameCode/client/images/grid.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/grid.png');
+});
+app.get('/gameCode/client/images/king-head.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/king-head.png');
+});
+app.get('/gameCode/client/images/knight.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/knight.png');
+});
+app.get('/gameCode/client/images/powerups.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/powerups.png');
+});
+app.get('/gameCode/client/images/save-map-btn.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/save-map-btn.png');
+});
+app.get('/gameCode/client/images/saved-btn.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/saved-btn.png');
+});
+app.get('/gameCode/client/images/slider-left.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/slider-left.png');
+});
+app.get('/gameCode/client/images/slider-right.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/slider-right.png');
+});
+app.get('/gameCode/client/images/start-btn.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/start-btn.png');
+});
+app.get('/gameCode/client/images/enemies.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/enemies.png');
+});
+app.get('/gameCode/client/images/bullet.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/bullet.png');
+});
+
+//Sounds
+app.get('/gameCode/client/sounds/jump.wav', function (req, res) {
+    res.sendFile(__dirname + '/client/sounds/jump.wav');
+});
+app.get('/gameCode/client/sounds/bow.wav', function (req, res) {
+    res.sendFile(__dirname + '/client/sounds/bow.wav');
+});
+app.get('/gameCode/client/sounds/king-death.wav', function (req, res) {
+    res.sendFile(__dirname + '/client/sounds/king-death.wav');
+});
+app.get('/gameCode/client/sounds/gameOver.wav', function (req, res) {
+    res.sendFile(__dirname + '/client/sounds/gameOver.wav');
+});
+app.get('/gameCode/client/sounds/fireball.wav', function (req, res) {
+    res.sendFile(__dirname + '/client/sounds/fireball.wav');
+});
+
+
 app.use('/client', express.static(__dirname + '/client'));
 
 serv.listen(2000);
@@ -243,7 +392,7 @@ var isUsernameTaken = function (data, cb) {
 };
 
 var isLevelnameTaken = function (data, cb) {
-    db.level.find({ name: data.name, user: data.user }, function (err, res) {
+    db.level.find({ name: data.name }, function (err, res) {
         if (res.length > 0) {
             cb(true);
         } else cb(false);
@@ -271,15 +420,8 @@ var addLevel = function (data, cb) {
         { 
             user: data.user,
             name: data.name,
-            castleArray: data.castleArray,
-            forestArray: data.forestArray,
-            underwaterArray: data.underwaterArray,
-            caveArray: data.caveArray,
-            background: data.background,
-            backgroundImage: data.backgroundImage,
-            bgiSw: data.bgiSw,
-            bgiSh: data.bgiSh,
-            realArray: data.realArray
+            tileArray: data.tileArray,
+            backgroundImage: data.backgroundImage
         },
         function (err) {
             cb();

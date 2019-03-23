@@ -1,130 +1,43 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
 
 <head>
-    <title>Load Level</title>
+  <meta name="viewport" content="width=1280" />
+  <title>Load Level</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" type="text/css" href="css/reset.css">
 </head>
-<div id="levelHolder">
-</div>
-<canvas id="myCanvas" width="1000" height="800"></canvas>
 
 <body>
 
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-    <script>
-        var socket = io();
-        socket.emit('requestLevels', {
-            user: sessionStorage.getItem("username")
-        });
-        let levels;
+  <!-- main game -->
+  <div class="main-wrapper">
+    <canvas class="game-screen"></canvas>
+  </div>
 
-        const tileWidth = 32,
-            tileHeight = 32;
-        const mapRows = 8,
-            mapColumns = 80;
+ <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
 
-        let mapHeight = mapRows * tileHeight;
-        let mapWidth = mapColumns * tileWidth;
-        let topOffset = document.getElementById("myCanvas").offsetTop;
-        let sourceX, sourceY, sourceTile;
-        let canvas = document.getElementById('myCanvas');
-        let context = canvas.getContext('2d');
+  <script src="js/View.js"></script>
+  <script src="js/GameUI.js"></script>
 
-        let castleImage = new Image();
-        castleImage.src = '../client/images/castle.png';
-        let castlesw = 1920;
-        let castlesh = 918;
+  <script src="js/mainGame/GameSound.js"></script>
+  <script src="js/mainGame/Element.js"></script>
+  <script src="js/mainGame/PowerUp.js"></script>
+  <script src="js/mainGame/Enemy.js"></script>
+  <script src="js/mainGame/Bullet.js"></script>
+  <script src="js/mainGame/King.js"></script>
+  <script src="js/mainGame/Score.js"></script>
+  <script src="js/mainGame/KingGame.js"></script>
 
-        let forestImage = new Image();
-        forestImage.src = '../client/images/forest.png';
-        let forestsw = 700;
-        let forestsh = 400;
+  <script src="js/levelEditor/Storage.js"></script>
+  <script src="js/levelEditor/Editor.js"></script>
+  <script src="js/levelEditor/CreatedLevels.js"></script>
 
-        let underwaterImage = new Image();
-        underwaterImage.src = '../client/images/lava.png';
-        let underwatersw = 720;
-        let underwatersh = 320;
+  <script src="js/KingMaker.js"></script>
 
-        let caveImage = new Image();
-        caveImage.src = '../client/images/cave.png';
-        let cavesw = 1000;
-        let cavesh = 500;
+  <script src="js/Preloader.js"></script>
+  
 
-        let tilemapImage = new Image();
-        tilemapImage.src = '../client/images/tilemap.png';
-        let tilemapsw = 416;
-        let tilemapsh = 32;
-
-        socket.on('levelsResponse', function (data) {
-            if (data.success) {
-                levels = data.levels;
-                loadLevelList();
-            } else alert('Request unsuccessful.');
-        });
-
-        var loadLevelList = function () {
-            var string = "<table id='levelsTable'><tr><th>Levels</th></tr>";
-            for (var i = 0; i < levels.length; i++) {
-                string = string + "<tr><td><button id='" + levels[i].name + "Button' onclick=loadLevel(" + i + ");>" + levels[i].name + "</button></td></tr>";
-            }
-            document.getElementById("levelHolder").innerHTML = string;
-        }
-
-        function loadLevel(i) {
-            let level = levels[i];
-
-            let name = level.name;
-            let realTiles = level.realArray;
-            let castleTiles = level.castleArray;
-            let forestTiles = level.forestArray;
-            let underwaterTiles = level.underwaterArray;
-            let caveTiles = level.caveArray;
-            let background = level.background;
-            let backgroundImage = level.backgroundImage;
-            let bgiSw = level.bgiSw;
-            let bgiSh = level.bgiSh;
-
-            // context.fillStyle = background;
-            // context.fillRect(0, 0, mapWidth, mapHeight);
-            changeBackgroundImage(bgiSw, bgiSh, backgroundImage, realTiles);
-            
-            // loadTiles(castleTiles, castlesw, castleImage);
-            // loadTiles(forestTiles, forestsw, forestImage);
-            // loadTiles(underwaterTiles, underwatersw, underwaterImage);
-            // loadTiles(caveTiles, cavesw, caveImage);
-
-            document.getElementById("levelHolder").innerHTML = "";
-        }
-
-        function changeBackgroundImage(sw, sh, imageSrc, tiles) {
-            let i = new Image();
-            i.src = imageSrc;
-            i.onload = function () {
-                context.clearRect(0, 0, mapWidth, mapHeight);
-                context.drawImage(i, 0, 0, sw, sh, 0, 0, mapWidth, mapHeight);
-                loadTiles(tiles, tilemapsw, tilemapImage);
-            }
-        }
-
-        function loadTiles(tileArray, srcWidth, img) {
-            for (var i = 0; i < mapRows; i++) {
-                for (var j = 0; j < mapColumns; j++) {
-                    if (tileArray[i][j] != undefined) {
-                        let tileY = Math.floor(tileArray[i][j] / (srcWidth / tileWidth)) * tileHeight;
-                        let tileX = tileArray[i][j] * tileWidth;
-                        if (tileY != 0) {
-                            tileX = (tileArray[i][j] - (Math.floor(tileArray[i][j] / (srcWidth / tileWidth)) * (srcWidth / tileWidth))) * tileWidth;
-                        }
-                        let gridi = i * tileWidth;
-                        let gridj = j * tileHeight;
-                        context.drawImage(img, tileX, tileY, tileWidth, tileHeight, gridj, gridi, tileWidth, tileHeight);
-                    }
-                }
-            }
-        }
-
-    </script>
 </body>
 
 </html>
