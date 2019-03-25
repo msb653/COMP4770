@@ -166,7 +166,7 @@
   background: url('../images/elements.png') -96px 0;
 }
 
-.flag-pole {
+.gem {
   width: 31px;
   height: 31px;
   background: url('../images/elements.png') -128px 0;
@@ -178,28 +178,46 @@
   background: url('../images/elements.png') -160px 0;
 }
 
-.pipe-left {
+.sword {
   width: 31px;
   height: 31px;
   background: url('../images/elements.png') -192px 0;
 }
 
-.pipe-right {
+.bow {
   width: 31px;
   height: 31px;
   background: url('../images/elements.png') -224px 0;
 }
 
-.pipe-top-left {
+.staff {
   width: 31px;
   height: 31px;
   background: url('../images/elements.png') -256px 0;
 }
 
-.pipe-top-right {
+.arrow {
   width: 31px;
   height: 31px;
   background: url('../images/elements.png') -288px 0;
+}
+
+.key {
+  width: 31px;
+  height: 31px;
+  background: url('../images/elements.png') -320px 0;
+}
+
+.door {
+  width: 31px;
+  height: 31px;
+  background: url('../images/elements.png') -352px 0;
+}
+
+.enemy1 {
+  width: 31px;
+  height: 31px;
+  background: url('../images/elements.png') -384px 0;
 }
 
 .wizard {
@@ -231,66 +249,6 @@
   float: left;
 }
 
-.lvl-size {
-  clear: both;
-  float: left;
-  width: 115px;
-  height: 32px;
-  margin-right: 10px;
-}
-
-.grid-small-btn {
-  float: left;
-  width: 64px;
-  height: 32px;
-  background: url('../images/grid-small-btn.png');
-  border: none;
-  margin-right: 10px;
-}
-
-.grid-medium-btn:selected {
-  background: red;
-}
-
-.grid-medium-btn {
-  float: left;
-  width: 96px;
-  height: 32px;
-  background: url('../images/grid-medium-btn.png');
-  border: none;
-  margin-right: 10px;
-}
-
-.grid-large-btn {
-  float: left;
-  width: 128px;
-  height: 32px;
-  background: url('../images/grid-large-btn.png');
-  border: none;
-  margin-right: 10px;
-}
-
-.save-map-btn {
-  float: right;
-  width: 100px;
-  height: 100px;
-  background: url('../images/save-map-btn.png');
-  border: none;
-  border: 2px solid black;
-  margin-right: 10px;
-  margin-top: -35px;
-}
-
-.clear-map-btn {
-  float: right;
-  width: 100px;
-  height: 100px;
-  background: url('../images/clear-map-btn.png');
-  border: none;
-  border: 2px solid black;
-  margin-right: 10px;
-  margin-top: -35px;
-}
 
 .levels-wrapper {
   width: 1280px;
@@ -303,76 +261,6 @@
   background: url('../images/bg.png');
 }
 
-.start-btn {
-  width: 200px;
-  height: 50px;
-  color: #ffffff;
-  background: url('../images/start-btn.png');
-  position: absolute;
-  bottom: 100px;
-  left: 252px;
-  border: 2px solid black;
-}
-
-.editor-btn {
-  width: 200px;
-  height: 50px;
-  background: url('../images/editor-btn.png');
-  position: absolute;
-  bottom: 100px;
-  left: 530px;
-  color: #ffffff;
-  border: 2px solid black;
-}
-
-.created-btn {
-  width: 200px;
-  height: 50px;
-  background: url('../images/saved-btn.png');
-  position: absolute;
-  bottom: 100px;
-  left: 810px;
-  color: #ffffff;
-  border: 2px solid black;
-}
-
-.back-btn {
-  width: 200px;
-  height: 50px;
-  background: url('../images/back-btn.png');
-  color: #ffffff;
-  border: 2px solid black;
-  margin: 10px;
-  display: none;
-}
-
-.level-btn {
-  font-family: SuperKing256;
-  font-size: 25px;
-  float: left;
-  line-height: 50px;
-  text-align: center;
-  width: 248px;
-  height: 50px;
-  color: #ffffff;
-  border: 2px solid black;
-  margin: 2px;
-  text-transform: uppercase;
-  font-weight: bold;
-  background: #15a7d9;
-}
-
-.delete-all-btn {
-  width: 100px;
-  height: 100px;
-  background: url('../images/delete-all-btn.png');
-  color: #ffffff;
-  border: 2px solid black;
-  margin: 10px;
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
-}
 
 .btn-wrapper {
   width: 1280px;

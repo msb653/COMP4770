@@ -20,7 +20,8 @@ function KingGame() {
   var gameSound;
   var score;
 
-  var keys = [];
+  var keys;
+  var doorKeys;
   var enemies;
   var powerUps;
   var bullets;
@@ -46,6 +47,8 @@ function KingGame() {
     
     powerUps = [];
     bullets = [];
+    keys = [];
+    doorKeys = [];
 
     gameUI.setWidth(viewPort);
     gameUI.setHeight(height);
@@ -63,6 +66,17 @@ function KingGame() {
     score.displayScore();
     score.updateLevelNum(currentLevel);
 
+    
+    for (var row = 0; row < map.length; row++) {
+        for (var column = 0; column < map[row].length; column++) {
+          switch (map[row][column]) {
+            case 11: //Key
+              doorKeys.push(1);
+              break;
+          }
+        }
+    };
+    
     if (!king) {
       //so that when level changes, it uses the same instance
       king = new King();
@@ -237,8 +251,7 @@ function KingGame() {
   };
 
   this.showInstructions = function() {
-    gameUI.writeText('Controls: Arrow keys for direction, shift to run, ctrl for bullets', 30, 30);
-    gameUI.writeText('Tip: Jumping while running makes you jump higher', 30, 60);
+    gameUI.writeText('Use the arrow keys to move, and ctrl to attack.');
   };
 
   this.renderMap = function() {
@@ -327,6 +340,96 @@ function KingGame() {
             that.checkElementEnemyCollision(element);
             that.checkElementBulletCollision(element);
             break;
+            
+          case 7: //Sword
+              element.x = column * tileSize;
+              element.y = row * tileSize;
+              element.sword();
+              element.draw();
+              
+              that.checkElementKingCollision(element, row, column);
+              that.checkElementPowerUpCollision(element);
+              that.checkElementEnemyCollision(element);
+              that.checkElementBulletCollision(element);
+              break;
+              
+          case 8: //Bow
+              element.x = column * tileSize;
+              element.y = row * tileSize;
+              element.bow();
+              element.draw();
+              
+              that.checkElementKingCollision(element, row, column);
+              that.checkElementPowerUpCollision(element);
+              that.checkElementEnemyCollision(element);
+              that.checkElementBulletCollision(element);
+              break;
+              
+          case 9: //Staff
+              element.x = column * tileSize;
+              element.y = row * tileSize;
+              element.staff();
+              element.draw();
+              
+              that.checkElementKingCollision(element, row, column);
+              that.checkElementPowerUpCollision(element);
+              that.checkElementEnemyCollision(element);
+              that.checkElementBulletCollision(element);
+              break;
+              
+          case 10: //Arrow
+              element.x = column * tileSize;
+              element.y = row * tileSize;
+              element.arrow();
+              element.draw();
+              
+              that.checkElementKingCollision(element, row, column);
+              that.checkElementPowerUpCollision(element);
+              that.checkElementEnemyCollision(element);
+              that.checkElementBulletCollision(element);
+              break;
+              
+          case 11: //Key
+              element.x = column * tileSize;
+              element.y = row * tileSize;
+              element.key();
+              element.draw();        
+              
+              that.checkElementKingCollision(element, row, column);
+              break;
+              
+          case 12: //Door
+              element.x = column * tileSize;
+              element.y = row * tileSize;
+              element.door();
+              element.draw();
+              if (doorKeys.length == 0) {
+            	  map[row][column] = 10;
+              }
+              
+              break;
+              
+          case 13: //Open Door
+              element.x = column * tileSize;
+              element.y = row * tileSize;
+              element.openDoor();
+              element.draw();
+              
+              that.checkElementKingCollision(element, row, column);
+              that.checkElementPowerUpCollision(element);
+              that.checkElementEnemyCollision(element);
+              that.checkElementBulletCollision(element);
+              break;
+              
+          case 14: //Gem
+              element.x = column * tileSize;
+              element.y = row * tileSize;
+              element.gem();
+              element.draw();
+
+              that.checkElementKingCollision(element, row, column);
+              break;
+
 
           case 20: // Wizard
             var enemy = new Enemy();
@@ -404,6 +507,25 @@ function KingGame() {
         }
         map[row][column] = 6;
       }
+    }
+    
+    // Check collision for keys and gems
+    if (collisionDirection == 'l' || collisionDirection == 'r' || 
+    		collisionDirection == 'b' || collisionDirection == 't') {
+    	 // Remove keys upon collision, and update the doorKeys array
+    	if (element.type == 11) {
+    		map[row][column] = 0;
+    		doorKeys.pop();
+    	}
+    	
+    	if (element.type == 14) {
+    		map[row][column] = 0;
+    		score.coinScore++;
+            score.totalScore += 100;
+            
+            score.updateCoinScore();
+            score.updateTotalScore();
+    	}
     }
   };
 
@@ -829,7 +951,6 @@ function KingGame() {
     score.gameOverView();
     gameUI.makeBox(0, 0, maxWidth, height);
     gameUI.writeText('Game Over', centerPos - 80, height - 300);
-    gameUI.writeText('Thanks For Playing', centerPos - 122, height / 2);
   };
 
   this.resetGame = function() {

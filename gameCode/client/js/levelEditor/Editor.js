@@ -126,8 +126,15 @@ function Editor() {
       'platformForest',
       'platformCave',
       'platformLava',
+      'gem',
       'chest',
-      'wizard'
+      'sword',
+      'bow',
+      'staff',
+      'arrow',
+      'key',
+      'door',
+      'enemy1'
     ];
  
     var element;
@@ -243,7 +250,7 @@ function Editor() {
     var newMap = [];
     var gridRows = grid.getElementsByTagName('tr');
 
-    //loops throught the table cells and checks for the class-name, puts the value according to its className;
+    //loops through the table cells and checks for the class-name, puts the value according to its className;
     for (var i = 0; i < gridRows.length; i++) {
       var columns = [];
       var gridColumns = gridRows[i].getElementsByTagName('td');
@@ -270,8 +277,36 @@ function Editor() {
           case 'chest':
               value = 5;
               break;
+              
+          case 'sword':
+              value = 7;
+              break;
+              
+          case 'bow':
+              value = 8;
+              break;
+              
+          case 'staff':
+              value = 9;
+              break;
+              
+          case 'arrow':
+              value = 10;
+              break;
+              
+          case 'key':
+              value = 11;
+              break;
+              
+          case 'door':
+              value = 12;
+              break;
+              
+          case 'gem':
+              value = 14;
+              break;
 
-          case 'wizard':
+          case 'enemy1':
             value = 20;
             break;
 
