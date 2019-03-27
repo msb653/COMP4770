@@ -8,7 +8,7 @@ function GameSound() {
   var bullet;
   var powerDown;
   var jump;
-
+  var mainMenuSound;
   var that = this;
 
   this.init = function() {
@@ -23,6 +23,7 @@ function GameSound() {
     jump = new Audio('sounds/jump.wav');
     gameOver = new Audio('sounds/gameOver.wav');
     fireball = new Audio('sounds/fireball.wav');
+    mainMenuSound = new Audio('sounds/MainMenuSound.wav');
   };
 
   this.play = function(element) {
@@ -63,13 +64,17 @@ function GameSound() {
       jump.currentTime = 0;
       jump.play();
     } else if (element == 'gameOver') {
-        gameOver.pause();
-        gameOver.currentTime = 0;
-        gameOver.play();
-      } else if (element == 'fireball') {
-          gameOver.pause();
-          gameOver.currentTime = 0;
-          fireball.play();
-        }
+      gameOver.pause();
+      gameOver.currentTime = 0;
+      gameOver.play();
+    } else if (element == 'fireball') {
+      gameOver.pause();
+      gameOver.currentTime = 0;
+      fireball.play();
+    } else if (element == 'mainMenuSound') {
+      mainMenuSound.pause();
+      mainMenuSound.currentTime = 0;
+      mainMenuSound.play();
+    }
   };
 }
