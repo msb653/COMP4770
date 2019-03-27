@@ -47,6 +47,12 @@ app.get('/gameCode/client/levelEditor.css', function(req, res) {
 app.get('/gameCode/client/options/options.css', function(req, res) {
   res.sendFile(__dirname + '/client/options/options.css');
 });
+app.get('/gameCode/client/overworld.html', function (req, res) {
+    res.sendFile(__dirname + '/client/overworld.html');
+});
+app.get('/gameCode/client/achievements.html', function (req, res) {
+    res.sendFile(__dirname + '/client/achievements.html');
+});
 
 //Images
 app.get('/gameCode/client/images/menuBackground.jpg', function(req, res) {
@@ -272,6 +278,12 @@ app.get('/gameCode/client/sounds/MainMenuSound.wav', function(req, res) {
   res.sendFile(__dirname + '/client/sounds/MainMenuSound.wav');
 });
 
+app.get('/gameCode/client/images/overworld.png', function (req, res) {
+   res.sendFile(__dirname + '/client/images/overworld.png');
+});
+app.get('/gameCode/client/images/knightRight.gif', function (req, res) {
+   res.sendFile(__dirname + '/client/images/knightRight.gif');
+});
 app.use('/client', express.static(__dirname + '/client'));
 
 serv.listen(2000);

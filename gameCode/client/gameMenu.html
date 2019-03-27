@@ -167,6 +167,14 @@
                 location.href = "../client/levelEditor.html";
             }
 
+			overworld.onclick = function () {
+            	location.href = "../client/overworld.html";
+        	}
+
+        	achievementsMenu.onclick = function () {
+            	location.href = "../client/achievements.html";
+        	}
+
             logout.onclick = function () {
                 socket.emit('disconnect');
                 location.href = "/";

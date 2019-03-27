@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Menu</title>
+    <!-- <link rel="stylesheet" type="text/css" href="../client/gameMenuStyle.css" /> -->
+</head>
+
+<body>
+    <canvas id="myCanvas" width="1000" height="800"></canvas>
+    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+    <script>
+
+        let canvas = document.getElementById('myCanvas');
+        let context = canvas.getContext('2d');
+
+        let overworldImage = new Image();
+        overworldImage.src = '../client/images/overworld.png';
+        let overworldsw = 1000;
+        let overworldsh = 500;
+
+        let avatarImage = new Image();
+        avatarImage.src = '../client/images/knightRight.gif';
+        let avatarsw = 376;
+        let avatarsh = 376;
+
+        document.addEventListener("keydown", doMoveAvatar);
+
+        let moving = false;
+
+        function doMoveAvatar(e) {
+            var char = e.keyCode;
+            if (!moving) {
+                if (e.keyCode == 13) {
+                    playLevel();
+                }
+                else if (e.keyCode == 38) {
+                    moveAvatar(mUp, avatarLocation);
+                }
+                else if (e.keyCode == 40) {
+                    moveAvatar(mDown, avatarLocation);
+                }
+                else if (e.keyCode == 37) {
+                    moveAvatar(mLeft, avatarLocation);
+                }
+                else if (e.keyCode == 39) {
+                    moveAvatar(mRight, avatarLocation);
+                }
+            }
+        }
+
+        let cx = 350;
+        let cy = 100;
+
+        let fx = 160;
+        let fy = 100;
+
+        let vx = 750;
+        let vy = 300;
+
+        let bx = 650;
+        let by = 10;
+
+        let locations = [
+            [cx, cy],
+            [fx, fy],
+            [bx, by],
+            [vx, vy]
+        ];
+
+        let avatarLocation = 1;
+        let x = locations[avatarLocation][0];
+        let y = locations[avatarLocation][1];
+
+        window.onload = function () {
+            context.drawImage(overworldImage, 0, 0, overworldsw, overworldsh);
+            context.drawImage(avatarImage, x, y, 75, 75);
+        }
+
+        //0 x scalar
+        //1 y scalar
+        //2 destination node
+        //index current node
+
+        let mUp = [
+            [-1, 0, 0],
+            [1, -0.005, 2],
+            [0, 0, 4],
+            [-1, -0.5, 2]
+        ];
+        let mDown = [
+            [1, 0.009, 3],
+            [1, 0, 0],
+            [1, 0.5, 3],
+            [0, 0, 4]
+        ];
+        let mLeft = [
+            [-1, 0, 1],
+            [0, 0, 4],
+            [-1, 0.005, 1],
+            [-1, -0.01, 0]
+        ];
+        let mRight = [
+            [1, 0.008, 3],
+            [1, 0, 0],
+            [0, 0, 4],
+            [0, 0, 4]
+        ];
+
+        function moveAvatar(m, current) {
+            if (m[current][2] != 4) {
+                moving = true;
+                x = locations[current][0];
+                y = locations[current][1];
+
+                console.log(avatarLocation);
+                let id = setInterval(function () {
+                    if (m[current][0] < 0 && m[current][1] >= 0 && (x < locations[m[current][2]][0] ||
+                        y > locations[m[current][2]][1])) {
+                        stopMoving(id, current, m);
+                    }
+                    else if (m[current][0] < 0 && m[current][1] < 0 && (x < locations[m[current][2]][0] ||
+                        y < locations[m[current][2]][1])) {
+                        stopMoving(id, current, m);
+                    }
+                    else if (m[current][0] > 0 && m[current][1] >= 0 && (x > locations[m[current][2]][0] ||
+                        y > locations[m[current][2]][1])) {
+                        stopMoving(id, current, m);
+                    }
+                    else if (m[current][0] > 0 && m[current][1] < 0 && (x > locations[m[current][2]][0] ||
+                        y < locations[m[current][2]][1])) {
+                        stopMoving(id, current, m);
+                    }
+                    var sign = 1;
+                    if (m[current][0] < 0 && m[current][1] < 0) {
+                        sign = -1;
+                    }
+                    x = x + m[current][0] * 5;
+                    y = y + m[current][1] * Math.abs(x - locations[current][0]);
+                    context.drawImage(overworldImage, 0, 0, overworldsw, overworldsh);
+                    context.drawImage(avatarImage, x, y, 75, 75);
+                    console.log("x=" + x + " y=" + y);
+                }, 60);
+            }
+        }
+
+        function stopMoving(id, current, m) {
+            clearInterval(id);
+            avatarLocation = m[current][2];
+            moving = false;
+        }
+
+        function playLevel() {
+            if (avatarLocation == 0) {
+                location.href = "../client/campaignMode.html?level=0";
+            }
+            else if (avatarLocation == 1) {
+                location.href = "../client/campaignMode.html?level=1";
+            }
+            else if (avatarLocation == 2) {
+                location.href = "../client/campaignMode.html?level=2";
+            }
+            else if (avatarLocation == 3) {
+                location.href = "../client/campaignMode.html?level=3";
+            }
+        }
+
+    </script>
+</body>
+
+</html>
