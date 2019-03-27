@@ -19,6 +19,7 @@ function KingGame() {
   var element;
   var gameSound;
   var score;
+  var sound;
 
   var keys;
   var doorKeys;
@@ -44,7 +45,7 @@ function KingGame() {
     tileSize = 32;
     translatedDist = 0;
     enemies = [];
-    
+    sound = true;
     powerUps = [];
     bullets = [];
     keys = [];
@@ -66,17 +67,16 @@ function KingGame() {
     score.displayScore();
     score.updateLevelNum(currentLevel);
 
-    
     for (var row = 0; row < map.length; row++) {
-        for (var column = 0; column < map[row].length; column++) {
-          switch (map[row][column]) {
-            case 11: //Key
-              doorKeys.push(1);
-              break;
-          }
+      for (var column = 0; column < map[row].length; column++) {
+        switch (map[row][column]) {
+          case 11: //Key
+            doorKeys.push(1);
+            break;
         }
-    };
-    
+      }
+    }
+
     if (!king) {
       //so that when level changes, it uses the same instance
       king = new King();
@@ -215,26 +215,31 @@ function KingGame() {
       enemies[i].update();
       // We only want the enemy to shoot if they're alive, have a ranged attack and are within range
       if (enemies[i].rangedAttack == true && (enemies[i].x - king.x < 500 || king.x - enemies[i] < 500) && enemies[i].state != 'dead') {
-        if (!enemies[i].bulletFlag) { // Only shoot if their flag is false
+        if (!enemies[i].bulletFlag) {
+          // Only shoot if their flag is false
           enemies[i].bulletFlag = true;
           var bullet = new Bullet();
           bullet.enemy = 1; // make the bullet hostile
           bullet.changeType('fireball'); // specify that the bullet is a fireball
 
-          if (enemies[i].x < king.x) { // Shoot left or right depending on the position on the king
+          if (enemies[i].x < king.x) {
+            // Shoot left or right depending on the position on the king
             bullet.init(enemies[i].x, enemies[i].y, 1);
           } else {
             bullet.init(enemies[i].x, enemies[i].y, -1);
           }
           bullets.push(bullet);
           // Play fireball audio
-          gameSound.play('fireball');
+          if (sound) {
+            gameSound.play('fireball');
+          }
 
-         // Make the enemy wait until they can fire again
+          // Make the enemy wait until they can fire again
           (function(index) {
-              setTimeout(function() { enemies[i].bulletFlag = false; }, enemies[i].fireRate);
+            setTimeout(function() {
+              enemies[i].bulletFlag = false;
+            }, enemies[i].fireRate);
           })(i);
-          
         }
       }
     }
@@ -334,102 +339,101 @@ function KingGame() {
             element.y = row * tileSize;
             element.openChest();
             element.draw();
-            
+
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
             that.checkElementBulletCollision(element);
             break;
-            
+
           case 7: //Sword
-              element.x = column * tileSize;
-              element.y = row * tileSize;
-              element.sword();
-              element.draw();
-              
-              that.checkElementKingCollision(element, row, column);
-              that.checkElementPowerUpCollision(element);
-              that.checkElementEnemyCollision(element);
-              that.checkElementBulletCollision(element);
-              break;
-              
+            element.x = column * tileSize;
+            element.y = row * tileSize;
+            element.sword();
+            element.draw();
+
+            that.checkElementKingCollision(element, row, column);
+            that.checkElementPowerUpCollision(element);
+            that.checkElementEnemyCollision(element);
+            that.checkElementBulletCollision(element);
+            break;
+
           case 8: //Bow
-              element.x = column * tileSize;
-              element.y = row * tileSize;
-              element.bow();
-              element.draw();
-              
-              that.checkElementKingCollision(element, row, column);
-              that.checkElementPowerUpCollision(element);
-              that.checkElementEnemyCollision(element);
-              that.checkElementBulletCollision(element);
-              break;
-              
+            element.x = column * tileSize;
+            element.y = row * tileSize;
+            element.bow();
+            element.draw();
+
+            that.checkElementKingCollision(element, row, column);
+            that.checkElementPowerUpCollision(element);
+            that.checkElementEnemyCollision(element);
+            that.checkElementBulletCollision(element);
+            break;
+
           case 9: //Staff
-              element.x = column * tileSize;
-              element.y = row * tileSize;
-              element.staff();
-              element.draw();
-              
-              that.checkElementKingCollision(element, row, column);
-              that.checkElementPowerUpCollision(element);
-              that.checkElementEnemyCollision(element);
-              that.checkElementBulletCollision(element);
-              break;
-              
+            element.x = column * tileSize;
+            element.y = row * tileSize;
+            element.staff();
+            element.draw();
+
+            that.checkElementKingCollision(element, row, column);
+            that.checkElementPowerUpCollision(element);
+            that.checkElementEnemyCollision(element);
+            that.checkElementBulletCollision(element);
+            break;
+
           case 10: //Arrow
-              element.x = column * tileSize;
-              element.y = row * tileSize;
-              element.arrow();
-              element.draw();
-              
-              that.checkElementKingCollision(element, row, column);
-              that.checkElementPowerUpCollision(element);
-              that.checkElementEnemyCollision(element);
-              that.checkElementBulletCollision(element);
-              break;
-              
+            element.x = column * tileSize;
+            element.y = row * tileSize;
+            element.arrow();
+            element.draw();
+
+            that.checkElementKingCollision(element, row, column);
+            that.checkElementPowerUpCollision(element);
+            that.checkElementEnemyCollision(element);
+            that.checkElementBulletCollision(element);
+            break;
+
           case 11: //Key
-              element.x = column * tileSize;
-              element.y = row * tileSize;
-              element.key();
-              element.draw();        
-              
-              that.checkElementKingCollision(element, row, column);
-              break;
-              
+            element.x = column * tileSize;
+            element.y = row * tileSize;
+            element.key();
+            element.draw();
+
+            that.checkElementKingCollision(element, row, column);
+            break;
+
           case 12: //Door
-              element.x = column * tileSize;
-              element.y = row * tileSize;
-              element.door();
-              element.draw();
-              if (doorKeys.length == 0) {
-            	  map[row][column] = 10;
-              }
-              
-              break;
-              
+            element.x = column * tileSize;
+            element.y = row * tileSize;
+            element.door();
+            element.draw();
+            if (doorKeys.length == 0) {
+              map[row][column] = 10;
+            }
+
+            break;
+
           case 13: //Open Door
-              element.x = column * tileSize;
-              element.y = row * tileSize;
-              element.openDoor();
-              element.draw();
-              
-              that.checkElementKingCollision(element, row, column);
-              that.checkElementPowerUpCollision(element);
-              that.checkElementEnemyCollision(element);
-              that.checkElementBulletCollision(element);
-              break;
-              
+            element.x = column * tileSize;
+            element.y = row * tileSize;
+            element.openDoor();
+            element.draw();
+
+            that.checkElementKingCollision(element, row, column);
+            that.checkElementPowerUpCollision(element);
+            that.checkElementEnemyCollision(element);
+            that.checkElementBulletCollision(element);
+            break;
+
           case 14: //Gem
-              element.x = column * tileSize;
-              element.y = row * tileSize;
-              element.gem();
-              element.draw();
+            element.x = column * tileSize;
+            element.y = row * tileSize;
+            element.gem();
+            element.draw();
 
-              that.checkElementKingCollision(element, row, column);
-              break;
-
+            that.checkElementKingCollision(element, row, column);
+            break;
 
           case 20: // Wizard
             var enemy = new Enemy();
@@ -508,24 +512,23 @@ function KingGame() {
         map[row][column] = 6;
       }
     }
-    
+
     // Check collision for keys and gems
-    if (collisionDirection == 'l' || collisionDirection == 'r' || 
-    		collisionDirection == 'b' || collisionDirection == 't') {
-    	 // Remove keys upon collision, and update the doorKeys array
-    	if (element.type == 11) {
-    		map[row][column] = 0;
-    		doorKeys.pop();
-    	}
-    	
-    	if (element.type == 14) {
-    		map[row][column] = 0;
-    		score.coinScore++;
-            score.totalScore += 100;
-            
-            score.updateCoinScore();
-            score.updateTotalScore();
-    	}
+    if (collisionDirection == 'l' || collisionDirection == 'r' || collisionDirection == 'b' || collisionDirection == 't') {
+      // Remove keys upon collision, and update the doorKeys array
+      if (element.type == 11) {
+        map[row][column] = 0;
+        doorKeys.pop();
+      }
+
+      if (element.type == 14) {
+        map[row][column] = 0;
+        score.coinScore++;
+        score.totalScore += 100;
+
+        score.updateCoinScore();
+        score.updateTotalScore();
+      }
     }
   };
 
@@ -585,8 +588,9 @@ function KingGame() {
         score.totalScore += 1000;
         score.updateTotalScore();
 
-        //sound when mushroom appears
-        gameSound.play('powerUp');
+        if (sound) {
+          gameSound.play('powerUp');
+        }
       }
     }
   };
@@ -607,7 +611,9 @@ function KingGame() {
           score.updateTotalScore();
 
           //sound when enemy dies
-          gameSound.play('killEnemy');
+          if (sound) {
+            gameSound.play('killEnemy');
+          }
         } else if (collWithKing == 'r' || collWithKing == 'l' || collWithKing == 'b') {
           enemies[i].velX *= -1;
 
@@ -617,7 +623,9 @@ function KingGame() {
             collWithKing = undefined;
 
             //sound when king powerDowns
-            gameSound.play('powerDown');
+            if (sound) {
+              gameSound.play('powerDown');
+            }
 
             setTimeout(function() {
               king.invulnerable = false;
@@ -629,7 +637,9 @@ function KingGame() {
             collWithKing = undefined;
 
             //sound when king powerDowns
-            gameSound.play('powerDown');
+            if (sound) {
+              gameSound.play('powerDown');
+            }
 
             setTimeout(function() {
               king.invulnerable = false;
@@ -645,11 +655,13 @@ function KingGame() {
             score.updateLifeCount();
 
             //sound when king dies
-            gameSound.play('kingDie');
+            if (sound) {
+              gameSound.play('kingDie');
+            }
 
             timeOutId = setTimeout(function() {
               if (score.lifeCount == 0) {
-                  that.gameOver();
+                that.gameOver();
               } else {
                 that.resetGame();
               }
@@ -679,7 +691,9 @@ function KingGame() {
           score.updateTotalScore();
 
           //sound when enemy dies
-          gameSound.play('killEnemy');
+          if (sound) {
+            gameSound.play('killEnemy');
+          }
         }
       }
     }
@@ -701,7 +715,9 @@ function KingGame() {
           collWithKing = undefined;
 
           //sound when king powerDowns
-          gameSound.play('powerDown');
+          if (sound) {
+            gameSound.play('powerDown');
+          }
 
           setTimeout(function() {
             king.invulnerable = false;
@@ -713,7 +729,9 @@ function KingGame() {
           collWithKing = undefined;
 
           //sound when king powerDowns
-          gameSound.play('powerDown');
+          if (sound) {
+            gameSound.play('powerDown');
+          }
 
           setTimeout(function() {
             king.invulnerable = false;
@@ -729,7 +747,9 @@ function KingGame() {
           score.updateLifeCount();
 
           //sound when king dies
-          gameSound.play('kingDie');
+          if (sound) {
+            gameSound.play('kingDie');
+          }
 
           timeOutId = setTimeout(function() {
             if (score.lifeCount == 0) {
@@ -757,7 +777,9 @@ function KingGame() {
       that.pauseGame();
 
       //sound when king dies
-      gameSound.play('kingDie');
+      if (sound) {
+        gameSound.play('kingDie');
+      }
 
       score.lifeCount--;
       score.updateLifeCount();
@@ -787,7 +809,9 @@ function KingGame() {
         king.velY = -(king.speed / 2 + 5.5);
 
         //sound when king jumps
-        gameSound.play('jump');
+        if (sound) {
+          gameSound.play('jump');
+        }
       }
     }
 
@@ -844,7 +868,18 @@ function KingGame() {
       king.speed = 3;
     }
 
-    if ((keys[17] && (king.weapon == 'bow') || king.weapon == 'staff')) {
+    if (keys[83]) {
+      //s key
+      sound = !sound;
+      if (sound == true) {
+        alert('sound unmuted');
+      } else {
+        alert('sound muted');
+      }
+      keys[83] = false;
+    }
+
+    if ((keys[17] && king.weapon == 'bow') || king.weapon == 'staff') {
       //ctrl key
       if (!bulletFlag) {
         bulletFlag = true;
@@ -858,7 +893,9 @@ function KingGame() {
         bullets.push(bullet);
 
         //bullet sound
-        gameSound.play('bullet');
+        if (sound) {
+          gameSound.play('bullet');
+        }
 
         setTimeout(function() {
           bulletFlag = false; //only lets king fire bullet after 500ms
@@ -926,7 +963,9 @@ function KingGame() {
         king.frame = 0;
 
         //sound when stage clears
-        gameSound.play('stageClear');
+        if (sound) {
+          gameSound.play('stageClear');
+        }
 
         timeOutId = setTimeout(function() {
           currentLevel++;
@@ -946,8 +985,10 @@ function KingGame() {
   };
 
   this.gameOver = function() {
-	// Play game over audio
-    gameSound.play('gameOver');
+    // Play game over audio
+    if (sound) {
+      gameSound.play('gameOver');
+    }
     score.gameOverView();
     gameUI.makeBox(0, 0, maxWidth, height);
     gameUI.writeText('Game Over', centerPos - 80, height - 300);

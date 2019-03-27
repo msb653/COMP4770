@@ -1,72 +1,217 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html>
+    <head>
+        <title>Menu</title>
+        <link rel="stylesheet" type="text/css" href="../client/gameMenuStyle.css" />
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <audio id="player" autoplay="true" loop>
+            <source src="../client/sounds/MainMenuSound.wav">
+        </audio>
+        <p class="welcomeMessage">Welcome</p>
+        <div class="menuContainer">
+            <img src="../client/images/avatar.png" class="avatar" />
+            <input id="playCampaign" type="submit" class="playStoryButton" value="Play Campaign"></input><br><br>
+            <input id="levelEditor" type="submit" class="levelEditorButton" value="Level Editor"></input><br><br>
+            <input id="loadLevel" type="submit" class="loadLevelButton" value="Load Level"></input><br><br>
+            <input id="overworld" type="submit" class="overworldButton" value="Play Overworld"></input><br><br>
+            <input id="achievements" type="submit" class="achievementsButton" value="Achievements"></input><br><br>
+            <div class="bs-example">
+                    <input id="submit-button" type="submit" class="btn btn-lg btn-primary launch-modal" value="Options">
+                    <div id="myModal" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <img class="optionsImage" src="../client/images/optionsSign.png">
+                                     <h2 class="text-light"> Options</h2>
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" onclick="resetForm()">
+                                        &times;
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#demo1">
+                                        Sound Options <img class="svgImage" src="../client/images/svg/si-glyph-triangle-down.svg"/>
+                                    </button>
+                                    <div id="demo1" class="collapse">
+                                        <img class="svgImage" src="../client/images/svg/si-glyph-sound-mute.svg" onclick="muteVolume()"/>
+                                        <input id="volume" min="0" max="1" step="0.1" type="range" onchange="setVolume()">
+                                        <img class="svgImage" src="../client/images/svg/si-glyph-sound.svg" onclick="upVolume()"/>
+                                    </div>
+                                    <hr>
+                                    <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#demo2">
+                                        Game Controls  <img class="svgImage" src="../client/images/svg/si-glyph-triangle-down.svg"/>
+                                    </button>
+                                    <div id="demo2" class="collapse">
+                                        <br>
+                                        <ul class="list-group">
+                                            <li class="list-group-item list-group-item-dark"><strong>S:</strong> 
+                                                <i>Mute the sound</i>
+                                            </li>
+                                            <li class="list-group-item list-group-item-dark"><strong>Space Bar:</strong> 
+                                                <i>Jump</i>
+                                            </li>
+                                            <li class="list-group-item list-group-item-dark">
+                                                <img width="32" height="32" src="../client/images/svg/controlKey.jpg"/>
+                                                <strong>Control Key:</strong> 
+                                                <i>Shoot</i>
+                                            </li>
+                                            <li class="list-group-item list-group-item-dark">
+                                                <img class="svgImage" src="../client/images/svg/si-glyph-arrow-thick-right.svg"/>
+                                                <strong>Right Arrow:</strong> 
+                                                <i>Move Character right</i>
+                                            </li>
+                                            <li class="list-group-item list-group-item-dark">
+                                                <img class="svgImage" src="../client/images/svg/si-glyph-arrow-thick-left.svg"/>
+                                                <strong>Left Arrow:</strong> 
+                                                <i>Move Character left</i>
+                                            </li>
+                                            <li class="list-group-item list-group-item-dark">
+                                                <img class="svgImage" src="../client/images/svg/si-glyph-arrow-thick-up.svg"/>
+                                                <strong>Up Arrow:</strong> 
+                                                <i>Move Character up</i>
+                                            </li>
+                                            <li class="list-group-item list-group-item-dark">
+                                                <img class="svgImage" src="../client/images/svg/si-glyph-arrow-thick-down.svg"/>
+                                                <strong>Down Arrow:</strong> 
+                                                <i>Move Character down</i>
+                                            </li>
+                                        </ul>
+                                    </div><hr>
+                                    <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#demo3">
+                                        Change Password  <img class="svgImage" src="../client/images/svg/si-glyph-triangle-down.svg"/>
+                                    </button>
+                                    <div id="demo3" class="collapse">
+                                        <br>
+                                        <input id="newPassword" type="password" name="new_password" placeholder="New Password" />
+                                        <input id="confirmPassword" type="password" name="confirm_password" placeholder="Confirm Password" />
+                                        <br><br>
+                                        <button onclick="savePassword()" type="button" class="btn btn-success">Save changes</button>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="resetForm()">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div><br>
+            <input id="logout" type="submit" class="logoutButton" value="Logout"></input><br><br><br>
+        </div>
+        <!-- 
+        <div id="levelChoose">
+        <p id="theLevels"> Levels go here </p>
+        <br><br>
+        </div> -->
 
-<head>
-    <title>Menu</title>
-    <link rel="stylesheet" type="text/css" href="../client/gameMenuStyle.css" />
-</head>
+        <!-- <div id="achievementsMenu">
+        <h1 style="color: white;"> Achievements </h1>
+        <p id  = "lev">  </p>
+        </div> -->
 
-<body>
-    <p class="welcomeMessage">Welcome Back!!</p>
-    <div class="menuContainer">
-        <img src="../client/images/avatar.png" class="avatar" />
-        <input id="playCampaign" type="submit" class="playStoryButton" value="Play Campaign"></input><br><br>
-        <input id="levelEditor" type="submit" class="levelEditorButton" value="Level Editor"></input><br><br>
-        <input id="loadLevel" type="submit" class="loadLevelButton" value="Load Level"></input><br><br>
-        <input id="overworld" type="submit" class="overworldButton" value="Play Overworld"></input><br><br>
-        <input id="achievements" type="submit" class="achievementsButton" value="Achievements"></input><br><br>
-        <input id="options" type="submit" class="changePassword" value="Options"></input><br><br>
-        <input id="logout" type="submit" class="logoutButton" value="Logout"></input><br><br><br>
-    </div>
-    <!-- 
-    <div id="levelChoose">
-      <p id="theLevels"> Levels go here </p>
-      <br><br>
-    </div> -->
+        <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
+        <script type="text/javascript">
+            // $(document).ready(function(){
+            //     $('.launch-modal').click(function(){
+            //         $('#myModal').modal({
+            //             backdrop: 'static'
+            //         });
+            //     }); 
+            // });
 
-    <!-- <div id="achievementsMenu">
-      <h1 style="color: white;"> Achievements </h1>
-      <p id  = "lev">  </p>
-    </div> -->
+            $(function () {
+                //getting click event to show modal
+                $('#submit-button').click(function () {
+                    $('#myModal').modal();
+                //appending modal background inside the bigform-content
+                    $('.modal-backdrop').appendTo('.menuContainer');
+                //removing body classes to enable click events
+                    $('body').removeClass();
+                });
+                //just to prove actions outside modal
+                $('#help-button').click(function () {
+                    alert("Action with modal opened or closed");
+                });
+            });
+        </script>
+        <script>
+            var socket = io();
+            var menuContainer = document.getElementById('menuContainer');
+            var playCampaign = document.getElementById('playCampaign');
+            var levelEditor = document.getElementById('levelEditor');
+            var LoadLevel = document.getElementById('loadLevel');
+            var overworld = document.getElementById('overworld');
+            var achievements = document.getElementById('Achievements');
+            var options = document.getElementById('options');
+            var logout = document.getElementById('logout');
+            var achievementsMenu = document.getElementById('achievementsMenu');
+            var lev = document.getElementById('lev');
+            var levelChoose = document.getElementById('levelChoose');
+            var newPassword = document.getElementById('newPassword');
+            var confirmPassword = document.getElementById('confirmPassword');
+            var volume = document.getElementById("volume");
+            var player = document.getElementById('player');
+            
+            playCampaign.onclick = function () {
+                location.href = "../client/campaignMode.html";
+            }
 
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
-    <script>
-        var socket = io();
-        var menuContainer = document.getElementById('menuContainer');
-        var playCampaign = document.getElementById('playCampaign');
-        var levelEditor = document.getElementById('levelEditor');
-        var LoadLevel = document.getElementById('loadLevel');
-        var overworld = document.getElementById('overworld');
-        var achievements = document.getElementById('Achievements');
-        var options = document.getElementById('options');
-        var logout = document.getElementById('logout');
-        var achievementsMenu = document.getElementById('achievementsMenu');
-        var lev = document.getElementById('lev');
-        var levelChoose = document.getElementById('levelChoose');
+            loadLevel.onclick = function () {
+                location.href = "../client/loadLevel.html";
+            }
 
-        playCampaign.onclick = function () {
-            location.href = "../client/campaignMode.html";
-        }
+            levelEditor.onclick = function () {
+                location.href = "../client/levelEditor.html";
+            }
 
-        loadLevel.onclick = function () {
-            location.href = "../client/loadLevel.html";
-        }
+            logout.onclick = function () {
+                socket.emit('disconnect');
+                location.href = "/";
+            }
 
-        levelEditor.onclick = function () {
-            location.href = "../client/levelEditor.html";
-        }
+            function savePassword(){
+                if(confirmPassword.value === newPassword.value){
+                    socket.emit('newPassword', {
+                        user: sessionStorage.getItem("username"),
+                        // oldPassword: sessionStorage.getItem("password"),
+                        password: newPassword.value
+                    });
+                }
+                else alert("Passwords do not match...try again!");
+            }
 
-        logout.onclick = function () {
-            socket.emit('disconnect');
-            location.href = "/";
-        }
+            function resetForm(){
+                newPassword.value = "";
+                confirmPassword.value = "";
+            }
 
-      // socket.on('serverMsg', function(data) {
-      //   console.log(data.msg);
-      // });
+            function setVolume() {
+                player.volume = volume.value;
+            }
 
-    </script>
-</body>
+            function muteVolume(){
+                player.volume = 0;
+                volume.value = 0;
+            }
 
+            function upVolume(){
+                player.volume = 1;
+                volume.value = 1;
+            }
+
+            socket.on('savePasswordResponse', function (data) {
+                if (data.success) {
+                    alert('Save successful.');
+                } else alert('Save unsuccessful.');
+            });
+
+        // socket.on('serverMsg', function(data) {
+        //   console.log(data.msg);
+        // });
+
+        </script>
+    </body>
 </html>

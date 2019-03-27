@@ -12,25 +12,13 @@
         </h1>
         <!-- <form> -->
         <p>Username</p>
-        <input
-          id="signDiv-username"
-          type="text"
-          name="user_name"
-          placeholder="Enter Username"
-        />
+        <input id="signDiv-username" type="text" name="user_name" placeholder="Enter Username" />
         <br /><br />
         <p>Password</p>
-        <input
-          id="signDiv-password"
-          type="password"
-          name="user_password"
-          placeholder="Enter Password"
-        />
+        <input id="signDiv-password" type="password" name="user_password" placeholder="Enter Password" />
         <br /><br />
         <input id="signDiv-signIn" type="submit" value="Login" />
-        <a href="javascript:SwapDivsWithClick('signIn','recoverPassword')"
-          >Lost your password?</a
-        ><br />
+        <a href="javascript:SwapDivsWithClick('signIn','recoverPassword')">Lost your password?</a><br />
         <a href="javascript:SwapDivsWithClick('signIn','signUp')">
           Don't have an account?
         </a>
@@ -42,20 +30,10 @@
         </h1>
         <!-- <form> -->
         <p>Username</p>
-        <input
-          id="signDiv-createUsername"
-          type="text"
-          name=""
-          placeholder="Enter New Username"
-        />
+        <input id="signDiv-createUsername" type="text" name="" placeholder="Enter New Username" />
         <br /><br />
         <p>Password</p>
-        <input
-          id="signDiv-createPassword"
-          type="password"
-          name=""
-          placeholder="Choose New Password"
-        />
+        <input id="signDiv-createPassword" type="password" name="" placeholder="Choose New Password" />
         <br /><br />
         <input id="signDiv-signUp" type="submit" name="" value="Create" />
         <a href="javascript:SwapDivsWithClick('signIn','signUp')">
@@ -67,31 +45,17 @@
         <h1 class="signUpHeader">
           Recover Password
         </h1>
-        <!-- <form> -->
         <p>Username</p>
-        <input
-          id="signDiv-recoverUsername"
-          type="text"
-          name=""
-          placeholder="Enter Username"
-        />
-        <br /><br />
-        <p>Password</p>
-        <input
-          id="signDiv-recoverPassword"
-          type="password"
-          name=""
-          placeholder="Enter New Password"
-        />
-        <br /><br />
-        <input type="submit" name="" value="Login" />
-        <a href="javascript:SwapDivsWithClick('signIn','recoverPassword')"
-          >I remember my password!</a
-        ><br />
+        <input type="text" id="signDiv-recoverUsername" name="name" placeholder="Enter Username" /><br /><br />
+        <p>Email</p>
+        <form>
+          <input type="email" id="signDiv-email" size="30" name="email" required placeholder="sophie@example.com" /><br /><br />
+          <input type="submit" id="sendPassword" value="Send password" />
+        </form>
+        <a href="javascript:SwapDivsWithClick('signIn','recoverPassword')">I remember my password!</a><br />
         <a href="javascript:SwapDivsWithClick('recoverPassword','signUp')">
           Don't have an account?
         </a>
-        <!-- <form> -->
       </div>
     </div>
 
@@ -124,45 +88,56 @@
       var signDivUsername = document.getElementById('signDiv-username');
       var signDivPassword = document.getElementById('signDiv-password');
       var signDivSignIn = document.getElementById('signDiv-signIn'); //Sign-In submit input
-      var signDivCreateUserName = document.getElementById(
-        'signDiv-createUsername'
-      );
-      var signDivCreatePassword = document.getElementById(
-        'signDiv-createPassword'
-      );
+      var signDivCreateUserName = document.getElementById('signDiv-createUsername');
+      var signDivCreatePassword = document.getElementById('signDiv-createPassword');
       var signDivSignUp = document.getElementById('signDiv-signUp'); //Sign-Up submit input
       var forgotDiv = document.getElementById('recoverPassword');
       var recoverUsername = document.getElementById('signDiv-recoverUsername');
-      var recoverPassword = document.getElementById('signDiv-recoverPassword');
+      var signEmail = document.getElementById('signDiv-email');
+      var sendButton = document.getElementById('sendPassword'); //Recover submitinput
 
-      signDivSignIn.onclick = function() {
+      signDivSignIn.onclick = () => {
         socket.emit('signIn', {
           username: signDivUsername.value,
           password: signDivPassword.value
         });
       };
 
-      signDivSignUp.onclick = function() {
+      signDivSignUp.onclick = () => {
         socket.emit('signUp', {
           username: signDivCreateUserName.value,
           password: signDivCreatePassword.value
         });
       };
 
-      socket.on('signInResponse', function(data) {
+      sendButton.onclick = () => {
+        socket.emit('recoverPassword', {
+          username: recoverUsername.value,
+          email: signEmail.value
+        });
+      };
+
+      socket.on('signInResponse', data => {
         if (data.success) {
           // loginContainer.hidden = true;
-          sessionStorage.setItem("username", data.user);
+          sessionStorage.setItem('username', data.user);
           location.href = '../gameCode/client/gameMenu.html';
         } else alert('Sign in unsuccessful.');
       });
 
-      socket.on('signUpResponse', function(data) {
+      socket.on('signUpResponse', data => {
         if (data.success) {
           // alert('Sign up successul.');
-          sessionStorage.setItem("username", data.user);
+          sessionStorage.setItem('username', data.user);
           location.href = '../gameCode/client/gameMenu.html';
         } else alert('Sign up unsuccessul.');
+      });
+
+      socket.on('recoverPasswordResponse', data => {
+        if (data.success) {
+          sessionStorage.setItem('username', data.user);
+          // location.href = '../gameCode/client/gameMenu.html';
+        } else alert('Please input a valid username');
       });
     </script>
   </body>
