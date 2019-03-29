@@ -22,7 +22,6 @@ var KingMaker = (function() {
     var kingGame;
     var editor;
     var createdLevels;
-
     var that = this;
 
     this.init = function() {

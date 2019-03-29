@@ -37,21 +37,27 @@ function CreatedLevels() {
   };
 
   this.loadLevelList = function() {
+    var levelSelect = view.create('select');
+    var levelPlay = view.create('button');
+    var testDiv = view.create('div');
+    view.append(testDiv, levelPlay);
     let totalStoredLevels = levels.length;
     if (totalStoredLevels != 0) {
       for (var i = 1; i < totalStoredLevels; i++) {
-        var testDiv = view.create('div');
-        var levelButton = view.create('button');
+        var levelButton = view.create('option');
+        view.append(levelSelect, levelButton);
         var levelName = levels[i].name;
         view.setHTML(levelButton, levelName);
-        view.append(testDiv, levelButton);
+        view.append(testDiv, levelSelect);
         view.append(levelsWrapper, testDiv);
 
-        levelButton.onclick = (function(i) {
-          return function() {
-            that.startLevel(i);
-            that.removeCreatedLevelsScreen();
-          };
+        (function(i) {
+          levelPlay.onclick = (function(i) {
+            return function() {
+              that.startLevel(i);
+              that.removeCreatedLevelsScreen();
+            };
+          })(i);
         })(i);
       }
     } else {
