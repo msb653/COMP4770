@@ -7,6 +7,8 @@ function Score() {
   var totalScoreWrapper;
   var lifeCountWrapper;
   var levelWrapper;
+  var tempWrapper;
+  var chestWrapper;
 
   this.coinScore;
   this.totalScore;
@@ -26,9 +28,13 @@ function Score() {
     totalScoreWrapper = view.create('div');
     lifeCountWrapper = view.create('div');
     levelWrapper = view.create('div');
+    tempWrapper = view.create('div');
+    chestWrapper = view.create('div');
 
     view.addClass(scoreWrapper, 'score-wrapper');
     view.addClass(coinScoreWrapper, 'coin-score');
+    view.addClass(tempWrapper, 'door-face');
+    view.addClass(chestWrapper, 'chest-face');
     view.addClass(totalScoreWrapper, 'total-score');
     view.addClass(lifeCountWrapper, 'life-count');
     view.addClass(levelWrapper, 'level-num');
@@ -37,6 +43,8 @@ function Score() {
     view.append(scoreWrapper, lifeCountWrapper);
     view.append(scoreWrapper, coinScoreWrapper);
     view.append(scoreWrapper, totalScoreWrapper);
+    view.append(scoreWrapper, tempWrapper);
+    view.append(scoreWrapper, chestWrapper);
     view.append(mainWrapper, scoreWrapper);
 
     that.updateCoinScore();

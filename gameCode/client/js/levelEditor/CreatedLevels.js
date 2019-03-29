@@ -1,106 +1,109 @@
 function CreatedLevels() {
-	var view = View.getInstance();
+  var view = View.getInstance();
 
-	var socket = io();
+  var socket = io();
 
-	var storage;
-	var levelsWrapper;
-	var levels;
+  var storage;
+  var levelsWrapper;
+  var levels;
 
-	var that = this;
+  var that = this;
 
-	this.init = function() {
-		socket.emit('requestLevels', {
-			user: sessionStorage.getItem("username")
-		});
+  this.init = function() {
+    socket.emit('requestLevels', {
+      user: sessionStorage.getItem('username')
+    });
 
-		socket.on('levelsResponse', function (data) {
-			if (data.success) {
-				levels = data.levels;
-				that.loadLevelList();
-			} else alert('Request unsuccessful.');
-		});
-		
-		
+    socket.on('levelsResponse', function(data) {
+      if (data.success) {
+        levels = data.levels;
+        that.loadLevelList();
+      } else alert('Request unsuccessful.');
+    });
 
-		var mainWrapper = view.getMainWrapper();
-		var deleteAllBtn = view.create('button');
-		deleteAllBtn.innerHTML = 'Delete Levels';
-		levelsWrapper = view.create('div');
+    var mainWrapper = view.getMainWrapper();
+    var deleteAllBtn = view.create('button');
+    deleteAllBtn.innerHTML = 'Delete Levels';
+    levelsWrapper = view.create('div');
 
+    view.addClass(levelsWrapper, 'levels-wrapper');
+    view.style(levelsWrapper, { display: 'block' });
+    view.append(levelsWrapper, deleteAllBtn);
+    view.append(mainWrapper, levelsWrapper);
 
-		view.addClass(levelsWrapper, 'levels-wrapper');
-		view.style(levelsWrapper, { display: 'block' });
-		view.append(levelsWrapper, deleteAllBtn);
-		view.append(mainWrapper, levelsWrapper);
+    deleteAllBtn.onclick = that.deleteAllMaps;
 
+    storage = new Storage();
+  };
 
-		deleteAllBtn.onclick = that.deleteAllMaps;
+  this.loadLevelList = function() {
+    let totalStoredLevels = levels.length;
+    if (totalStoredLevels != 0) {
+      for (var i = 1; i < totalStoredLevels; i++) {
+        var testDiv = view.create('div');
+        var levelButton = view.create('button');
+        var levelName = levels[i].name;
+        view.setHTML(levelButton, levelName);
+        view.append(testDiv, levelButton);
+        view.append(levelsWrapper, testDiv);
 
-		storage = new Storage();
+        levelButton.onclick = (function(i) {
+          return function() {
+            that.startLevel(i);
+            that.removeCreatedLevelsScreen();
+          };
+        })(i);
+      }
+    } else {
+      var noMapsMessage = view.create('div');
 
-	};
+      view.addClass(noMapsMessage, 'no-maps');
+      view.setHTML(noMapsMessage, 'No levels found. Created levels will be listed here.');
+      view.append(levelsWrapper, noMapsMessage);
+    }
+  };
 
-	this.loadLevelList = function() {
+  this.deleteAllMaps = function() {
+    storage.clear();
+    socket.emit('deleteLevel', {
+      user: sessionStorage.getItem('username'),
+      name: sessionStorage.getItem('name')
+    });
+    that.removeCreatedLevelsScreen();
+    that.init();
+  };
 
-		let totalStoredLevels = levels.length;
-		if (totalStoredLevels != 0) {
-			for (var i = 1; i < totalStoredLevels; i++) {
-				var testDiv = view.create('div');
-				var levelButton = view.create('button');
-				var levelName = levels[i].name;
-				view.setHTML(levelButton, levelName);
-				view.append(testDiv, levelButton);
-				view.append(levelsWrapper, testDiv);
+  socket.on('deleteLevelResponse', function(data) {
+    if (data.success) {
+      alert('Save successful.');
+    } else alert('Save unsuccessful.');
+  });
 
-				levelButton.onclick = (function(i) {
-					return function() {
-						that.startLevel(i);
-						that.removeCreatedLevelsScreen();
-					};
-				})(i);
-			}
-		} else {
-			var noMapsMessage = view.create('div');
+  this.startLevel = function(i) {
+    var level = levels[i];
 
-			view.addClass(noMapsMessage, 'no-maps');
-			view.setHTML(noMapsMessage, 'No levels found. Created levels will be listed here.');
-			view.append(levelsWrapper, noMapsMessage);
-		}
-	};
+    var kingMakerInstance = KingMaker.getInstance();
+    var levelName = level.name;
+    var loadMap = level.tileArray;
+    var map = { 1: loadMap }; //always only one level in saved maps.
 
-	this.deleteAllMaps = function() {
-		storage.clear();
+    kingMakerInstance.startGame(map);
+  };
 
-		that.removeCreatedLevelsScreen();
-		that.init();
-	};
+  this.showCreatedLevelsScreen = function() {
+    if (levelsWrapper) {
+      view.style(levelsWrapper, { display: 'block' });
+    }
+  };
 
-	this.startLevel = function(i) {
-		var level = levels[i];
-		
-		var kingMakerInstance = KingMaker.getInstance();
-		var levelName = level.name;
-		var loadMap = level.tileArray;
-		var map = { 1: loadMap }; //always only one level in saved maps.
+  this.removeCreatedLevelsScreen = function() {
+    if (levelsWrapper) {
+      view.style(levelsWrapper, { display: 'none' });
 
-		kingMakerInstance.startGame(map);
-	};
-
-	this.showCreatedLevelsScreen = function() {
-		if (levelsWrapper) {
-			view.style(levelsWrapper, { display: 'block' });
-		}
-	};
-
-	this.removeCreatedLevelsScreen = function() {
-		if (levelsWrapper) {
-			view.style(levelsWrapper, { display: 'none' });
-
-			while (levelsWrapper.hasChildNodes()) {
-				//removes all the created levels on screen, so that it can be initiated again showing new levels that user creates
-				view.remove(levelsWrapper, levelsWrapper.lastChild);
-			}
-		}
-	};
+      while (levelsWrapper.hasChildNodes()) {
+        //removes all the created levels on screen, so that it can be initiated again showing new levels that user creates
+        view.remove(levelsWrapper, levelsWrapper.lastChild);
+      }
+    }
+  };
 }

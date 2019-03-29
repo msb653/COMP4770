@@ -33,11 +33,11 @@ function King() {
     this.hasBow = false;
     this.hasStaff = false;
     this.arrows = 0;
-    this.weapon='bow';
+    this.weapon = 'bow';
   };
 
   this.draw = function() {
-    that.sX = that.width * that.frame;
+    // that.sX = that.width * that.frame;
     gameUI.draw(kingSprite, that.sX, that.sY, that.width, that.height, that.x, that.y, that.width, that.height);
   };
 

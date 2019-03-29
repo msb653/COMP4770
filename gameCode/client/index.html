@@ -1,9 +1,30 @@
 <html>
   <head>
     <title>Conquest of the Legend</title>
+    <link rel="icon" href="../client/images/icon.gif" type="image/gif" sizes="16x16" />
     <link rel="stylesheet" type="text/css" href="../client/indexStyle.css" />
   </head>
   <body>
+    <audio id="player" autoplay loop>
+      <source src="../client/sounds/loginPageSound.wav" />
+    </audio>
+    <section>
+      <video src="../client/images/smoke.mp4" autoplay muted loop></video>
+      <h1 class="spanClass">
+        <span>K</span>
+        <span>I</span>
+        <span>N</span>
+        <span>G</span>
+        <span>'</span>
+        <span>S</span>
+        &nbsp;
+        <span>Q</span>
+        <span>U</span>
+        <span>E</span>
+        <span>S</span>
+        <span>T</span>
+      </h1>
+    </section>
     <div class="loginContainer">
       <img src="../client/images/avatar.png" class="avatar" />
       <div id="signIn">
@@ -130,7 +151,19 @@
           // alert('Sign up successul.');
           sessionStorage.setItem('username', data.user);
           location.href = '../gameCode/client/gameMenu.html';
-        } else alert('Sign up unsuccessul.');
+        } else alert('Username is already taken');
+      });
+
+      socket.on('checkEmptyResponse', data => {
+        if (data.success) {
+          sessionStorage.setItem('username', data.user);
+        } else alert('Please choose a valid username');
+      });
+
+      socket.on('emptyPasswordResponse', data => {
+        if (data.success) {
+          sessionStorage.setItem('username', data.user);
+        } else alert('Please enter a valid password');
       });
 
       socket.on('recoverPasswordResponse', data => {

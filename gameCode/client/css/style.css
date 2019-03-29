@@ -110,6 +110,20 @@
   padding-left: 40px;
 }
 
+.door-face {
+  background: url('../images/door.png') left center no-repeat;
+  width: 150px;
+  float: left;
+  padding-left: 40px;
+}
+
+.chest-face {
+  background: url('../images/openChest.png') left center no-repeat;
+  width: 150px;
+  float: left;
+  padding-left: 40px;
+}
+
 .level-num {
   width: 150px;
   float: left;
@@ -249,7 +263,6 @@
   float: left;
 }
 
-
 .levels-wrapper {
   width: 1280px;
   height: 530px;
@@ -260,7 +273,6 @@
   display: none;
   background: url('../images/bg.png');
 }
-
 
 .btn-wrapper {
   width: 1280px;

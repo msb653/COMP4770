@@ -7,6 +7,120 @@ body {
   font-family: sans-serif;
 }
 
+section {
+  height: 100vh;
+  background: #000;
+}
+
+section:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, #f00, #f00, #0f0, #0ff, #ff0, #0ff);
+  mix-blend-mode: color;
+  pointer-events: none;
+}
+
+h1.spanClass {
+  margin: 0;
+  padding: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  text-align: center;
+  color: whitesmoke;
+  font-size: 5em;
+  font-family: sans-serif;
+  letter-spacing: 0.1em;
+}
+
+h1 span {
+  opacity: 0;
+  display: inline-block;
+  /* animation: animate 2s linear forwards; */
+  animation-name: animate;
+  animation-duration: 1.5s;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+  animation-direction: alternate;
+  animation-iteration-count: infinite;
+}
+
+h1 span:nth-child(1) {
+  animation-delay: 1s;
+}
+h1 span:nth-child(2) {
+  animation-delay: 2s;
+}
+h1 span:nth-child(3) {
+  animation-delay: 2.5s;
+}
+h1 span:nth-child(4) {
+  animation-delay: 3s;
+}
+h1 span:nth-child(5) {
+  animation-delay: 3.5s;
+}
+h1 span:nth-child(6) {
+  animation-delay: 3.75s;
+}
+h1 span:nth-child(7) {
+  animation-delay: 4s;
+}
+h1 span:nth-child(8) {
+  animation-delay: 4.5s;
+}
+h1 span:nth-child(9) {
+  animation-delay: 4.75s;
+}
+h1 span:nth-child(10) {
+  animation-delay: 5s;
+}
+h1 span:nth-child(11) {
+  animation-delay: 5.5s;
+}
+
+video {
+  object-fit: cover;
+}
+
+audio {
+  display: none;
+}
+
+@keyframes animate {
+  0% {
+    opacity: 0;
+    transform: rotateY(90deg);
+    filter: blur(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: rotateY(0deg);
+    filter: blur(0);
+  }
+}
+
+@keyframes animateLogin {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 400%;
+  }
+}
+
+.title {
+  color: goldenrod;
+  text-align: center;
+  font-size: 50%;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
 .loginContainer {
   width: 350px;
   height: 450px;
@@ -69,16 +183,44 @@ input[type='password'] {
   border: none;
   outline: none;
   height: 40px;
-  background: #fb2525;
+  /* background: #fb2525; */
   color: #fff;
   font-size: 18px;
+  font-family: sans-serif;
   border-radius: 20px;
+  top: 50%;
+  left: 50%;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-sizing: border-box;
+  background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+  background-size: 400%;
 }
 
 .loginContainer input[type='submit']:hover {
+  animation: animateLogin 8s linear infinite;
   cursor: pointer;
-  background: #ffc107;
-  color: #000;
+}
+
+.loginContainer input[type='submit']:before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  z-index: -1;
+  background: linear-gradient(90deg, #03a9f4, #f441a5, #ffeb3b, #03a9f4);
+  background-size: 400%;
+  border-radius: 40px;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.loginContainer input[type='submit']:hover:before {
+  filter: blur(20px);
+  opacity: 1;
+  animation: animateLogin 8s linear infinite;
 }
 
 .loginContainer a {

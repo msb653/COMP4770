@@ -12,6 +12,8 @@ var express = require('express');
 var app = express();
 
 var nodemailer = require('nodemailer');
+var pbkdf2 = require('pbkdf2');
+
 var serv = require('http').Server(app);
 
 //HTML
@@ -57,6 +59,12 @@ app.get('/gameCode/client/achievements.html', function (req, res) {
 //Images
 app.get('/gameCode/client/images/menuBackground.jpg', function(req, res) {
   res.sendFile(__dirname + '/client/images/menuBackground.jpg');
+});
+app.get('/gameCode/client/images/homePicture.jpg', function(req, res) {
+  res.sendFile(__dirname + '/client/images/homePicture.jpg');
+});
+app.get('/gameCode/client/images/homePicture2.jpg', function(req, res) {
+  res.sendFile(__dirname + '/client/images/homePicture2.jpg');
 });
 app.get('/gameCode/client/images/avatar.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/avatar.png');
@@ -129,6 +137,12 @@ app.get('/gameCode/client/images/svg/controlKey.jpg', function(req, res) {
 });
 app.get('/gameCode/client/images/optionsSign.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/optionsSign.png');
+});
+app.get('/gameCode/client/images/smoke.mp4', function(req, res) {
+  res.sendFile(__dirname + '/client/images/smoke.mp4');
+});
+app.get('/gameCode/client/images/door.png', function(req, res) {
+  res.sendFile(__dirname + '/client/images/door.png');
 });
 
 // Testing
@@ -257,6 +271,12 @@ app.get('/gameCode/client/images/enemies.png', function(req, res) {
 app.get('/gameCode/client/images/bullet.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/bullet.png');
 });
+app.get('/gameCode/client/images/icon.gif', function(req, res) {
+  res.sendFile(__dirname + '/client/images/icon.gif');
+});
+app.get('/gameCode/client/images/openChest.png', function(req, res) {
+  res.sendFile(__dirname + '/client/images/openChest.png');
+});
 
 //Sounds
 app.get('/gameCode/client/sounds/jump.wav', function(req, res) {
@@ -276,6 +296,9 @@ app.get('/gameCode/client/sounds/fireball.wav', function(req, res) {
 });
 app.get('/gameCode/client/sounds/MainMenuSound.wav', function(req, res) {
   res.sendFile(__dirname + '/client/sounds/MainMenuSound.wav');
+});
+app.get('/gameCode/client/sounds/loginPageSound.wav', function(req, res) {
+  res.sendFile(__dirname + '/client/sounds/loginPageSound.wav');
 });
 
 app.get('/gameCode/client/images/overworld.png', function (req, res) {
@@ -428,9 +451,10 @@ Bullet.update = function() {
 };
 
 function getHash(str) {
-  for (var i = 0, h = 0; i < str.length; i++) {
-    h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
-  }
+  //   for (var i = 0, h = 0; i < str.length; i++) {
+  //     h = (Math.imul(31, h) + str.charCodeAt(i)) | 0;
+  //   }
+  h = pbkdf2.pbkdf2Sync(str, 'salt', 1, 32, 'sha512');
   return h;
 }
 
@@ -533,8 +557,14 @@ var isLevelnameTaken = (data, cb) => {
 
 var getLevels = (data, cb) => {
   db.level.find({ user: data.user }).toArray((err, result) => {
-    // console.log(result);
     cb(result);
+  });
+};
+
+var deleteLevels = (data, cb) => {
+  db.level.find({ user: data.user }).toArray((err, result) => {
+    db.level.remove({ user: data.user });
+    // cb(result);
   });
 };
 
@@ -564,6 +594,18 @@ var addLevel = (data, cb) => {
   );
 };
 
+// var updateScore = (data, cb) => {
+//   var myquery = { username: data.username };
+//   var newvalues = { $set: { username: data.username, password: hashedPassword , score} };
+//   db.account.update(myquery, newvalues, (err, res) => {
+//     if (err) throw err;
+//     // console.log('Username: ' + data.username);
+//     // console.log('Password: ' + password);
+//     // console.log(typeof hashedPassword);
+//     // console.log('Hashed Password: ' + hashedPassword);
+//   });
+// };
+
 var io = require('socket.io')(serv, {});
 io.sockets.on('connection', socket => {
   socket.id = Math.random();
@@ -586,9 +628,13 @@ io.sockets.on('connection', socket => {
       if (res) {
         socket.emit('signUpResponse', { success: false });
       } else {
-        addUser(data, () => {
-          socket.emit('signUpResponse', { success: true, user: user.user });
-        });
+        if (data.username != '') {
+          if (data.password != '') {
+            addUser(data, () => {
+              socket.emit('signUpResponse', { success: true, user: user.user });
+            });
+          } else socket.emit('emptyPasswordResponse', { success: false });
+        } else socket.emit('checkEmptyResponse', { success: false });
       }
     });
   });
@@ -612,6 +658,16 @@ io.sockets.on('connection', socket => {
         addLevel(data, () => {
           socket.emit('saveLevelResponse', { success: true });
         });
+      }
+    });
+  });
+
+  socket.on('deleteLevel', data => {
+    deleteLevels(data, res => {
+      if (res) {
+        socket.emit('deleteLevelResponse', { success: true });
+      } else {
+        socket.emit('deleteLevelResponse', { success: false });
       }
     });
   });
