@@ -239,6 +239,11 @@
   height: 31px;
   background: url('../images/enemies.png') 0 0;
 }
+.dguy {
+  width: 31px;
+  height: 31px;
+  background: url('../images/elements.png') -416px 0;
+}
 
 .right-arrow {
   width: 60px;

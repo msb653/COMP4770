@@ -134,7 +134,8 @@ function Editor() {
       'arrow',
       'key',
       'door',
-      'enemy1'
+      'enemy1',
+      'dguy'
     ];
  
     var element;
@@ -306,6 +307,9 @@ function Editor() {
               value = 14;
               break;
 
+          case 'dguy':
+              value = 15;
+              break;
           case 'enemy1':
             value = 20;
             break;

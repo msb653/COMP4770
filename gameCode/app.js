@@ -167,6 +167,7 @@ app.get('/gameCode/client/js/mainGame/Enemy.js', function(req, res) {
 app.get('/gameCode/client/js/mainGame/Bullet.js', function(req, res) {
   res.sendFile(__dirname + '/client/js/mainGame/Bullet.js');
 });
+
 app.get('/gameCode/client/js/mainGame/King.js', function(req, res) {
   res.sendFile(__dirname + '/client/js/mainGame/King.js');
 });

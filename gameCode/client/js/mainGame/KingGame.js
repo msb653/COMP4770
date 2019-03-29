@@ -431,6 +431,20 @@ function KingGame() {
 
             that.checkElementKingCollision(element, row, column);
             break;
+          case 15: //dead guy
+            element.x = column * tileSize;
+            element.y = row * tileSize;
+            element.dguy();
+            element.draw();
+
+            that.checkElementKingCollision(element, row, column);
+            that.checkElementPowerUpCollision(element);
+            that.checkElementEnemyCollision(element);
+            that.checkElementBulletCollision(element);
+
+
+
+            break;
 
           case 20: // Wizard
             var enemy = new Enemy();
@@ -507,6 +521,11 @@ function KingGame() {
           powerUps.push(powerUp);
         }
         map[row][column] = 6;
+      }
+      if (element.type == 15) {
+        map[row][column] = 15;
+        gameSound.play('help');
+        alert("Daddy please save me!");
       }
     }
 
