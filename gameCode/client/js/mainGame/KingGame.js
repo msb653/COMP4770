@@ -9,7 +9,7 @@ function KingGame() {
   var tileSize;
   var map;
   var originalMaps;
-
+  var diff;
   var translatedDist; //distance translated(side scrolled) as king moves to the right
   var centerPos; //center position of the viewPort, viewable screen
   var kingInGround;
@@ -409,7 +409,7 @@ function KingGame() {
             element.door();
             element.draw();
             if (doorKeys.length == 0) {
-              map[row][column] = 10;
+              map[row][column] = 13;
             }
 
             break;
@@ -421,9 +421,6 @@ function KingGame() {
             element.draw();
 
             that.checkElementKingCollision(element, row, column);
-            that.checkElementPowerUpCollision(element);
-            that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element);
             break;
 
           case 14: //Gem
@@ -552,6 +549,9 @@ function KingGame() {
 
         if (collisionDirection == 'l' || collisionDirection == 'r') {
           enemies[i].velX *= -1;
+          // Update this later
+          if (enemies[i].sX == 0) enemies[i].sX = 64;
+          else enemies[i].sX = 0;
         } else if (collisionDirection == 'b') {
           enemies[i].grounded = true;
         }
@@ -816,6 +816,7 @@ function KingGame() {
     }
 
     if (keys[39]) {
+      king.sX = 0;
       //right arrow
       that.checkKingPos(); //if king goes to the center of the screen, sidescroll the map
 
@@ -840,6 +841,8 @@ function KingGame() {
     }
 
     if (keys[37]) {
+      king.sX = 45;
+      that.checkKingPos();
       //left arrow
       if (king.velX > -king.speed) {
         king.velX--;
@@ -936,6 +939,12 @@ function KingGame() {
     if (king.x > centerPos && centerPos + viewPort / 2 < maxWidth) {
       gameUI.scrollWindow(-king.speed, 0);
       translatedDist += king.speed;
+    } else if (king.x <= centerPos - 3 && king.x > 640) {
+      gameUI.scrollWindow(king.speed, 0);
+      translatedDist -= king.speed;
+      console.log("King's Position: " + king.x);
+      console.log('Center Position: ' + centerPos);
+      console.log('Max width: ' + maxWidth);
     }
   };
 

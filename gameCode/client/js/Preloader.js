@@ -28,7 +28,9 @@ function Preloader() {
       10: 'images/powerups.png',
       11: 'images/slider-left.png',
       12: 'images/slider-right.png',
-      13: 'images/openChest.png'
+      13: 'images/openChest.png',
+      14: 'images/door.png',
+      15: 'images/openChest.png'
     };
 
     that.loadImages(imageSources);

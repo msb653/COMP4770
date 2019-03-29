@@ -18,7 +18,7 @@ function Enemy() {
   this.rangedAttack;
   this.bulletFlag = false;
 
-  this.sX;
+  this.sX = 0;
   this.sY = 0;
   this.width = 64;
   this.height = 64;
@@ -29,18 +29,13 @@ function Enemy() {
 
   this.wizard = function() {
     this.type = 20;
-    that.sX = 0;
     this.fireRate = 2000;
     this.rangedAttack = true;
   };
-  
 
   this.draw = function() {
-    that.sX = that.width * that.frame;
     gameUI.draw(element, that.sX, that.sY, that.width, that.height, that.x, that.y, that.width, that.height);
   };
-  
-
 
   this.update = function() {
     var gravity = 0.2;
