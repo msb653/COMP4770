@@ -32,8 +32,11 @@ app.get('/gameCode/client/loadLevel.html', function(req, res) {
 app.get('/gameCode/client/campaignMode.html', function(req, res) {
   res.sendFile(__dirname + '/client/campaignMode.html');
 });
-app.get('/gameCode/client/options/options.html', function(req, res) {
-  res.sendFile(__dirname + '/client/options/options.html');
+app.get('/gameCode/client/overworld.html', function(req, res) {
+  res.sendFile(__dirname + '/client/overworld.html');
+});
+app.get('/gameCode/client/achievements.html', function(req, res) {
+  res.sendFile(__dirname + '/client/achievements.html');
 });
 
 //CSS
@@ -46,14 +49,11 @@ app.get('/gameCode/client/campaign.css', function(req, res) {
 app.get('/gameCode/client/levelEditor.css', function(req, res) {
   res.sendFile(__dirname + '/client/LevelEditor.css');
 });
-app.get('/gameCode/client/options/options.css', function(req, res) {
-  res.sendFile(__dirname + '/client/options/options.css');
+app.get('/gameCode/client/css/reset.css', function(req, res) {
+  res.sendFile(__dirname + '/client/css/reset.css');
 });
-app.get('/gameCode/client/overworld.html', function (req, res) {
-    res.sendFile(__dirname + '/client/overworld.html');
-});
-app.get('/gameCode/client/achievements.html', function (req, res) {
-    res.sendFile(__dirname + '/client/achievements.html');
+app.get('/gameCode/client/css/style.css', function(req, res) {
+  res.sendFile(__dirname + '/client/css/style.css');
 });
 
 //Images
@@ -144,74 +144,18 @@ app.get('/gameCode/client/images/smoke.mp4', function(req, res) {
 app.get('/gameCode/client/images/door.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/door.png');
 });
-app.get('/gameCode/client/images/teleporter.png', function (req, res) {
-    res.sendFile(__dirname + '/client/images/teleporter.png');
+app.get('/gameCode/client/images/teleporter.png', function(req, res) {
+  res.sendFile(__dirname + '/client/images/teleporter.png');
 });
-app.get('/gameCode/client/images/teleporter3.png', function (req, res) {
-    res.sendFile(__dirname + '/client/images/teleporter3.png');
+app.get('/gameCode/client/images/teleporter3.png', function(req, res) {
+  res.sendFile(__dirname + '/client/images/teleporter3.png');
 });
-app.get('/gameCode/client/images/bomb.png', function (req, res) {
-    res.sendFile(__dirname + '/client/images/bomb.png');
+app.get('/gameCode/client/images/bomb.png', function(req, res) {
+  res.sendFile(__dirname + '/client/images/bomb.png');
 });
-app.get('/gameCode/client/images/bat2.png', function (req, res) {
-    res.sendFile(__dirname + '/client/images/bat2.png');
+app.get('/gameCode/client/images/bat2.png', function(req, res) {
+  res.sendFile(__dirname + '/client/images/bat2.png');
 });
-
-// Testing
-app.get('/gameCode/client/js/View.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/View.js');
-});
-app.get('/gameCode/client/js/GameUI.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/GameUI.js');
-});
-app.get('/gameCode/client/js/mainGame/GameSound.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/mainGame/GameSound.js');
-});
-app.get('/gameCode/client/js/mainGame/Element.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/mainGame/Element.js');
-});
-app.get('/gameCode/client/js/mainGame/PowerUp.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/mainGame/PowerUp.js');
-});
-app.get('/gameCode/client/js/mainGame/Enemy.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/mainGame/Enemy.js');
-});
-app.get('/gameCode/client/js/mainGame/Bullet.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/mainGame/Bullet.js');
-});
-
-app.get('/gameCode/client/js/mainGame/King.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/mainGame/King.js');
-});
-app.get('/gameCode/client/js/mainGame/Score.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/mainGame/Score.js');
-});
-app.get('/gameCode/client/js/mainGame/KingGame.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/mainGame/KingGame.js');
-});
-app.get('/gameCode/client/js/levelEditor/Storage.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/levelEditor/Storage.js');
-});
-app.get('/gameCode/client/js/levelEditor/Editor.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/levelEditor/Editor.js');
-});
-app.get('/gameCode/client/js/levelEditor/CreatedLevels.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/levelEditor/CreatedLevels.js');
-});
-app.get('/gameCode/client/js/KingMaker.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/KingMaker.js');
-});
-app.get('/gameCode/client/js/Preloader.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/Preloader.js');
-});
-
-app.get('/gameCode/client/css/reset.css', function(req, res) {
-  res.sendFile(__dirname + '/client/css/reset.css');
-});
-app.get('/gameCode/client/css/style.css', function(req, res) {
-  res.sendFile(__dirname + '/client/css/style.css');
-});
-
 app.get('/gameCode/client/images/back-btn.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/back-btn.png');
 });
@@ -290,6 +234,59 @@ app.get('/gameCode/client/images/icon.gif', function(req, res) {
 app.get('/gameCode/client/images/openChest.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/openChest.png');
 });
+app.get('/gameCode/client/images/overworld.png', function(req, res) {
+  res.sendFile(__dirname + '/client/images/overworld.png');
+});
+app.get('/gameCode/client/images/knightRight.gif', function(req, res) {
+  res.sendFile(__dirname + '/client/images/knightRight.gif');
+});
+
+// Testing
+app.get('/gameCode/client/js/View.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/View.js');
+});
+app.get('/gameCode/client/js/GameUI.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/GameUI.js');
+});
+app.get('/gameCode/client/js/mainGame/GameSound.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/mainGame/GameSound.js');
+});
+app.get('/gameCode/client/js/mainGame/Element.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/mainGame/Element.js');
+});
+app.get('/gameCode/client/js/mainGame/PowerUp.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/mainGame/PowerUp.js');
+});
+app.get('/gameCode/client/js/mainGame/Enemy.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/mainGame/Enemy.js');
+});
+app.get('/gameCode/client/js/mainGame/Bullet.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/mainGame/Bullet.js');
+});
+app.get('/gameCode/client/js/mainGame/King.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/mainGame/King.js');
+});
+app.get('/gameCode/client/js/mainGame/Score.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/mainGame/Score.js');
+});
+app.get('/gameCode/client/js/mainGame/KingGame.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/mainGame/KingGame.js');
+});
+app.get('/gameCode/client/js/levelEditor/Storage.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/levelEditor/Storage.js');
+});
+app.get('/gameCode/client/js/levelEditor/Editor.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/levelEditor/Editor.js');
+});
+app.get('/gameCode/client/js/levelEditor/CreatedLevels.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/levelEditor/CreatedLevels.js');
+});
+app.get('/gameCode/client/js/KingMaker.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/KingMaker.js');
+});
+app.get('/gameCode/client/js/Preloader.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/Preloader.js');
+});
 
 //Sounds
 app.get('/gameCode/client/sounds/jump.wav', function(req, res) {
@@ -319,13 +316,10 @@ app.get('/gameCode/client/sounds/bomb.wav', function(req, res) {
 app.get('/gameCode/client/sounds/teleport.mp3', function(req, res) {
   res.sendFile(__dirname + '/client/sounds/teleport.mp3');
 });
+app.get('/gameCode/client/sounds/silence.mp3', function(req, res) {
+  res.sendFile(__dirname + '/client/sounds/silence.mp3');
+});
 
-app.get('/gameCode/client/images/overworld.png', function (req, res) {
-   res.sendFile(__dirname + '/client/images/overworld.png');
-});
-app.get('/gameCode/client/images/knightRight.gif', function (req, res) {
-   res.sendFile(__dirname + '/client/images/knightRight.gif');
-});
 app.use('/client', express.static(__dirname + '/client'));
 
 serv.listen(2000);
@@ -587,6 +581,13 @@ var deleteLevels = (data, cb) => {
   });
 };
 
+var deleteOneLevel = (data, cb) => {
+  db.level.find({ user: data.user, name: data.name }).toArray((err, result) => {
+    db.level.remove({ user: data.user, name: data.name });
+    // cb(result);
+  });
+};
+
 var addUser = (data, cb) => {
   hashedPassword = getHash(data.password);
   db.account.insert({ username: data.username, password: hashedPassword }, err => {
@@ -687,6 +688,16 @@ io.sockets.on('connection', socket => {
         socket.emit('deleteLevelResponse', { success: true });
       } else {
         socket.emit('deleteLevelResponse', { success: false });
+      }
+    });
+  });
+
+  socket.on('deleteOneLevel', data => {
+    deleteOneLevel(data, res => {
+      if (res) {
+        socket.emit('deleteOneLevelResponse', { success: true });
+      } else {
+        socket.emit('deleteOneLevelResponse', { success: false });
       }
     });
   });

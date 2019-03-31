@@ -23,39 +23,42 @@ function CreatedLevels() {
 
     var mainWrapper = view.getMainWrapper();
     var deleteAllBtn = view.create('button');
-    deleteAllBtn.innerHTML = 'Delete Levels';
+    var deleteOneBtn = view.create('button');
+    deleteAllBtn.innerHTML = 'Delete All Levels';
+    deleteOneBtn.innerHTML = 'Delete Level?';
     levelsWrapper = view.create('div');
 
     view.addClass(levelsWrapper, 'levels-wrapper');
     view.style(levelsWrapper, { display: 'block' });
     view.append(levelsWrapper, deleteAllBtn);
+    view.append(levelsWrapper, deleteOneBtn);
     view.append(mainWrapper, levelsWrapper);
 
     deleteAllBtn.onclick = that.deleteAllMaps;
+    deleteOneBtn.onclick = that.deleteOneMap;
 
     storage = new Storage();
   };
 
-   var levelPlay = view.create('button');
-   levelPlay.onclick = function(){
-       that.startLevel(levelSelect.selectedIndex);
-       that.removeCreatedLevelsScreen();
-   };
-    var levelSelect = view.create('select');    
-
+  var levelPlay = view.create('button');
+  levelPlay.onclick = function() {
+    that.startLevel(levelSelect.selectedIndex);
+    that.removeCreatedLevelsScreen();
+  };
+  var levelSelect = view.create('select');
 
   this.loadLevelList = function() {
     var testDiv = view.create('div');
     view.append(testDiv, levelPlay);
     let totalStoredLevels = levels.length;
-    view.setHTML(levelPlay,"Play");
+    view.setHTML(levelPlay, 'Play');
     if (totalStoredLevels != 0) {
       for (var i = 0; i < totalStoredLevels; i++) {
         var levelButton = view.create('option');
         view.append(levelSelect, levelButton);
         var levelName = levels[i].name;
         view.setHTML(levelButton, levelName);
-        
+
         // (function(i) {
         //   levelSelect.onselect = (function(i) {
         //     return function() {
@@ -78,17 +81,33 @@ function CreatedLevels() {
   this.deleteAllMaps = function() {
     storage.clear();
     socket.emit('deleteLevel', {
-      user: sessionStorage.getItem('username'),
-      name: sessionStorage.getItem('name')
+      user: sessionStorage.getItem('username')
     });
     that.removeCreatedLevelsScreen();
     that.init();
   };
 
+  this.deleteOneMap = function() {
+    storage.clear();
+    socket.emit('deleteOneLevel', {
+      user: sessionStorage.getItem('username'),
+      name: levels[levelSelect.selectedIndex].name
+    });
+    that.removeCreatedLevelsScreen();
+    that.init();
+    window.location.reload();
+  };
+
   socket.on('deleteLevelResponse', function(data) {
     if (data.success) {
-      alert('Save successful.');
-    } else alert('Save unsuccessful.');
+      alert('All Levels have been successfully deleted.');
+    } else alert('Levels not deleted.');
+  });
+
+  socket.on('deleteOneLevelResponse', function(data) {
+    if (data.success) {
+      alert('Delete Level successfully completed.');
+    } else alert('Delete Level unsuccessful.');
   });
 
   this.startLevel = function(i) {
