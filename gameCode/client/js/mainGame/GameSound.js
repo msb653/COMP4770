@@ -20,14 +20,16 @@ function GameSound() {
     kingDie = new Audio('sounds/king-death.wav');
     killEnemy = new Audio('sounds/kill-enemy.wav');
     stageClear = new Audio('sounds/stage-clear.wav');
-    bullet = new Audio('sounds/bow.wav');
+    bow = new Audio('sounds/bow.wav');
     powerDown = new Audio('sounds/power-down.wav');
     jump = new Audio('sounds/jump.wav');
     gameOver = new Audio('sounds/gameOver.wav');
     fireball = new Audio('sounds/fireball.wav');
     mainMenuSound = new Audio('sounds/MainMenuSound.wav');
-    teleport = new Audio('sounds/teleport.wav');
+    teleport = new Audio('sounds/teleport.mp3');
     explosion = new Audio('sounds/bomb.wav');
+    woosh = new Audio('sounds/throw.wav');
+    sword = new Audio('sounds/sword.wav');
   };
 
   this.play = function(element) {
@@ -55,10 +57,10 @@ function GameSound() {
       stageClear.pause();
       stageClear.currentTime = 0;
       stageClear.play();
-    } else if (element == 'bullet') {
-      bullet.pause();
-      bullet.currentTime = 0;
-      bullet.play();
+    } else if (element == 'bow') {
+      bow.pause();
+      bow.currentTime = 0;
+      bow.play();
     } else if (element == 'powerDown') {
       powerDown.pause();
       powerDown.currentTime = 0;
@@ -80,5 +82,25 @@ function GameSound() {
       mainMenuSound.currentTime = 0;
       mainMenuSound.play();
     }
+    else if (element == 'teleport') {
+    	teleport.pause();
+    	teleport.currentTime = 0;
+    	teleport.play();
+      }
+    else if (element == 'explosion') {
+    	explosion.pause();
+    	explosion.currentTime = 0;
+    	explosion.play();
+      }
+    else if (element == 'woosh') {
+    	woosh.pause();
+    	woosh.currentTime = 0;
+    	woosh.play();
+      }
+    else if (element == 'sword') {
+    	sword.pause();
+    	sword.currentTime = 0;
+    	sword.play();
+      }
   };
 }

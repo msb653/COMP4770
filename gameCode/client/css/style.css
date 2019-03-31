@@ -103,12 +103,55 @@
   padding-left: 40px;
 }
 
-.coin-score {
+.gem-score {
   background: url('../images/gem.gif') left center no-repeat;
   width: 150px;
   float: left;
   padding-left: 40px;
 }
+
+.bow-icon {
+  background: url('../images/bow_icon.png') left center no-repeat;
+  width: 150px;
+  float: left;
+  padding-left: 40px;
+}
+
+.sword-icon {
+  background: url('../images/sword_icon.png') left center no-repeat;
+  width: 150px;
+  float: left;
+  padding-left: 40px;
+}
+
+.staff-icon {
+  background: url('../images/staff_icon.png') left center no-repeat;
+  width: 150px;
+  float: left;
+  padding-left: 40px;
+}
+
+.teleporter-icon {
+  background: url('../images/teleport_icon.png') left center no-repeat;
+  width: 150px;
+  float: left;
+  padding-left: 40px;
+}
+
+.destroyer-icon {
+  background: url('../images/bomb.png') left center no-repeat;
+  width: 150px;
+  float: left;
+  padding-left: 40px;
+}
+
+.no-weapon-icon {
+  background: url('../images/no_weapon_icon.png') left center no-repeat;
+  width: 150px;
+  float: left;
+  padding-left: 40px;
+}
+
 
 .door-face {
   background: url('../images/door.png') left center no-repeat;
@@ -122,11 +165,6 @@
   width: 150px;
   float: left;
   padding-left: 40px;
-}
-
-.level-num {
-  width: 150px;
-  float: left;
 }
 
 .total-score {

@@ -67,7 +67,7 @@ function Element() {
     that.type = 7;
     that.width = 32;
     that.height = 32;
-    that.sX = 6 * that.width;
+    that.sX = 6 * that.width-1;  // Subtract 1 to deal with slight offset
   };
 
   this.bow = function() {

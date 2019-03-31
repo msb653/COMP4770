@@ -15,12 +15,14 @@ function King() {
   this.sX = 0; // sprite x
   this.sY = 4; // sprite y
   this.frame = 0;
-  this.sword;
+  this.hasSword;
   this.hasBow;
   this.hasStaff;
   this.hasTeleporter;
   this.hasDestroyer;
   this.arrows;
+  this.destroyers;
+  this.teleporters;
   this.weapon;
 
   var that = this;
@@ -37,7 +39,9 @@ function King() {
     this.hasTeleporter = false;
     this.hasDestroyer = false;
     this.arrows = 0;
-    this.weapon = 'bow';
+    this.teleporters = 0;
+    this.destroyers = 0;
+    this.weapon = 'none';
   };
 
   this.draw = function() {

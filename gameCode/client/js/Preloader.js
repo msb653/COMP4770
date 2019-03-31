@@ -33,7 +33,14 @@ function Preloader() {
       15: 'images/elements.png',
       16: 'images/teleporter3.png',
       17: 'images/bomb.png',
-      18: 'images/bat2.png'
+      18: 'images/bat2.png',
+      19: 'images/bow_icon.png',
+      20: 'images/staff_icon.png',
+      21: 'images/sword_icon.png',
+      22: 'images/teleport_icon.png',
+      23: 'images/no_weapon_icon.png',
+      24: 'images/arrowLeft.png',
+      25: 'images/swordLeft.png'
     };
 
     that.loadImages(imageSources);

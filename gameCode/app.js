@@ -234,6 +234,7 @@ app.get('/gameCode/client/images/icon.gif', function(req, res) {
 app.get('/gameCode/client/images/openChest.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/openChest.png');
 });
+
 app.get('/gameCode/client/images/overworld.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/overworld.png');
 });
@@ -288,6 +289,28 @@ app.get('/gameCode/client/js/Preloader.js', function(req, res) {
   res.sendFile(__dirname + '/client/js/Preloader.js');
 });
 
+app.get('/gameCode/client/images/bow_icon.png', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/bow_icon.png');
+	});
+app.get('/gameCode/client/images/staff_icon.png', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/staff_icon.png');
+	});
+app.get('/gameCode/client/images/sword_icon.png', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/sword_icon.png');
+	});
+app.get('/gameCode/client/images/teleport_icon.png', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/teleport_icon.png');
+	});
+app.get('/gameCode/client/images/no_weapon_icon.png', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/no_weapon_icon.png');
+	});
+app.get('/gameCode/client/images/arrowLeft.png', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/arrowLeft.png');
+	});
+app.get('/gameCode/client/images/swordLeft.png', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/swordLeft.png');
+	});
+
 //Sounds
 app.get('/gameCode/client/sounds/jump.wav', function(req, res) {
   res.sendFile(__dirname + '/client/sounds/jump.wav');
@@ -314,7 +337,13 @@ app.get('/gameCode/client/sounds/bomb.wav', function(req, res) {
   res.sendFile(__dirname + '/client/sounds/bomb.wav');
 });
 app.get('/gameCode/client/sounds/teleport.mp3', function(req, res) {
-  res.sendFile(__dirname + '/client/sounds/teleport.mp3');
+	res.sendFile(__dirname + '/client/sounds/teleport.mp3');
+});
+app.get('/gameCode/client/sounds/throw.wav', function(req, res) {
+	res.sendFile(__dirname + '/client/sounds/throw.wav');
+});
+app.get('/gameCode/client/sounds/sword.wav', function(req, res) {
+	res.sendFile(__dirname + '/client/sounds/sword.wav');
 });
 app.get('/gameCode/client/sounds/silence.mp3', function(req, res) {
   res.sendFile(__dirname + '/client/sounds/silence.mp3');

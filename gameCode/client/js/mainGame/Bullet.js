@@ -14,7 +14,7 @@ function Bullet() {
   this.width = 32;
   this.height = 32;
   this.enemy = 0;
-  this.type='arrow';
+  this.type;
 
   var that = this;
 
@@ -23,6 +23,14 @@ function Bullet() {
     that.velY = 0;
     that.x = x + that.width;
     that.y = y + 30;
+    if (that.type == 'swordRight') {
+    	that.y = y+15;
+    	that.x = x + that.width;
+    }
+    if (that.type == 'swordLeft') {
+    	that.y = y+15;
+    	that.x = x - 20;
+    }
     that.sX = 0;
   };
 
@@ -49,6 +57,9 @@ function Bullet() {
           that.y += that.velY - 10;
           that.x += that.velX*0.75;
       }
+      else if(that.type == "sword") {
+    	  // Update is based on the kings position (handled in kingGame.js)
+      }
       else {
           that.x += that.velX;
       }
@@ -66,6 +77,21 @@ function Bullet() {
       if (type == "destroyer") {
 		  element.src = 'images/bomb.png';
 		  this.type='destroyer';
+	  }
+      if (type == "arrow") {
+    	  if (this.velX >= 0)
+    		  element.src = 'images/arrow.png';
+    	  else
+    		  element.src = 'images/arrowLeft.png';
+		  this.type='arrow';
+	  }
+      if (type == "swordRight") {
+    	  element.src = 'images/sword_icon.png';
+		  this.type='swordRight';
+	  }
+      if (type == "swordLeft") {
+    	  element.src = 'images/swordLeft.png';
+		  this.type='swordLeft';
 	  }
   }
 }

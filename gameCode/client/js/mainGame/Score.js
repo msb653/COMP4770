@@ -6,7 +6,7 @@ function Score() {
   var coinScoreWrapper;
   var totalScoreWrapper;
   var lifeCountWrapper;
-  var levelWrapper;
+  var weaponWrapper;
   var tempWrapper;
   var chestWrapper;
 
@@ -27,19 +27,19 @@ function Score() {
     coinScoreWrapper = view.create('div');
     totalScoreWrapper = view.create('div');
     lifeCountWrapper = view.create('div');
-    levelWrapper = view.create('div');
+    weaponWrapper = view.create('div');
     tempWrapper = view.create('div');
     chestWrapper = view.create('div');
 
     view.addClass(scoreWrapper, 'score-wrapper');
-    view.addClass(coinScoreWrapper, 'coin-score');
+    view.addClass(coinScoreWrapper, 'gem-score');
     view.addClass(tempWrapper, 'door-face');
     view.addClass(chestWrapper, 'chest-face');
     view.addClass(totalScoreWrapper, 'total-score');
     view.addClass(lifeCountWrapper, 'life-count');
-    view.addClass(levelWrapper, 'level-num');
+    view.addClass(weaponWrapper, 'no-weapon-icon');
 
-    view.append(scoreWrapper, levelWrapper);
+    view.append(scoreWrapper, weaponWrapper);
     view.append(scoreWrapper, lifeCountWrapper);
     view.append(scoreWrapper, coinScoreWrapper);
     view.append(scoreWrapper, totalScoreWrapper);
@@ -50,7 +50,7 @@ function Score() {
     that.updateCoinScore();
     that.updateTotalScore();
     that.updateLifeCount();
-    that.updateLevelNum(1);
+    that.updateWeapon('none', -1);
   };
 
   this.updateCoinScore = function() {
@@ -71,8 +71,28 @@ function Score() {
     view.setHTML(lifeCountWrapper, 'x ' + that.lifeCount);
   };
 
-  this.updateLevelNum = function(level) {
-    view.setHTML(levelWrapper, 'Level: ' + level);
+  this.updateWeapon = function(weapon, ammo) {
+    // Set the ammo value
+	if (ammo >= 0) {
+		 view.setHTML(weaponWrapper, 'Ammo: ' +  ammo); // Weapon with limited ammo
+	}  else {
+		view.setHTML(weaponWrapper, 'Ammo: ' + '∞'); // Weapon with infinite ammo
+	}
+	
+	// Update weapon icon
+	if (weapon == 'sword')
+		view.addClass(weaponWrapper, 'sword-icon');
+	else if (weapon == 'bow')
+		view.addClass(weaponWrapper, 'bow-icon');
+	else if (weapon == 'staff')
+		view.addClass(weaponWrapper, 'staff-icon');
+	else if (weapon == 'teleporter')
+		view.addClass(weaponWrapper, 'teleporter-icon');
+	else if (weapon == 'destroyer')
+		view.addClass(weaponWrapper, 'destroyer-icon');
+	else if (weapon == 'none')
+		view.addClass(weaponWrapper, 'no-weapon-icon');
+	
   };
 
   this.displayScore = function() {
