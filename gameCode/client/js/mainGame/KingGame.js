@@ -687,6 +687,7 @@ function KingGame() {
           enemies[i].velX *= -1;
           // Update this later
           if (enemies[i].sX == 0 && enemies[i].type == 'wizard') enemies[i].sX = 64;
+          else if (enemies[i].sX == 0 && enemies[i].type == 'enemy3') enemies[i].sX = 64;
           else if (enemies[i].sX == 0 && enemies[i].type == 'flyer') enemies[i].sX = 32;
           else enemies[i].sX = 0;
         } else if (collisionDirection == 'b') {
