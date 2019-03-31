@@ -228,10 +228,22 @@
   background: url('../images/elements.png') -352px 0;
 }
 
+.openDoor {
+  width: 31px;
+  height: 31px;
+  background: url('../images/elements.png') -352px 0;
+}
+
 .enemy1 {
   width: 31px;
   height: 31px;
   background: url('../images/elements.png') -384px 0;
+}
+
+.flyer {
+  width: 31px;
+  height: 31px;
+  background: url('../images/elements.png') -512px 0;
 }
 
 .wizard {
@@ -239,10 +251,23 @@
   height: 31px;
   background: url('../images/enemies.png') 0 0;
 }
+
 .dguy {
   width: 31px;
   height: 31px;
   background: url('../images/elements.png') -416px 0;
+}
+
+.teleporter {
+  width: 31px;
+  height: 31px;
+  background: url('../images/elements.png') -448px 0;
+}
+
+.destroyer {
+  width: 31px;
+  height: 31px;
+  background: url('../images/elements.png') -480px 0;
 }
 
 .right-arrow {

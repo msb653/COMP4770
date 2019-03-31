@@ -30,7 +30,10 @@ function Preloader() {
       12: 'images/slider-right.png',
       13: 'images/openChest.png',
       14: 'images/door.png',
-      15: 'images/elements.png'
+      15: 'images/elements.png',
+      16: 'images/teleporter3.png',
+      17: 'images/bomb.png',
+      18: 'images/bat2.png'
     };
 
     that.loadImages(imageSources);

@@ -46,6 +46,9 @@ var GameUI = (function() {
     };
 
     this.draw = function(image, sx, sy, width, height, x, y, width, height) {
+        
+        //   console.log(image.src);
+      
       ctx.drawImage(image, sx, sy, width, height, x, y, width, height);
     };
 

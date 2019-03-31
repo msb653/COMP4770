@@ -135,7 +135,10 @@ function Editor() {
       'key',
       'door',
       'enemy1',
-      'dguy'
+      'dguy',
+      'teleporter',
+      'destroyer',
+      'flyer'
     ];
  
     var element;
@@ -310,8 +313,21 @@ function Editor() {
           case 'dguy':
               value = 15;
               break;
+              
+          case 'teleporter':
+              value = 16;
+              break;
+
+          case 'destroyer':
+              value = 17;
+              break;
+              
           case 'enemy1':
             value = 20;
+            break;
+
+          case 'flyer':
+            value = 21;
             break;
 
 

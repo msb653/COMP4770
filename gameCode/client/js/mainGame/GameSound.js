@@ -9,6 +9,8 @@ function GameSound() {
   var powerDown;
   var jump;
   var mainMenuSound;
+  var teleport;
+  var explosion;
   var that = this;
 
   this.init = function() {
@@ -24,6 +26,8 @@ function GameSound() {
     gameOver = new Audio('sounds/gameOver.wav');
     fireball = new Audio('sounds/fireball.wav');
     mainMenuSound = new Audio('sounds/MainMenuSound.wav');
+    teleport = new Audio('sounds/teleport.wav');
+    explosion = new Audio('sounds/bomb.wav');
   };
 
   this.play = function(element) {

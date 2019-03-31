@@ -18,6 +18,8 @@ function King() {
   this.sword;
   this.hasBow;
   this.hasStaff;
+  this.hasTeleporter;
+  this.hasDestroyer;
   this.arrows;
   this.weapon;
 
@@ -32,6 +34,8 @@ function King() {
     this.hasSword = false;
     this.hasBow = false;
     this.hasStaff = false;
+    this.hasTeleporter = false;
+    this.hasDestroyer = false;
     this.arrows = 0;
     this.weapon = 'bow';
   };

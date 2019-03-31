@@ -17,6 +17,8 @@ function Enemy() {
   this.fireRate;
   this.rangedAttack;
   this.bulletFlag = false;
+  this.initialX;
+  this.initialY;
 
   this.sX = 0;
   this.sY = 0;
@@ -31,6 +33,14 @@ function Enemy() {
     this.type = 20;
     this.fireRate = 2000;
     this.rangedAttack = true;
+  };
+
+  this.flyer = function() {
+    this.type = 21;
+    element.src = 'images/bat2.png';
+    this.width = 32;
+    this.height = 32;
+    this.velY = 1;
   };
 
   this.draw = function() {
@@ -51,9 +61,31 @@ function Enemy() {
       that.y += that.velY;
     } else {
       //only animate when not dead
-      that.velY += gravity;
-      that.x += that.velX;
-      that.y += that.velY;
+      if(that.type == 21){
+
+          if (that.x > that.initialX + 50) {
+              that.velX = -1;
+          }
+          else if (that.x < that.initialX - 50) {
+              that.velX = 1;
+          }
+
+          if (that.y > that.initialY + 50) {
+              that.velY = -1;
+          }
+          else if (that.y < that.initialY - 50) {
+              that.velY = 1;
+          }
+
+        that.x += that.velX;
+        that.y += that.velY;
+      }
+      else{
+        that.velY += gravity;
+        that.x += that.velX;
+        that.y += that.velY;
+      }
+      
 
       //for animating
       tickCounter += 1;

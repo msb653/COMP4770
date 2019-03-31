@@ -144,6 +144,18 @@ app.get('/gameCode/client/images/smoke.mp4', function(req, res) {
 app.get('/gameCode/client/images/door.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/door.png');
 });
+app.get('/gameCode/client/images/teleporter.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/teleporter.png');
+});
+app.get('/gameCode/client/images/teleporter3.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/teleporter3.png');
+});
+app.get('/gameCode/client/images/bomb.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/bomb.png');
+});
+app.get('/gameCode/client/images/bat2.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/bat2.png');
+});
 
 // Testing
 app.get('/gameCode/client/js/View.js', function(req, res) {
@@ -300,6 +312,12 @@ app.get('/gameCode/client/sounds/MainMenuSound.wav', function(req, res) {
 });
 app.get('/gameCode/client/sounds/loginPageSound.wav', function(req, res) {
   res.sendFile(__dirname + '/client/sounds/loginPageSound.wav');
+});
+app.get('/gameCode/client/sounds/bomb.wav', function(req, res) {
+  res.sendFile(__dirname + '/client/sounds/bomb.wav');
+});
+app.get('/gameCode/client/sounds/teleport.mp3', function(req, res) {
+  res.sendFile(__dirname + '/client/sounds/teleport.mp3');
 });
 
 app.get('/gameCode/client/images/overworld.png', function (req, res) {

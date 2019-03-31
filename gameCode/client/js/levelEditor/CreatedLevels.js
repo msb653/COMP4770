@@ -36,30 +36,36 @@ function CreatedLevels() {
     storage = new Storage();
   };
 
+   var levelPlay = view.create('button');
+   levelPlay.onclick = function(){
+       that.startLevel(levelSelect.selectedIndex);
+       that.removeCreatedLevelsScreen();
+   };
+    var levelSelect = view.create('select');    
+
+
   this.loadLevelList = function() {
-    var levelSelect = view.create('select');
-    var levelPlay = view.create('button');
     var testDiv = view.create('div');
     view.append(testDiv, levelPlay);
     let totalStoredLevels = levels.length;
+    view.setHTML(levelPlay,"Play");
     if (totalStoredLevels != 0) {
-      for (var i = 1; i < totalStoredLevels; i++) {
+      for (var i = 0; i < totalStoredLevels; i++) {
         var levelButton = view.create('option');
         view.append(levelSelect, levelButton);
         var levelName = levels[i].name;
         view.setHTML(levelButton, levelName);
-        view.append(testDiv, levelSelect);
-        view.append(levelsWrapper, testDiv);
-
-        (function(i) {
-          levelPlay.onclick = (function(i) {
-            return function() {
-              that.startLevel(i);
-              that.removeCreatedLevelsScreen();
-            };
-          })(i);
-        })(i);
+        
+        // (function(i) {
+        //   levelSelect.onselect = (function(i) {
+        //     return function() {
+        //       levelIndex = i;
+        //     };
+        //   })(i);
+        // })(i);
       }
+      view.append(testDiv, levelSelect);
+      view.append(levelsWrapper, testDiv);
     } else {
       var noMapsMessage = view.create('div');
 

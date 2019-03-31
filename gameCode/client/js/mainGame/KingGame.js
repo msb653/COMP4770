@@ -27,6 +27,8 @@ function KingGame() {
   var powerUps;
   var bullets;
   var bulletFlag = false;
+  var teleporterFlag  = false;
+  var destroyerFlag = false;
 
   var currentLevel;
 
@@ -72,7 +74,7 @@ function KingGame() {
         switch (map[row][column]) {
           case 11: //Key
             doorKeys.push(1);
-            break;
+            break; 
         }
       }
     }
@@ -282,7 +284,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element);
+            that.checkElementBulletCollision(element,row,column);
             break;
 
           case 2: //forest platform
@@ -294,7 +296,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element);
+            that.checkElementBulletCollision(element,row,column);
             break;
 
           case 3: //cave platform
@@ -306,7 +308,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element);
+            that.checkElementBulletCollision(element,row,column);
             break;
 
           case 4: //lava platform
@@ -318,7 +320,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element);
+            that.checkElementBulletCollision(element,row,column);
             break;
 
           case 5: // Chest
@@ -330,7 +332,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element);
+            that.checkElementBulletCollision(element,row,column);
 
             break;
 
@@ -343,7 +345,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element);
+            that.checkElementBulletCollision(element,row,column);
             break;
 
           case 7: //Sword
@@ -355,7 +357,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element);
+            that.checkElementBulletCollision(element,row,column);
             break;
 
           case 8: //Bow
@@ -367,7 +369,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element);
+            that.checkElementBulletCollision(element,row,column);
             break;
 
           case 9: //Staff
@@ -379,7 +381,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element);
+            that.checkElementBulletCollision(element,row,column);
             break;
 
           case 10: //Arrow
@@ -391,7 +393,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element);
+            that.checkElementBulletCollision(element,row,column);
             break;
 
           case 11: //Key
@@ -401,6 +403,9 @@ function KingGame() {
             element.draw();
 
             that.checkElementKingCollision(element, row, column);
+            if(teleporterFlag == true){
+                that.checkElementBulletCollision(element,row,column);
+            }
             break;
 
           case 12: //Door
@@ -410,6 +415,7 @@ function KingGame() {
             element.draw();
             if (doorKeys.length == 0) {
               map[row][column] = 13;
+              that.checkElementKingCollision(element, row, column);
             }
 
             break;
@@ -430,7 +436,12 @@ function KingGame() {
             element.draw();
 
             that.checkElementKingCollision(element, row, column);
+             if(teleporterFlag == true){
+                that.checkElementBulletCollision(element,row,column);
+            }
             break;
+
+          
           case 15: //dead guy
             element.x = column * tileSize;
             element.y = row * tileSize;
@@ -441,11 +452,30 @@ function KingGame() {
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
             that.checkElementBulletCollision(element);
-
-
-
+            break;
+            
+            case 16: //teleporter
+            element.x = column * tileSize;
+            element.y = row * tileSize;
+            element.teleporter();
+            element.draw();
+            that.checkElementKingCollision(element, row, column);
+            if(teleporterFlag == true){
+                that.checkElementBulletCollision(element,row,column);
+            }
             break;
 
+          case 17: //destroyer
+            element.x = column * tileSize;
+            element.y = row * tileSize;
+            element.destroyer();
+            element.draw();
+            that.checkElementKingCollision(element, row, column);
+            if(destroyerFlag == true){
+                that.checkElementBulletCollision(element,row,column);
+            }
+            break;
+            
           case 20: // Wizard
             var enemy = new Enemy();
             enemy.wizard();
@@ -455,6 +485,20 @@ function KingGame() {
 
             enemies.push(enemy);
             map[row][column] = 0;
+            break;
+
+          case 21: // flyer(bat)
+            var enemy = new Enemy();
+            enemy.flyer();
+            enemy.x = column * tileSize;
+            enemy.y = row * tileSize;
+            enemy.initialX = enemy.x;
+            enemy.initialY = enemy.y;
+            enemy.draw();
+
+            enemies.push(enemy);
+            map[row][column] = 0;
+            break;
         }
       }
     }
@@ -507,26 +551,34 @@ function KingGame() {
     var collisionDirection = that.collisionCheck(king, element);
 
     if (collisionDirection == 'l' || collisionDirection == 'r') {
-      king.velX = 0;
-      king.jumping = false;
-    } else if (collisionDirection == 'b') {
-      king.grounded = true;
-      king.jumping = false;
-    } else if (collisionDirection == 't') {
-      king.velY *= -1;
-      if (element.type == 5) {
-        var powerUp = new PowerUp();
-        if (king.type == 'small') {
-          powerUp.crown(element.x, element.y);
-          powerUps.push(powerUp);
+        if (element.type != 12 && element.type != 13) {
+            king.velX = 0;
+            king.jumping = false;
         }
-        map[row][column] = 6;
-      }
-      if (element.type == 15) {
-        map[row][column] = 15;
-        gameSound.play('help');
-        alert("Daddy please save me!");
-      }
+      
+    } else if (collisionDirection == 'b') {
+        if (element.type != 12 && element.type != 13) {
+            king.grounded = true;
+            king.jumping = false;
+        }
+    } else if (collisionDirection == 't') {
+        if (element.type != 12 && element.type != 13) {
+            king.velY *= -1;
+            if (element.type == 5) {
+                var powerUp = new PowerUp();
+                if (king.type == 'small') {
+                    powerUp.crown(element.x, element.y);
+                    powerUps.push(powerUp);
+                }
+                map[row][column] = 6;
+            }
+
+            if (element.type == 15) {
+                map[row][column] = 15;
+                gameSound.play('help');
+                alert("Daddy please save me!");
+            }
+        }
     }
 
     // Check collision for keys and gems
@@ -545,6 +597,23 @@ function KingGame() {
         score.updateCoinScore();
         score.updateTotalScore();
       }
+
+      if (element.type == 16) {
+        map[row][column] = 0;
+        teleporterFlag = true;
+        destroyerFlag = false;
+      }
+
+       if (element.type == 17) {
+        map[row][column] = 0;
+        teleporterFlag = false;
+        destroyerFlag = true;
+      }
+
+      if(element.type == 13){
+          that.levelFinish(collisionDirection);
+      }
+
     }
   };
 
@@ -569,7 +638,8 @@ function KingGame() {
         if (collisionDirection == 'l' || collisionDirection == 'r') {
           enemies[i].velX *= -1;
           // Update this later
-          if (enemies[i].sX == 0) enemies[i].sX = 64;
+          if (enemies[i].sX == 0 && enemies[i].type == 'wizard') enemies[i].sX = 64;
+          else if (enemies[i].sX == 0 && enemies[i].type == 'flyer') enemies[i].sX = 32;
           else enemies[i].sX = 0;
         } else if (collisionDirection == 'b') {
           enemies[i].grounded = true;
@@ -578,15 +648,38 @@ function KingGame() {
     }
   };
 
-  this.checkElementBulletCollision = function(element) {
+  this.checkElementBulletCollision = function(element, row, column) {
     for (var i = 0; i < bullets.length; i++) {
       var collisionDirection = that.collisionCheck(bullets[i], element);
 
       if (collisionDirection == 'b') {
         //if collision is from bottom of the bullet, it is grounded, so that it can be bounced
         bullets[i].grounded = true;
-      } else if (collisionDirection == 't' || collisionDirection == 'l' || collisionDirection == 'r') {
+        if(bullets[i].type == "teleporter"){
+            king.x = bullets[i].x;
+            king.y = bullets[i].y-32;
+            king.draw();
+            that.updateKing();
+        }
+        else if(bullets[i].type == "destroyer"){
+            if(element.type == 1 || element.type == 2 || element.type == 3 || element.type == 4){
+                map[row][column] = 0;
+            }
+        }
         bullets.splice(i, 1);
+      } else if (collisionDirection == 't' || collisionDirection == 'l' || collisionDirection == 'r') {
+        if(bullets[i].type == "teleporter"){
+            king.x = bullets[i].x;
+            king.y = bullets[i].y-32;
+            king.draw();
+            that.updateKing();
+        }
+        else if(bullets[i].type == "destroyer"){
+            if(element.type == 1 || element.type == 2 || element.type == 3 || element.type == 4){
+                map[row][column] = 0;
+            }
+        }
+          bullets.splice(i, 1);
       }
     }
   };
@@ -901,11 +994,17 @@ function KingGame() {
       keys[83] = false;
     }
 
-    if ((keys[17] && king.weapon == 'bow') || king.weapon == 'staff') {
+    if ((keys[17] && king.weapon == 'bow') || king.weapon == 'staff' || king.weapon == 'teleporter' || king.weapon == 'destroyer') {
       //ctrl key
       if (!bulletFlag) {
         bulletFlag = true;
         var bullet = new Bullet();
+        if(teleporterFlag == true){
+            bullet.changeType("teleporter");
+        }
+        else if(destroyerFlag == true){
+            bullet.changeType("destroyer");
+        }
         if (king.velX >= 0) {
           var direction = 1;
         } else {
@@ -916,7 +1015,15 @@ function KingGame() {
 
         //bullet sound
         if (sound) {
-          gameSound.play('bullet');
+            if(teleporterFlag == true){
+                gameSound.play('teleport');
+            }
+            else if(destroyerFlag == true){
+                gameSound.play('explosion');
+            }
+            else{
+                gameSound.play('bullet');
+            }
         }
 
         setTimeout(function() {
@@ -969,43 +1076,47 @@ function KingGame() {
 
   this.levelFinish = function(collisionDirection) {
     //game finishes when king slides the flagPole and collides with the ground
-    if (collisionDirection == 'r') {
-      king.x += 10;
-      king.velY = 2;
-      king.frame = 0;
-    } else if (collisionDirection == 'l') {
-      king.x -= 32;
-      king.velY = 2;
-      king.frame = 0;
-    }
+    // if (collisionDirection == 'r') {
+    //   king.x += 10;
+    //   king.velY = 2;
+    //   king.frame = 0;
+    // } else if (collisionDirection == 'l') {
+    //   king.x -= 32;
+    //   king.velY = 2;
+    //   king.frame = 0;
+    // }
 
-    if (kingInGround) {
-      king.x += 20;
-      king.frame = 0;
-      tickCounter += 1;
-      if (tickCounter > maxTick) {
-        that.pauseGame();
+    king.frame = 0;
 
-        king.x += 10;
-        tickCounter = 0;
-        king.frame = 0;
+    // if (kingInGround) {
+    //   king.x += 20;
+    //   king.frame = 0;
+    //   tickCounter += 1;
+    //   if (tickCounter > maxTick) {
+    //     that.pauseGame();
+
+    //     king.x += 10;
+    //     tickCounter = 0;
+    //     king.frame = 0;
 
         //sound when stage clears
         if (sound) {
           gameSound.play('stageClear');
         }
 
-        timeOutId = setTimeout(function() {
-          currentLevel++;
-          if (originalMaps[currentLevel]) {
-            that.init(originalMaps, currentLevel);
-            score.updateLevelNum(currentLevel);
-          } else {
-            that.gameOver();
-          }
-        }, 5000);
-      }
-    }
+        window.location.reload();
+
+        // timeOutId = setTimeout(function() {
+        //   currentLevel++;
+        //   if (originalMaps[currentLevel]) {
+        //     that.init(originalMaps, currentLevel);
+        //     score.updateLevelNum(currentLevel);
+        //   } else {
+        //     that.gameOver();
+        //   }
+        // }, 5000);
+    //   }
+    // }
   };
 
   this.pauseGame = function() {

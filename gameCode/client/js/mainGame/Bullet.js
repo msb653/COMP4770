@@ -33,20 +33,39 @@ function Bullet() {
   this.update = function() {
     var gravity = 0.2;
 
-    if (that.grounded) {
+    if (that.grounded && that.type != "teleporter") {
       //bouncing the bullet as it touches the ground
       that.grounded = false;
     }
 
     that.velY += gravity;
 
-    that.x += that.velX;
+     
+      if (that.type == "teleporter") {
+          that.y += that.velY - 7;
+          that.x += that.velX * 0.5;
+      }
+      else if(that.type == "destroyer") {
+          that.y += that.velY - 10;
+          that.x += that.velX*0.75;
+      }
+      else {
+          that.x += that.velX;
+      }
   };
   
   this.changeType = function(type) {
 	  if (type == "fireball") {
 		  element.src = 'images/bullet.png';
 		  this.type='fireball';
+      }
+      if (type == "teleporter") {
+		  element.src = 'images/teleporter3.png';
+		  this.type='teleporter';
+      }
+      if (type == "destroyer") {
+		  element.src = 'images/bomb.png';
+		  this.type='destroyer';
 	  }
   }
 }
