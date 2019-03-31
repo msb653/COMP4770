@@ -183,6 +183,9 @@ app.get('/gameCode/client/images/elements.png', function(req, res) {
 app.get('/gameCode/client/images/enemy.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/enemy.png');
 });
+app.get('/gameCode/client/images/enemy3.png', function(req, res) {
+  res.sendFile(__dirname + '/client/images/enemy3.png');
+});
 app.get('/gameCode/client/images/start-screen.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/start-screen.png');
 });

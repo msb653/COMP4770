@@ -40,7 +40,8 @@ function Preloader() {
       22: 'images/teleport_icon.png',
       23: 'images/no_weapon_icon.png',
       24: 'images/arrowLeft.png',
-      25: 'images/swordLeft.png'
+      25: 'images/swordLeft.png',
+      26: 'images/enemy3.png'
     };
 
     that.loadImages(imageSources);

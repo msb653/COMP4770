@@ -43,6 +43,14 @@ function Enemy() {
     this.velY = 1;
   };
 
+  this.enemy3 = function() {
+    this.type = 22;
+    element.src = 'images/enemy3.png';
+    this.width = 64;
+    this.height = 64;
+    this.velY = 1;
+  };
+
   this.draw = function() {
     gameUI.draw(element, that.sX, that.sY, that.width, that.height, that.x, that.y, that.width, that.height);
   };

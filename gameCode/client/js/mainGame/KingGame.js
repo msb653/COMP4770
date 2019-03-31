@@ -494,6 +494,19 @@ function KingGame() {
             enemies.push(enemy);
             map[row][column] = 0;
             break;
+
+            case 22: // flyer(bat)
+            var enemy = new Enemy();
+            enemy.enemy3();
+            enemy.x = column * tileSize;
+            enemy.y = row * tileSize;
+            enemy.initialX = enemy.x;
+            enemy.initialY = enemy.y;
+            enemy.draw();
+
+            enemies.push(enemy);
+            map[row][column] = 0;
+            break;
         }
       }
     }

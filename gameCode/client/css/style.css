@@ -284,6 +284,12 @@
   background: url('../images/elements.png') -512px 0;
 }
 
+.enemy3 {
+  width: 31px;
+  height: 31px;
+  background: url('../images/elements.png') -544px 0;
+}
+
 .wizard {
   width: 31px;
   height: 31px;
