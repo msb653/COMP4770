@@ -91,7 +91,7 @@ function Score() {
   };
 
   this.updateTimeElapsed = function() {
-    that.timeElapsed = setTimeout(add, 1000);
+    that.timeElapsed = setTimeout(add,1000);
     view.setHTML(timeElapsedWrapper, 'Time Elapsed: ' + that.timeElapsed);
   };
 
