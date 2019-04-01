@@ -124,5 +124,5 @@ function GameSound() {
 		}
 		muted = !muted;
 	};
-
+ 
 }
