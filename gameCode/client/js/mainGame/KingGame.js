@@ -603,7 +603,12 @@ function KingGame() {
         // When the user clicks the button, open the modal
 
         modal.style.display = 'block';
-
+        setTimeout(
+            () => {
+              modal.style.display = 'none';
+            },
+            4 * 1000
+        );
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
           modal.style.display = 'none';
@@ -635,7 +640,12 @@ function KingGame() {
         // When the user clicks the button, open the modal
 
         modal.style.display = 'block';
-
+        setTimeout(
+            () => {
+              modal.style.display = 'none';
+            },
+            4 * 1000
+        );
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
           modal.style.display = 'none';
