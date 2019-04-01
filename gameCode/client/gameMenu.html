@@ -10,7 +10,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <audio id="player" autoplay="true" loop>
+        <audio controls id="player" autoplay="true" loop>
             <source src="../client/sounds/MainMenuSound.wav">
         </audio>
         <div class="menuContainer">
@@ -50,6 +50,9 @@
                                         <ul class="list-group">
                                             <li class="list-group-item list-group-item-dark"><strong>S:</strong> 
                                                 <i>Mute the sound</i>
+                                            </li>
+                                            <li class="list-group-item list-group-item-dark"><strong>W:</strong> 
+                                                <i>Weapon toggle</i>
                                             </li>
                                             <li class="list-group-item list-group-item-dark"><strong>Space Bar:</strong> 
                                                 <i>Jump</i>
@@ -143,6 +146,8 @@
             var volume = document.getElementById("volume");
             var player = document.getElementById('player');
             
+            player.volume = sessionStorage.getItem('volume', player.volume);
+            volume.value = player.volume;
             playCampaign.onclick = function () {
                 location.href = "../client/campaignMode.html";
             }
@@ -182,16 +187,31 @@
 
             function setVolume() {
                 player.volume = volume.value;
+                sessionStorage.setItem('volume', player.volume);
+                socket.emit('setVolume', {
+                    user: sessionStorage.getItem("username"),
+                    volume: sessionStorage.getItem("volume")
+                })
             }
 
             function muteVolume(){
                 player.volume = 0;
                 volume.value = 0;
+                sessionStorage.setItem('volume', player.volume);
+                socket.emit('muteVolume', {
+                    user: sessionStorage.getItem("username"),
+                    volume: sessionStorage.getItem("volume")
+                })
             }
 
             function upVolume(){
                 player.volume = 1;
                 volume.value = 1;
+                sessionStorage.setItem('volume', player.volume);
+                socket.emit('upVolume', {
+                    user: sessionStorage.getItem("username"),
+                    volume: sessionStorage.getItem("volume")
+                })
             }
 
             function achievements() {
@@ -203,6 +223,21 @@
             socket.on('savePasswordResponse', function (data) {
                 if (data.success) {
                     alert('Save successful.');
+                } else alert('Save unsuccessful.');
+            });
+
+            socket.on('setVolume', function (data) {
+                if (data.success) {
+                } else alert('Save unsuccessful.');
+            });
+
+            socket.on('muteVolume', function (data) {
+                if (data.success) {
+                } else alert('Save unsuccessful.');
+            });
+
+            socket.on('upVolume', function (data) {
+                if (data.success) {
                 } else alert('Save unsuccessful.');
             });
 

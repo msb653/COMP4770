@@ -93,6 +93,7 @@ function CreatedLevels() {
     });
     that.removeCreatedLevelsScreen();
     that.init();
+    window.location.reload();
   };
 
   this.deleteOneMap = function() {

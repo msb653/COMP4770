@@ -72,7 +72,7 @@ function KingGame() {
         switch (map[row][column]) {
           case 11: //Key
             doorKeys.push(1);
-            break; 
+            break;
         }
       }
     }
@@ -208,13 +208,13 @@ function KingGame() {
     for (var i = 0; i < bullets.length; i++) {
       bullets[i].draw();
       if (bullets[i].type == 'swordRight') {
-    	 bullets[i].y = king.y+15;
-    	 bullets[i].x = king.x + bullets[i].width;
+        bullets[i].y = king.y + 15;
+        bullets[i].x = king.x + bullets[i].width;
       }
-      
+
       if (bullets[i].type == 'swordLeft') {
-    	  bullets[i].y = king.y+15;
-    	  bullets[i].x = king.x - 20;
+        bullets[i].y = king.y + 15;
+        bullets[i].x = king.x - 20;
       }
       bullets[i].update();
     }
@@ -232,8 +232,8 @@ function KingGame() {
           bullet.changeType('fireball'); // specify that the bullet is a fireball
 
           var fireHeight = enemies[i].y;
-          if(enemies[i].type == 24){
-              fireHeight = enemies[i].y + 64;
+          if (enemies[i].type == 24) {
+            fireHeight = enemies[i].y + 64;
           }
 
           if (enemies[i].x < king.x) {
@@ -296,7 +296,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element,row,column);
+            that.checkElementBulletCollision(element, row, column);
             break;
 
           case 2: //forest platform
@@ -308,7 +308,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element,row,column);
+            that.checkElementBulletCollision(element, row, column);
             break;
 
           case 3: //cave platform
@@ -320,7 +320,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element,row,column);
+            that.checkElementBulletCollision(element, row, column);
             break;
 
           case 4: //lava platform
@@ -332,7 +332,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element,row,column);
+            that.checkElementBulletCollision(element, row, column);
             break;
 
           case 5: // Chest
@@ -344,7 +344,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element,row,column);
+            that.checkElementBulletCollision(element, row, column);
 
             break;
 
@@ -357,7 +357,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element,row,column);
+            that.checkElementBulletCollision(element, row, column);
             break;
 
           case 7: //Sword
@@ -369,7 +369,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element,row,column);
+            that.checkElementBulletCollision(element, row, column);
             break;
 
           case 8: //Bow
@@ -381,7 +381,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element,row,column);
+            that.checkElementBulletCollision(element, row, column);
             break;
 
           case 9: //Staff
@@ -393,7 +393,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element,row,column);
+            that.checkElementBulletCollision(element, row, column);
             break;
 
           case 10: //Arrow
@@ -405,7 +405,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             that.checkElementPowerUpCollision(element);
             that.checkElementEnemyCollision(element);
-            that.checkElementBulletCollision(element,row,column);
+            that.checkElementBulletCollision(element, row, column);
             break;
 
           case 11: //Key
@@ -447,7 +447,6 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             break;
 
-          
           case 15: //dead guy
             element.x = column * tileSize;
             element.y = row * tileSize;
@@ -459,8 +458,8 @@ function KingGame() {
             that.checkElementEnemyCollision(element);
             that.checkElementBulletCollision(element);
             break;
-            
-            case 16: //teleporter
+
+          case 16: //teleporter
             element.x = column * tileSize;
             element.y = row * tileSize;
             element.teleporter();
@@ -475,7 +474,7 @@ function KingGame() {
             element.draw();
             that.checkElementKingCollision(element, row, column);
             break;
-            
+
           case 20: // Wizard
             var enemy = new Enemy();
             enemy.wizard();
@@ -500,7 +499,7 @@ function KingGame() {
             map[row][column] = 0;
             break;
 
-            case 22: // enemy 3
+          case 22: // enemy 3
             var enemy = new Enemy();
             enemy.enemy3();
             enemy.x = column * tileSize;
@@ -512,8 +511,8 @@ function KingGame() {
             enemies.push(enemy);
             map[row][column] = 0;
             break;
-            
-            case 23: //crab
+
+          case 23: //crab
             var enemy = new Enemy();
             enemy.crab();
             enemy.x = column * tileSize;
@@ -538,7 +537,6 @@ function KingGame() {
             enemies.push(enemy);
             map[row][column] = 0;
             break;
-            
         }
       }
     }
@@ -591,138 +589,143 @@ function KingGame() {
     var collisionDirection = that.collisionCheck(king, element);
 
     if (collisionDirection == 'l' || collisionDirection == 'r') {
-        if (element.type != 12 && element.type != 13) {
-            king.velX = 0;
-            king.jumping = false;
-        }
+      if (element.type != 12 && element.type != 13) {
+        king.velX = 0;
+        king.jumping = false;
+      }
 
       if (element.type == 15) {
-
         var modal = document.getElementById('myModal');
 
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName('close')[0];
 
+        // When the user clicks the button, open the modal
 
-// Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+        modal.style.display = 'block';
 
-// When the user clicks the button, open the modal
-
-        modal.style.display = "block";
-
-
-// When the user clicks on <span> (x), close the modal
+        // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
-          modal.style.display = "none";
-        }
+          modal.style.display = 'none';
+        };
 
-// When the user clicks anywhere outside of the modal, close it
+        // When the user clicks anywhere outside of the modal, close it
         window.onclick = function(event) {
           if (event.target == modal) {
-            modal.style.display = "none";
+            modal.style.display = 'none';
           }
-        }
+        };
         map[row][column] = 0;
         gameSound.play('help');
 
-        keys[39]=false;
+        keys[39] = false;
       }
-      
-    } else if (collisionDirection == 'b') {
-        if (element.type != 12 && element.type != 13) {
-            king.grounded = true;
-            king.jumping = false;
-        }
-    } else if (collisionDirection == 't') {
-        if (element.type != 12 && element.type != 13) {
-            king.velY *= -1;
-            if (element.type == 5) {
-                var powerUp = new PowerUp();
-                if (king.type == 'small') {
-                    powerUp.crown(element.x, element.y);
-                    powerUps.push(powerUp);
-                }
-                map[row][column] = 6;
-            }
-//help
 
+      if (element.type != 12 && element.type != 13) {
+        king.velX = 0;
+        king.jumping = false;
+      }
+    } else if (collisionDirection == 'b') {
+      if (element.type != 12 && element.type != 13) {
+        king.grounded = true;
+        king.jumping = false;
+      }
+    } else if (collisionDirection == 't') {
+      if (element.type != 12 && element.type != 13) {
+        king.velY *= -1;
+        if (element.type == 5) {
+          var powerUp = new PowerUp();
+          if (king.type == 'small') {
+            powerUp.crown(element.x, element.y);
+            powerUps.push(powerUp);
+          }
+          map[row][column] = 6;
         }
+        //help
+
+        if (element.type == 15) {
+          map[row][column] = 15;
+          gameSound.play('help');
+          alert('Daddy please save me!');
+        }
+      }
     }
 
     // Check collision with collectibles
     if (collisionDirection == 'l' || collisionDirection == 'r' || collisionDirection == 'b' || collisionDirection == 't') {
+      // Remove keys upon collision, and update the doorKeys array
+      if (element.type == 11) {
+        map[row][column] = 0;
+        doorKeys.pop();
+      }
 
-    	// Remove keys upon collision, and update the doorKeys array
-    	if (element.type == 11) {
-    		map[row][column] = 0;
-    		doorKeys.pop();
-    	}
+      // Remove gems upon collision and update score
+      if (element.type == 14) {
+        map[row][column] = 0;
+        score.coinScore++;
+        score.totalScore += 100;
 
-    	// Remove gems upon collision and update score
-    	if (element.type == 14) {
-    		map[row][column] = 0;
-    		score.coinScore++;
-    		score.totalScore += 100;
+        score.updateCoinScore();
+        score.updateTotalScore();
+      }
 
-    		score.updateCoinScore();
-    		score.updateTotalScore();
-    	}
+      // Handle weapon pick ups
+      if (element.type == 7) {
+        // Sword
+        king.hasSword = true;
+        king.weapon = 'sword';
+        score.updateWeapon('sword', -1);
+        map[row][column] = 0;
+      }
 
-    	// Handle weapon pick ups
-    	if (element.type == 7) { // Sword
-    		king.hasSword = true;
-    		king.weapon = 'sword';
-    		score.updateWeapon('sword', -1);
-    		map[row][column] = 0;
-    	}
+      if (element.type == 8) {
+        // Bow
+        map[row][column] = 0;
+        king.hasBow = true;
+        king.weapon = 'bow';
+        king.arrows = king.arrows + 10;
+        score.updateWeapon('bow', king.arrows);
+      }
 
-    	if (element.type == 8) { // Bow
-    		map[row][column] = 0;
-    		king.hasBow = true;
-    		king.weapon = 'bow';
-    		king.arrows = king.arrows + 10;
-    		score.updateWeapon('bow', king.arrows);
-    	}
+      if (element.type == 9) {
+        // Staff
+        map[row][column] = 0;
+        king.hasStaff = true;
+        king.weapon = 'staff';
+        score.updateWeapon('staff', -1);
+      }
 
-    	if (element.type == 9) { // Staff
-    		map[row][column] = 0;  
-    		king.hasStaff = true;
-    		king.weapon = 'staff';
-    		score.updateWeapon('staff', -1);
-    	}
+      if (element.type == 16) {
+        // Teleporter
+        map[row][column] = 0;
+        king.hasTeleporter = true;
+        king.weapon = 'teleporter';
+        king.teleporters = king.teleporters + 5;
+        score.updateWeapon('teleporter', king.teleporters);
+      }
 
-    	if (element.type == 16) { // Teleporter
-    		map[row][column] = 0;
-    		king.hasTeleporter = true;
-    		king.weapon = 'teleporter';
-    		king.teleporters = king.teleporters + 5;
-    		score.updateWeapon('teleporter', king.teleporters);
-    	}
+      if (element.type == 17) {
+        // Destroyer
+        map[row][column] = 0;
+        king.hasDestroyer = true;
+        king.weapon = 'destroyer';
+        king.destroyers = king.destroyers + 5;
+        score.updateWeapon('destroyer', king.destroyers);
+      }
 
-    	if (element.type == 17) { // Destroyer
-    		map[row][column] = 0;
-    		king.hasDestroyer = true;
-    		king.weapon = 'destroyer';
-    		king.destroyers = king.destroyers + 5;
-    		score.updateWeapon('destroyer', king.destroyers);
-    	}
+      // Collision with an arrow
+      if (element.type == 10) {
+        map[row][column] = 0;
+        king.weapon = 'bow';
+        king.arrows = king.arrows + 10;
+        score.updateWeapon('bow', king.arrows);
+      }
 
-    	// Collision with an arrow
-    	if (element.type == 10) { 
-    		map[row][column] = 0;
-    		king.weapon = 'bow';
-    		king.arrows = king.arrows + 10;
-    		score.updateWeapon('bow', king.arrows);
-    	}
-
-        // Collision with an open door (Ends the level)
-        if (element.type == 13) {
-            that.levelFinish(collisionDirection);
-        }
+      // Collision with an open door (Ends the level)
+      if (element.type == 13) {
+        that.levelFinish(collisionDirection);
+      }
     }
-
-    
-
-
   };
 
   this.checkElementPowerUpCollision = function(element) {
@@ -752,17 +755,16 @@ function KingGame() {
           else enemies[i].sX = 0;
         } else if (collisionDirection == 'b') {
           enemies[i].grounded = true;
-          if(enemies[i].type == 23){
+          if (enemies[i].type == 23) {
             enemies[i].velY = -7;
-          }
-          else if(enemies[i].type == 24){
+          } else if (enemies[i].type == 24) {
             enemies[i].velY = -10;
           }
         }
 
         // console.log(collisionDirection);
-        if(collisionDirection == null && (enemies[i].type == 23 || enemies[i].type == 24)){
-            enemies[i].grounded = false;
+        if (collisionDirection == null && (enemies[i].type == 23 || enemies[i].type == 24)) {
+          enemies[i].grounded = false;
         }
       }
     }
@@ -775,36 +777,34 @@ function KingGame() {
       if (collisionDirection == 'b') {
         //if collision is from bottom of the bullet, it is grounded, so that it can be bounced
         bullets[i].grounded = true;
-        if(bullets[i].type == "teleporter"){
-            king.x = bullets[i].x;
-            king.y = bullets[i].y-32;
-            king.draw();
-            that.checkKingPos();
-            that.updateKing();
-            gameSound.play('teleport');
-        }
-        else if(bullets[i].type == "destroyer"){
-            if(element.type == 1 || element.type == 2 || element.type == 3 || element.type == 4){
-                map[row][column] = 0;
-                gameSound.play('explosion');
-            }
+        if (bullets[i].type == 'teleporter') {
+          king.x = bullets[i].x;
+          king.y = bullets[i].y - 32;
+          king.draw();
+          that.checkKingPos();
+          that.updateKing();
+          gameSound.play('teleport');
+        } else if (bullets[i].type == 'destroyer') {
+          if (element.type == 1 || element.type == 2 || element.type == 3 || element.type == 4) {
+            map[row][column] = 0;
+            gameSound.play('explosion');
+          }
         }
         bullets.splice(i, 1);
       } else if (collisionDirection == 't' || collisionDirection == 'l' || collisionDirection == 'r') {
-        if(bullets[i].type == "teleporter"){
-            king.x = bullets[i].x;
-            king.y = bullets[i].y-32;
-            king.draw();
-            that.updateKing();
-            gameSound.play('teleport');
+        if (bullets[i].type == 'teleporter') {
+          king.x = bullets[i].x;
+          king.y = bullets[i].y - 32;
+          king.draw();
+          that.updateKing();
+          gameSound.play('teleport');
+        } else if (bullets[i].type == 'destroyer') {
+          if (element.type == 1 || element.type == 2 || element.type == 3 || element.type == 4) {
+            map[row][column] = 0;
+            gameSound.play('explosion');
+          }
         }
-        else if(bullets[i].type == "destroyer"){
-            if(element.type == 1 || element.type == 2 || element.type == 3 || element.type == 4){
-                map[row][column] = 0;
-                gameSound.play('explosion');
-            }
-        }
-          bullets.splice(i, 1);
+        bullets.splice(i, 1);
       }
     }
   };
@@ -924,18 +924,17 @@ function KingGame() {
 
           enemies[i].hp -= 1;
 
-            if (enemies[i].hp == 0) {
-                enemies[i].state = 'dead';
+          if (enemies[i].hp == 0) {
+            enemies[i].state = 'dead';
 
-                score.totalScore += 1000;
-                score.updateTotalScore();
+            score.totalScore += 1000;
+            score.updateTotalScore();
 
-                //sound when enemy dies
-                if (sound) {
-                    gameSound.play('killEnemy');
-                }
+            //sound when enemy dies
+            if (sound) {
+              gameSound.play('killEnemy');
             }
-          
+          }
         }
       }
     }
@@ -1123,189 +1122,184 @@ function KingGame() {
       }
       keys[83] = false;
     }
-    
+
     // W key
     // Handle weapon cycling
     if (keys[87]) {
-    	
-    	// Currently holding a sword
-    	if (king.weapon == 'sword') {
-    		if (king.hasBow) {
-    			king.weapon = 'bow';
-    			score.updateWeapon('bow', king.arrows);
-    		} else if (king.hasStaff) {
-    			king.weapon = 'staff';
-    			score.updateWeapon('staff', -1);
-    		} else if (king.hasTeleporter) {
-    			king.weapon = 'teleporter';
-    			score.updateWeapon('teleporter', king.teleporters);
-    		} else if (king.hasDestroyer) {
-    			king.weapon = 'destroyer';
-    			score.updateWeapon('destroyer', king.destroyers);
-    		}
-    		keys[87] = false;
-    		return;
-    	}
-    	
-    	// Currently holding a bow
-    	if (king.weapon == 'bow') {
-    	    if (king.hasStaff) {
-    			king.weapon = 'staff';
-    			score.updateWeapon('staff', -1);
-    		} else if (king.hasTeleporter) {
-    			king.weapon = 'teleporter';
-    			score.updateWeapon('teleporter', king.teleporters);
-    		} else if (king.hasDestroyer) {
-    			king.weapon = 'destroyer';
-    			score.updateWeapon('destroyer', king.destroyers);
-    		} else if (king.hasSword) {
-    			king.weapon = 'sword';
-    			score.updateWeapon('sword', -1);
-    		}
-    	    keys[87] = false;
-    	    return;
-    	}
-    	
-    	// Currently holding a staff
-    	if (king.weapon == 'staff') {
-    		if (king.hasTeleporter) {
-    			king.weapon = 'teleporter';
-    			score.updateWeapon('teleporter', king.teleporters);
-    		} else if (king.hasDestroyer) {
-    			king.weapon = 'destroyer';
-    			score.updateWeapon('destroyer', king.destroyers);
-    		} else if (king.hasSword) {
-    			king.weapon = 'sword';
-    			score.updateWeapon('sword', -1);
-    		} else if (king.hasBow) {
-    			king.weapon = 'bow';
-    			score.updateWeapon('bow', king.arrows);
-    		}
-    		keys[87] = false;
-    		return;
-    	}
-    	
-    	// Currently holding a teleporter
-    	if (king.weapon == 'teleporter') {
-    		if (king.hasDestroyer) {
-    			king.weapon = 'destroyer';
-    			score.updateWeapon('destroyer', king.destroyers);
-    		} else if (king.hasSword) {
-    			king.weapon = 'sword';
-    			score.updateWeapon('sword', -1);
-    		} else if (king.hasBow) {
-    			king.weapon = 'bow';
-    			score.updateWeapon('bow', king.arrows);
-    		} else if (king.hasStaff) {
-    			king.weapon = 'staff';
-    			score.updateWeapon('staff', -1);
-    		}
-    		keys[87] = false;
-    		return;
-    	}
+      // Currently holding a sword
+      if (king.weapon == 'sword') {
+        if (king.hasBow) {
+          king.weapon = 'bow';
+          score.updateWeapon('bow', king.arrows);
+        } else if (king.hasStaff) {
+          king.weapon = 'staff';
+          score.updateWeapon('staff', -1);
+        } else if (king.hasTeleporter) {
+          king.weapon = 'teleporter';
+          score.updateWeapon('teleporter', king.teleporters);
+        } else if (king.hasDestroyer) {
+          king.weapon = 'destroyer';
+          score.updateWeapon('destroyer', king.destroyers);
+        }
+        keys[87] = false;
+        return;
+      }
 
-    	// Currently holding a destroyer
-    	if (king.weapon == 'destroyer') {
-    		if (king.hasSword) {
-    			king.weapon = 'sword';
-    			score.updateWeapon('sword', -1);
-    		} else if (king.hasBow) {
-    			king.weapon = 'bow';
-    			score.updateWeapon('bow', king.arrows);
-    		} else if (king.hasStaff) {
-    			king.weapon = 'staff';
-    			score.updateWeapon('staff', -1);
-    		} else if (king.hasTeleporter) {
-    			king.weapon = 'teleporter';
-    			score.updateWeapon('teleporter', king.teleporters);
-    		}
-    		keys[87] = false;
-    		return;
-    	}
+      // Currently holding a bow
+      if (king.weapon == 'bow') {
+        if (king.hasStaff) {
+          king.weapon = 'staff';
+          score.updateWeapon('staff', -1);
+        } else if (king.hasTeleporter) {
+          king.weapon = 'teleporter';
+          score.updateWeapon('teleporter', king.teleporters);
+        } else if (king.hasDestroyer) {
+          king.weapon = 'destroyer';
+          score.updateWeapon('destroyer', king.destroyers);
+        } else if (king.hasSword) {
+          king.weapon = 'sword';
+          score.updateWeapon('sword', -1);
+        }
+        keys[87] = false;
+        return;
+      }
 
+      // Currently holding a staff
+      if (king.weapon == 'staff') {
+        if (king.hasTeleporter) {
+          king.weapon = 'teleporter';
+          score.updateWeapon('teleporter', king.teleporters);
+        } else if (king.hasDestroyer) {
+          king.weapon = 'destroyer';
+          score.updateWeapon('destroyer', king.destroyers);
+        } else if (king.hasSword) {
+          king.weapon = 'sword';
+          score.updateWeapon('sword', -1);
+        } else if (king.hasBow) {
+          king.weapon = 'bow';
+          score.updateWeapon('bow', king.arrows);
+        }
+        keys[87] = false;
+        return;
+      }
+
+      // Currently holding a teleporter
+      if (king.weapon == 'teleporter') {
+        if (king.hasDestroyer) {
+          king.weapon = 'destroyer';
+          score.updateWeapon('destroyer', king.destroyers);
+        } else if (king.hasSword) {
+          king.weapon = 'sword';
+          score.updateWeapon('sword', -1);
+        } else if (king.hasBow) {
+          king.weapon = 'bow';
+          score.updateWeapon('bow', king.arrows);
+        } else if (king.hasStaff) {
+          king.weapon = 'staff';
+          score.updateWeapon('staff', -1);
+        }
+        keys[87] = false;
+        return;
+      }
+
+      // Currently holding a destroyer
+      if (king.weapon == 'destroyer') {
+        if (king.hasSword) {
+          king.weapon = 'sword';
+          score.updateWeapon('sword', -1);
+        } else if (king.hasBow) {
+          king.weapon = 'bow';
+          score.updateWeapon('bow', king.arrows);
+        } else if (king.hasStaff) {
+          king.weapon = 'staff';
+          score.updateWeapon('staff', -1);
+        } else if (king.hasTeleporter) {
+          king.weapon = 'teleporter';
+          score.updateWeapon('teleporter', king.teleporters);
+        }
+        keys[87] = false;
+        return;
+      }
     }
 
-    
     // When ctrl is pressed (attack key)
-    if (keys[17] && (king.weapon == 'bow' || king.weapon == 'staff' || king.weapon == 'teleporter' || king.weapon == 'destroyer' || king.weapon == 'sword')) { // Only go inside if using a weapon
+    if (keys[17] && (king.weapon == 'bow' || king.weapon == 'staff' || king.weapon == 'teleporter' || king.weapon == 'destroyer' || king.weapon == 'sword')) {
+      // Only go inside if using a weapon
       //ctrl key
       if (!bulletFlag) {
         var bullet = new Bullet();
-        
+
         if (king.velX >= 0) {
-            var direction = 1;
+          var direction = 1;
+        } else {
+          var direction = -1;
+        }
+
+        if (king.weapon == 'teleporter' && king.teleporters > 0) {
+          // Throwing a teleporter
+          bulletFlag = true;
+          bullet.changeType('teleporter');
+          bullet.init(king.x, king.y, direction);
+          bullets.push(bullet);
+          king.teleporters = king.teleporters - 1;
+          score.updateWeapon('teleporter', king.teleporters);
+          gameSound.play('woosh');
+          setTimeout(function() {
+            bulletFlag = false; //only lets king fire bullet after 500ms
+          }, 1000);
+        } else if (king.weapon == 'destroyer' && king.destroyers > 0) {
+          bulletFlag = true;
+          bullet.changeType('destroyer');
+          bullet.init(king.x, king.y, direction);
+          bullets.push(bullet);
+          king.destroyers = king.destroyers - 1;
+          score.updateWeapon('destroyer', king.destroyers);
+          gameSound.play('woosh');
+          setTimeout(function() {
+            bulletFlag = false; //only lets king fire bullet after 500ms
+          }, 1000);
+        } else if (king.weapon == 'bow' && king.arrows > 0) {
+          bulletFlag = true;
+          bullet.init(king.x, king.y, direction);
+          bullet.changeType('arrow');
+          bullets.push(bullet);
+          king.arrows = king.arrows - 1;
+          score.updateWeapon('bow', king.arrows);
+          gameSound.play('bow');
+          setTimeout(function() {
+            bulletFlag = false; //only lets king fire bullet after 500ms
+          }, 500);
+        } else if (king.weapon == 'staff') {
+          bulletFlag = true;
+          bullet.changeType('fireball');
+          bullet.init(king.x, king.y, direction);
+          bullets.push(bullet);
+          gameSound.play('fireball');
+          setTimeout(function() {
+            bulletFlag = false; //only lets king fire bullet after 500ms
+          }, 1000);
+        } else if (king.weapon == 'sword') {
+          gameSound.play('sword');
+          bulletFlag = true;
+          if (king.velX >= 0) {
+            bullet.changeType('swordRight');
           } else {
-            var direction = -1;
+            bullet.changeType('swordLeft');
           }
-        
-        if(king.weapon == 'teleporter' && king.teleporters > 0) { // Throwing a teleporter
-        	bulletFlag = true;
-            bullet.changeType("teleporter");
-            bullet.init(king.x, king.y, direction);
-            bullets.push(bullet);
-            king.teleporters = king.teleporters-1;
-            score.updateWeapon('teleporter', king.teleporters);
-            gameSound.play('woosh');
-            setTimeout(function() {
-                bulletFlag = false; //only lets king fire bullet after 500ms
-              }, 1000);
-        }
-        else if(king.weapon == 'destroyer' && king.destroyers > 0){
-        	bulletFlag = true;
-        	bullet.changeType("destroyer");
-            bullet.init(king.x, king.y, direction);
-            bullets.push(bullet);
-            king.destroyers = king.destroyers-1;
-            score.updateWeapon('destroyer', king.destroyers);
-            gameSound.play('woosh');
-            setTimeout(function() {
-                bulletFlag = false; //only lets king fire bullet after 500ms
-              }, 1000);
-        }
-        else if(king.weapon == 'bow' && king.arrows > 0){
-        	bulletFlag = true;
-            bullet.init(king.x, king.y, direction);
-            bullet.changeType("arrow");
-            bullets.push(bullet);
-            king.arrows = king.arrows-1;
-            score.updateWeapon('bow', king.arrows);
-            gameSound.play('bow');
-            setTimeout(function() {
-                bulletFlag = false; //only lets king fire bullet after 500ms
-              }, 500);
-        }
-        else if(king.weapon == 'staff' ){
-        	bulletFlag = true;
-        	bullet.changeType("fireball");
-            bullet.init(king.x, king.y, direction);
-            bullets.push(bullet);
-            gameSound.play('fireball');
-            setTimeout(function() {
-                bulletFlag = false; //only lets king fire bullet after 500ms
-              }, 1000);
-        }
-        else if(king.weapon == 'sword' ){
-        	gameSound.play('sword');
-        	bulletFlag = true;
-        	if (king.velX >= 0) {
-        		bullet.changeType("swordRight");
-        	} else {
-        		bullet.changeType("swordLeft");
-        	}
-        	
-            bullet.init(king.x, king.y, direction);
-            bullets.push(bullet);
-            gameSound.play('sword');
-            var swordIndex = bullets.length;
-            setTimeout(function() {
-            	//remove the sword "bullet" from the array after a quarter second
-            	for (var i = 0; i < bullets.length; i++) {
-            		if (bullets[i].type == 'swordRight' || bullets[i].type == 'swordLeft') {
-            			bullets.splice(i, 1);
-            		}
-            	}
-                bulletFlag = false; //only lets king fire bullet after 500ms
-              }, 250);
+
+          bullet.init(king.x, king.y, direction);
+          bullets.push(bullet);
+          gameSound.play('sword');
+          var swordIndex = bullets.length;
+          setTimeout(function() {
+            //remove the sword "bullet" from the array after a quarter second
+            for (var i = 0; i < bullets.length; i++) {
+              if (bullets[i].type == 'swordRight' || bullets[i].type == 'swordLeft') {
+                bullets.splice(i, 1);
+              }
+            }
+            bulletFlag = false; //only lets king fire bullet after 500ms
+          }, 250);
         }
       }
     }
@@ -1374,22 +1368,22 @@ function KingGame() {
     //     tickCounter = 0;
     //     king.frame = 0;
 
-        //sound when stage clears
-        if (sound) {
-          gameSound.play('stageClear');
-        }
+    //sound when stage clears
+    if (sound) {
+      gameSound.play('stageClear');
+    }
 
-        window.location.reload();
+    window.location.reload();
 
-        // timeOutId = setTimeout(function() {
-        //   currentLevel++;
-        //   if (originalMaps[currentLevel]) {
-        //     that.init(originalMaps, currentLevel);
-        //     score.updateLevelNum(currentLevel);
-        //   } else {
-        //     that.gameOver();
-        //   }
-        // }, 5000);
+    // timeOutId = setTimeout(function() {
+    //   currentLevel++;
+    //   if (originalMaps[currentLevel]) {
+    //     that.init(originalMaps, currentLevel);
+    //     score.updateLevelNum(currentLevel);
+    //   } else {
+    //     that.gameOver();
+    //   }
+    // }, 5000);
     //   }
     // }
   };

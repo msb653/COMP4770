@@ -52,7 +52,7 @@ function Enemy() {
     this.velY = 1;
   };
 
-this.crab = function() {
+  this.crab = function() {
     this.type = 23;
     element.src = 'images/crab.png';
     this.width = 128;
@@ -61,7 +61,7 @@ this.crab = function() {
     this.rangedAttack = true;
     this.velX = 0;
     this.hp = 5;
-  }
+  };
 
   this.boss = function() {
     this.type = 24;
@@ -71,7 +71,7 @@ this.crab = function() {
     this.fireRate = 1500;
     this.rangedAttack = true;
     this.hp = 5;
-  }
+  };
 
   this.draw = function() {
     gameUI.draw(element, that.sX, that.sY, that.width, that.height, that.x, that.y, that.width, that.height);
@@ -82,32 +82,28 @@ this.crab = function() {
 
     if (that.grounded && that.type != 23 && that.type != 24) {
       that.velY = 0;
-    }
-    else if(that.grounded && that.type == 23 && that.type == 24){
-        that.velY = -5;
+    } else if (that.grounded && that.type == 23 && that.type == 24) {
+      that.velY = -5;
     }
 
     if (that.state == 'dead') {
       //falling enemy
       that.frame = 0;
       that.velY += gravity;
-      if(that.type != 23){
+      if (that.type != 23) {
         that.y += that.velY;
+      } else {
+        that.y -= that.velY;
       }
-      else{
-          that.y -= that.velY;
-      }
-      
     } else {
       //only animate when not dead
-      if(that.type == 21){
-          if (that.x > that.initialX + 50) {
-              that.velX = -1;
-          }
-          else if (that.x < that.initialX - 50) {
-              that.velX = 1;
-          }
-          that.velY = 0;
+      if (that.type == 21) {
+        if (that.x > that.initialX + 50) {
+          that.velX = -1;
+        } else if (that.x < that.initialX - 50) {
+          that.velX = 1;
+        }
+        that.velY = 0;
         //   if (that.y > that.initialY + 50 || that.y > that.initialY) {
         //       that.velY = -1;
         //   }
@@ -117,29 +113,24 @@ this.crab = function() {
 
         that.x += that.velX;
         that.y += that.velY;
-      }
-      else if(that.type == 23){
+      } else if (that.type == 23) {
         that.velY += gravity;
         that.x += that.velX;
-        that.y += that.velY
-      }
-      else if(that.type == 24){
-          that.velY += 0.4;
-          if (that.x > that.initialX + 100) {
-              that.velX = -3;
-          }
-          else if (that.x < that.initialX - 100) {
-              that.velX = 3;
-          }
-          that.x += that.velX;
-          that.y += that.velY
-      }
-      else{
+        that.y += that.velY;
+      } else if (that.type == 24) {
+        that.velY += 0.4;
+        if (that.x > that.initialX + 100) {
+          that.velX = -3;
+        } else if (that.x < that.initialX - 100) {
+          that.velX = 3;
+        }
+        that.x += that.velX;
+        that.y += that.velY;
+      } else {
         that.velY += gravity;
         that.x += that.velX;
         that.y += that.velY;
       }
-      
 
       //for animating
       tickCounter += 1;
