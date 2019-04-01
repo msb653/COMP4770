@@ -9,13 +9,10 @@ var KingMaker = (function() {
     var mainWrapper;
     var startScreen;
     var btnWrapper;
-
     var editorButton;
     var startGameButton;
     var createdLevelsButton;
-
     var editorStarted = 0;
-
     var backToMenuBtn;
 
     //instances
@@ -37,8 +34,18 @@ var KingMaker = (function() {
       startGameButton = view.create('button');
       createdLevelsButton = view.create('div');
       backToMenuBtn = view.create('button');
+      // startGameButton.innerHTML = 'Begin';
+      // createdLevelsButton.innerHTML = 'seelevels';
+      editorButton.innerHTML = 'Level Editor';
       backToMenuBtn.innerHTML = 'Back';
 
+      // view.addClass(backToMenuBtn, 'delete-btn');
+      // view.addClass(btnWrapper, 'btn-wrapper');
+      // view.addClass(startScreen, 'start-screen');
+
+      view.addClass(editorButton, 'editor-btn');
+      view.addClass(startGameButton, 'start-btn');
+      // view.addClass(createdLevelsButton, 'created-btn');
       view.addClass(backToMenuBtn, 'delete-btn');
       view.addClass(btnWrapper, 'btn-wrapper');
       view.addClass(startScreen, 'start-screen');

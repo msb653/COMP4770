@@ -160,8 +160,8 @@ app.get('/gameCode/client/images/bomb.png', function(req, res) {
 app.get('/gameCode/client/images/bat2.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/bat2.png');
 });
-app.get('/gameCode/client/images/crab.png', function (req, res) {
-    res.sendFile(__dirname + '/client/images/crab.png');
+app.get('/gameCode/client/images/crab.png', function(req, res) {
+  res.sendFile(__dirname + '/client/images/crab.png');
 });
 app.get('/gameCode/client/images/back-btn.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/back-btn.png');
@@ -198,6 +198,9 @@ app.get('/gameCode/client/images/enemy3.png', function(req, res) {
 });
 app.get('/gameCode/client/images/start-screen.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/start-screen.png');
+});
+app.get('/gameCode/client/images/start-btn.png', function(req, res) {
+  res.sendFile(__dirname + '/client/images/start-btn.png');
 });
 app.get('/gameCode/client/images/grid-large-btn.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/grid-large-btn.png');
@@ -303,26 +306,26 @@ app.get('/gameCode/client/js/Preloader.js', function(req, res) {
 });
 
 app.get('/gameCode/client/images/bow_icon.png', function(req, res) {
-	  res.sendFile(__dirname + '/client/images/bow_icon.png');
-	});
+  res.sendFile(__dirname + '/client/images/bow_icon.png');
+});
 app.get('/gameCode/client/images/staff_icon.png', function(req, res) {
-	  res.sendFile(__dirname + '/client/images/staff_icon.png');
-	});
+  res.sendFile(__dirname + '/client/images/staff_icon.png');
+});
 app.get('/gameCode/client/images/sword_icon.png', function(req, res) {
-	  res.sendFile(__dirname + '/client/images/sword_icon.png');
-	});
+  res.sendFile(__dirname + '/client/images/sword_icon.png');
+});
 app.get('/gameCode/client/images/teleport_icon.png', function(req, res) {
-	  res.sendFile(__dirname + '/client/images/teleport_icon.png');
-	});
+  res.sendFile(__dirname + '/client/images/teleport_icon.png');
+});
 app.get('/gameCode/client/images/no_weapon_icon.png', function(req, res) {
-	  res.sendFile(__dirname + '/client/images/no_weapon_icon.png');
-	});
+  res.sendFile(__dirname + '/client/images/no_weapon_icon.png');
+});
 app.get('/gameCode/client/images/arrowLeft.png', function(req, res) {
-	  res.sendFile(__dirname + '/client/images/arrowLeft.png');
-	});
+  res.sendFile(__dirname + '/client/images/arrowLeft.png');
+});
 app.get('/gameCode/client/images/swordLeft.png', function(req, res) {
-	  res.sendFile(__dirname + '/client/images/swordLeft.png');
-	});
+  res.sendFile(__dirname + '/client/images/swordLeft.png');
+});
 
 //Sounds
 app.get('/gameCode/client/sounds/jump.wav', function(req, res) {
@@ -350,13 +353,13 @@ app.get('/gameCode/client/sounds/bomb.wav', function(req, res) {
   res.sendFile(__dirname + '/client/sounds/bomb.wav');
 });
 app.get('/gameCode/client/sounds/teleport.mp3', function(req, res) {
-	res.sendFile(__dirname + '/client/sounds/teleport.mp3');
+  res.sendFile(__dirname + '/client/sounds/teleport.mp3');
 });
 app.get('/gameCode/client/sounds/throw.wav', function(req, res) {
-	res.sendFile(__dirname + '/client/sounds/throw.wav');
+  res.sendFile(__dirname + '/client/sounds/throw.wav');
 });
 app.get('/gameCode/client/sounds/sword.wav', function(req, res) {
-	res.sendFile(__dirname + '/client/sounds/sword.wav');
+  res.sendFile(__dirname + '/client/sounds/sword.wav');
 });
 app.get('/gameCode/client/sounds/silence.mp3', function(req, res) {
   res.sendFile(__dirname + '/client/sounds/silence.mp3');
@@ -632,7 +635,7 @@ var deleteOneLevel = (data, cb) => {
 
 var addUser = (data, cb) => {
   hashedPassword = getHash(data.password);
-  db.account.insert({ username: data.username, password: hashedPassword }, err => {
+  db.account.insert({ username: data.username, password: hashedPassword, volume: data.volume }, err => {
     if (!err) {
       console.log(hashedPassword);
       cb();
@@ -655,6 +658,19 @@ var addLevel = (data, cb) => {
       cb();
     }
   );
+};
+
+var setVolume = (data, cb) => {
+  db.account.find({ username: data.user }, (err, res) => {
+    if (res.length > 0) {
+      var myquery = { username: data.user };
+      var newvalues = { $set: { username: data.user, volume: data.volume } };
+      db.account.update(myquery, newvalues, (err, res) => {
+        if (err) throw err;
+      });
+      cb(true);
+    } else cb(false, { user: data.user });
+  });
 };
 
 // var updateScore = (data, cb) => {
@@ -699,6 +715,30 @@ io.sockets.on('connection', socket => {
           } else socket.emit('emptyPasswordResponse', { success: false });
         } else socket.emit('checkEmptyResponse', { success: false });
       }
+    });
+  });
+
+  socket.on('setVolume', data => {
+    setVolume(data, (res, user) => {
+      if (res) {
+        socket.emit('setVolume', { success: true });
+      } else socket.emit('setVolume', { success: false });
+    });
+  });
+
+  socket.on('muteVolume', data => {
+    setVolume(data, (res, user) => {
+      if (res) {
+        socket.emit('muteVolume', { success: true });
+      } else socket.emit('muteVolume', { success: false });
+    });
+  });
+
+  socket.on('upVolume', data => {
+    setVolume(data, (res, user) => {
+      if (res) {
+        socket.emit('upVolume', { success: true });
+      } else socket.emit('upVolume', { success: false });
     });
   });
 

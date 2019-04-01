@@ -121,14 +121,16 @@
       signDivSignIn.onclick = () => {
         socket.emit('signIn', {
           username: signDivUsername.value,
-          password: signDivPassword.value
+          password: signDivPassword.value,
+          volume: 0
         });
       };
 
       signDivSignUp.onclick = () => {
         socket.emit('signUp', {
           username: signDivCreateUserName.value,
-          password: signDivCreatePassword.value
+          password: signDivCreatePassword.value,
+          volume: 0
         });
       };
 
