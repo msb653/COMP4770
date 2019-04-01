@@ -1133,7 +1133,9 @@ function KingGame() {
     // S key
     if (keys[83]) {
       gameSound.toggleAudio();
-      keys[83] = false;
+      for (var i = 0; i < keys.length; i++) {
+          keys[i] = false;
+      }
     }
 
     // W key
