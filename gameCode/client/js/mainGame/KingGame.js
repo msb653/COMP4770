@@ -422,6 +422,7 @@ function KingGame() {
             element.y = row * tileSize;
             element.door();
             element.draw();
+            that.checkElementKingCollision(element, row, column);
             if (doorKeys.length == 0) {
               map[row][column] = 13;
               that.checkElementKingCollision(element, row, column);
@@ -592,6 +593,34 @@ function KingGame() {
       if (element.type != 12 && element.type != 13) {
         king.velX = 0;
         king.jumping = false;
+      }
+      if(element.type == 12){
+        var modal = document.getElementById('myModal2');
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName('close')[0];
+
+        // When the user clicks the button, open the modal
+
+        modal.style.display = 'block';
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = 'none';
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = 'none';
+          }
+        };
+       // map[row][column] = 0;
+        gameSound.play('help');
+
+        keys[39] = false;
+
+
       }
 
       if (element.type == 15) {
