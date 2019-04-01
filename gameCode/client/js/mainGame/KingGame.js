@@ -19,8 +19,7 @@ function KingGame() {
   var element;
   var gameSound;
   var score;
-  var sound;
-
+  
   var keys;
   var doorKeys;
   var enemies;
@@ -45,7 +44,6 @@ function KingGame() {
     tileSize = 32;
     translatedDist = 0;
     enemies = [];
-    sound = true;
     powerUps = [];
     bullets = [];
     keys = [];
@@ -243,10 +241,9 @@ function KingGame() {
             bullet.init(enemies[i].x, fireHeight, -1);
           }
           bullets.push(bullet);
+          
           // Play fireball audio
-          if (sound) {
             gameSound.play('fireball');
-          }
 
           // Make the enemy wait until they can fire again
           (function(index) {
@@ -857,9 +854,8 @@ function KingGame() {
         score.totalScore += 1000;
         score.updateTotalScore();
 
-        if (sound) {
-          gameSound.play('powerUp');
-        }
+        gameSound.play('powerUp');
+        
       }
     }
   };
@@ -880,9 +876,7 @@ function KingGame() {
           score.updateTotalScore();
 
           //sound when enemy dies
-          if (sound) {
-            gameSound.play('killEnemy');
-          }
+          gameSound.play('killEnemy');
         } else if (collWithKing == 'r' || collWithKing == 'l' || collWithKing == 'b') {
           enemies[i].velX *= -1;
 
@@ -892,9 +886,7 @@ function KingGame() {
             collWithKing = undefined;
 
             //sound when king powerDowns
-            if (sound) {
-              gameSound.play('powerDown');
-            }
+            gameSound.play('powerDown');
 
             setTimeout(function() {
               king.invulnerable = false;
@@ -906,9 +898,7 @@ function KingGame() {
             collWithKing = undefined;
 
             //sound when king powerDowns
-            if (sound) {
-              gameSound.play('powerDown');
-            }
+            gameSound.play('powerDown');
 
             setTimeout(function() {
               king.invulnerable = false;
@@ -924,9 +914,7 @@ function KingGame() {
             score.updateLifeCount();
 
             //sound when king dies
-            if (sound) {
-              gameSound.play('kingDie');
-            }
+            gameSound.play('kingDie');
 
             timeOutId = setTimeout(function() {
               if (score.lifeCount == 0) {
@@ -963,9 +951,7 @@ function KingGame() {
             score.updateTotalScore();
 
             //sound when enemy dies
-            if (sound) {
-              gameSound.play('killEnemy');
-            }
+            gameSound.play('killEnemy');
           }
         }
       }
@@ -988,9 +974,7 @@ function KingGame() {
           collWithKing = undefined;
 
           //sound when king powerDowns
-          if (sound) {
-            gameSound.play('powerDown');
-          }
+          gameSound.play('powerDown');
 
           setTimeout(function() {
             king.invulnerable = false;
@@ -1002,9 +986,7 @@ function KingGame() {
           collWithKing = undefined;
 
           //sound when king powerDowns
-          if (sound) {
-            gameSound.play('powerDown');
-          }
+          gameSound.play('powerDown');
 
           setTimeout(function() {
             king.invulnerable = false;
@@ -1020,9 +1002,7 @@ function KingGame() {
           score.updateLifeCount();
 
           //sound when king dies
-          if (sound) {
-            gameSound.play('kingDie');
-          }
+          gameSound.play('kingDie');
 
           timeOutId = setTimeout(function() {
             if (score.lifeCount == 0) {
@@ -1050,9 +1030,7 @@ function KingGame() {
       that.pauseGame();
 
       //sound when king dies
-      if (sound) {
-        gameSound.play('kingDie');
-      }
+      gameSound.play('kingDie');
 
       score.lifeCount--;
       score.updateLifeCount();
@@ -1082,9 +1060,7 @@ function KingGame() {
         king.velY = -(king.speed / 2 + 5.5);
 
         //sound when king jumps
-        if (sound) {
-          gameSound.play('jump');
-        }
+        gameSound.play('jump');
       }
     }
 
@@ -1146,12 +1122,7 @@ function KingGame() {
 
     // S key
     if (keys[83]) {
-      sound = !sound;
-      if (sound == true) {
-        alert('sound unmuted');
-      } else {
-        alert('sound muted');
-      }
+      gameSound.toggleAudio();
       keys[83] = false;
     }
 
@@ -1401,9 +1372,7 @@ function KingGame() {
         king.frame = 0;
 
         // sound when stage clears
-        if (sound) {
-          gameSound.play('stageClear');
-        }
+        gameSound.play('stageClear');
         if (originalMaps[2]== undefined) {
           window.location.reload();
         }
@@ -1427,9 +1396,7 @@ function KingGame() {
 
   this.gameOver = function() {
     // Play game over audio
-    if (sound) {
-      gameSound.play('gameOver');
-    }
+    gameSound.play('gameOver');
     score.gameOverView();
     gameUI.makeBox(0, 0, maxWidth, height);
     gameUI.writeText('Game Over', centerPos - 80, height - 300);
