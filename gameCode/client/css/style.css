@@ -290,6 +290,18 @@
   background: url('../images/elements.png') -544px 0;
 }
 
+.crab {
+  width: 31px;
+  height: 31px;
+  background: url('../images/elements.png') -576px 0;
+}
+
+.boss {
+  width: 31px;
+  height: 31px;
+  background: url('../images/elements.png') -608px 0;
+}
+
 .wizard {
   width: 31px;
   height: 31px;

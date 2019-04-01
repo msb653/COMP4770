@@ -156,11 +156,17 @@ app.get('/gameCode/client/images/bomb.png', function(req, res) {
 app.get('/gameCode/client/images/bat2.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/bat2.png');
 });
+app.get('/gameCode/client/images/crab.png', function (req, res) {
+    res.sendFile(__dirname + '/client/images/crab.png');
+});
 app.get('/gameCode/client/images/back-btn.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/back-btn.png');
 });
 app.get('/gameCode/client/images/bg.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/bg.png');
+});
+app.get('/gameCode/client/images/boss.png', function(req, res) {
+  res.sendFile(__dirname + '/client/images/boss.png');
 });
 app.get('/gameCode/client/images/arrow.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/arrow.png');

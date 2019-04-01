@@ -81,6 +81,14 @@ function GameSound() {
       mainMenuSound.pause();
       mainMenuSound.currentTime = 0;
       mainMenuSound.play();
+    } else if (element == 'teleport') {
+      teleport.pause();
+      teleport.currentTime = 0;
+      teleport.play();
+    } else if (element == 'explosion') {
+      explosion.pause();
+      explosion.currentTime = 0;
+      explosion.play();
     }
     else if (element == 'teleport') {
     	teleport.pause();

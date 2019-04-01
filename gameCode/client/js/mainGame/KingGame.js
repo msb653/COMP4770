@@ -231,11 +231,16 @@ function KingGame() {
           bullet.enemy = 1; // make the bullet hostile
           bullet.changeType('fireball'); // specify that the bullet is a fireball
 
+          var fireHeight = enemies[i].y;
+          if(enemies[i].type == 24){
+              fireHeight = enemies[i].y + 64;
+          }
+
           if (enemies[i].x < king.x) {
             // Shoot left or right depending on the position on the king
-            bullet.init(enemies[i].x, enemies[i].y, 1);
+            bullet.init(enemies[i].x, fireHeight, 1);
           } else {
-            bullet.init(enemies[i].x, enemies[i].y, -1);
+            bullet.init(enemies[i].x, fireHeight, -1);
           }
           bullets.push(bullet);
           // Play fireball audio
@@ -495,7 +500,7 @@ function KingGame() {
             map[row][column] = 0;
             break;
 
-            case 22: // flyer(bat)
+            case 22: // enemy 3
             var enemy = new Enemy();
             enemy.enemy3();
             enemy.x = column * tileSize;
@@ -507,6 +512,33 @@ function KingGame() {
             enemies.push(enemy);
             map[row][column] = 0;
             break;
+            
+            case 23: //crab
+            var enemy = new Enemy();
+            enemy.crab();
+            enemy.x = column * tileSize;
+            enemy.y = row * tileSize;
+            enemy.initialX = enemy.x;
+            enemy.initialY = enemy.y;
+            enemy.draw();
+
+            enemies.push(enemy);
+            map[row][column] = 0;
+            break;
+
+          case 24: //boss
+            var enemy = new Enemy();
+            enemy.boss();
+            enemy.x = column * tileSize;
+            enemy.y = row * tileSize;
+            enemy.initialX = enemy.x;
+            enemy.initialY = enemy.y;
+            enemy.draw();
+
+            enemies.push(enemy);
+            map[row][column] = 0;
+            break;
+            
         }
       }
     }
@@ -655,12 +687,13 @@ function KingGame() {
     		score.updateWeapon('bow', king.arrows);
     	}
 
+        // Collision with an open door (Ends the level)
+        if (element.type == 13) {
+            that.levelFinish(collisionDirection);
+        }
     }
 
-    // Collision with an open door (Ends the level)
-    if(element.type == 13){
-    	that.levelFinish(collisionDirection);
-    }
+    
 
 
   };
@@ -692,6 +725,17 @@ function KingGame() {
           else enemies[i].sX = 0;
         } else if (collisionDirection == 'b') {
           enemies[i].grounded = true;
+          if(enemies[i].type == 23){
+            enemies[i].velY = -7;
+          }
+          else if(enemies[i].type == 24){
+            enemies[i].velY = -10;
+          }
+        }
+
+        // console.log(collisionDirection);
+        if(collisionDirection == null && (enemies[i].type == 23 || enemies[i].type == 24)){
+            enemies[i].grounded = false;
         }
       }
     }
@@ -851,15 +895,20 @@ function KingGame() {
           bullets[j] = null;
           bullets.splice(j, 1);
 
-          enemies[i].state = 'dead';
+          enemies[i].hp -= 1;
 
-          score.totalScore += 1000;
-          score.updateTotalScore();
+            if (enemies[i].hp == 0) {
+                enemies[i].state = 'dead';
 
-          //sound when enemy dies
-          if (sound) {
-            gameSound.play('killEnemy');
-          }
+                score.totalScore += 1000;
+                score.updateTotalScore();
+
+                //sound when enemy dies
+                if (sound) {
+                    gameSound.play('killEnemy');
+                }
+            }
+          
         }
       }
     }

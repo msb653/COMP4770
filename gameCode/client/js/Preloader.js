@@ -41,7 +41,9 @@ function Preloader() {
       23: 'images/no_weapon_icon.png',
       24: 'images/arrowLeft.png',
       25: 'images/swordLeft.png',
-      26: 'images/enemy3.png'
+      26: 'images/enemy3.png',
+      27: 'images/crab.png',
+      28: 'images/boss.png'
     };
 
     that.loadImages(imageSources);
