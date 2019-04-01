@@ -594,6 +594,9 @@ function KingGame() {
         king.jumping = false;
       }
 
+      if (element.type == 13) {
+        that.levelFinish(collisionDirection);
+      }
       if (element.type == 15) {
         var modal = document.getElementById('myModal');
 
@@ -1345,47 +1348,48 @@ function KingGame() {
 
   this.levelFinish = function(collisionDirection) {
     //game finishes when king slides the flagPole and collides with the ground
-    // if (collisionDirection == 'r') {
-    //   king.x += 10;
-    //   king.velY = 2;
-    //   king.frame = 0;
-    // } else if (collisionDirection == 'l') {
-    //   king.x -= 32;
-    //   king.velY = 2;
-    //   king.frame = 0;
-    // }
+    if (collisionDirection == 'r') {
+      king.x += 10;
+      king.velY = 2;
+      king.frame = 0;
+    } else if (collisionDirection == 'l') {
+      king.x -= 32;
+      king.velY = 2;
+      king.frame = 0;
+    }
 
     king.frame = 0;
 
-    // if (kingInGround) {
-    //   king.x += 20;
-    //   king.frame = 0;
-    //   tickCounter += 1;
-    //   if (tickCounter > maxTick) {
-    //     that.pauseGame();
+    if (kingInGround) {
+      king.x += 20;
+      king.frame = 0;
+      tickCounter += 1;
+      if (tickCounter > maxTick) {
+        that.pauseGame();
 
-    //     king.x += 10;
-    //     tickCounter = 0;
-    //     king.frame = 0;
+        king.x += 10;
+        tickCounter = 0;
+        king.frame = 0;
 
-    //sound when stage clears
-    if (sound) {
-      gameSound.play('stageClear');
+        // sound when stage clears
+        if (sound) {
+          gameSound.play('stageClear');
+        }
+        if (originalMaps[2]== undefined) {
+          window.location.reload();
+        }
+
+        timeOutId = setTimeout(function() {
+          currentLevel++;
+          if (originalMaps[currentLevel]) {
+            that.init(originalMaps, currentLevel);
+            score.updateLevelNum(currentLevel);
+          } else {
+            that.gameOver();
+          }
+        }, 2000);
+      }
     }
-
-    window.location.reload();
-
-    // timeOutId = setTimeout(function() {
-    //   currentLevel++;
-    //   if (originalMaps[currentLevel]) {
-    //     that.init(originalMaps, currentLevel);
-    //     score.updateLevelNum(currentLevel);
-    //   } else {
-    //     that.gameOver();
-    //   }
-    // }, 5000);
-    //   }
-    // }
   };
 
   this.pauseGame = function() {
