@@ -228,6 +228,11 @@ font-family: "Times New Roman", Times, serif;
   float: left;
 }
 
+.total-timeElapsed {
+  float: left;
+  padding-left: 40px; 
+}
+
 .cell {
   width: 31px;
   height: 31px;

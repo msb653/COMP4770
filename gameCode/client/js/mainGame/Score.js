@@ -9,17 +9,36 @@ function Score() {
   var weaponWrapper;
   var tempWrapper;
   var chestWrapper;
+  var timeElapsedWrapper;
 
   this.coinScore;
   this.totalScore;
   this.lifeCount;
+  this.timeElapsed;
 
   var that = this;
+
+
+  function add() {
+    seconds++;
+    if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+        }
+    }
+    h1.textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + 
+    ":" + (seconds > 9 ? seconds : "0" + seconds);
+    timer();
+  } 
+
 
   this.init = function() {
     that.coinScore = 0;
     that.totalScore = 0;
     that.lifeCount = 5;
+    that.timeElapsed = 0;
 
     mainWrapper = view.getMainWrapper();
 
@@ -30,6 +49,7 @@ function Score() {
     weaponWrapper = view.create('div');
     tempWrapper = view.create('div');
     chestWrapper = view.create('div');
+    timeElapsedWrapper = view.create('div');
 
     view.addClass(scoreWrapper, 'score-wrapper');
     view.addClass(coinScoreWrapper, 'gem-score');
@@ -38,6 +58,7 @@ function Score() {
     view.addClass(totalScoreWrapper, 'total-score');
     view.addClass(lifeCountWrapper, 'life-count');
     view.addClass(weaponWrapper, 'no-weapon-icon');
+    view.addClass(timeElapsedWrapper, 'total-timeElapsed');
 
     view.append(scoreWrapper, weaponWrapper);
     view.append(scoreWrapper, lifeCountWrapper);
@@ -45,11 +66,13 @@ function Score() {
     view.append(scoreWrapper, totalScoreWrapper);
     view.append(scoreWrapper, tempWrapper);
     view.append(scoreWrapper, chestWrapper);
+    view.append(scoreWrapper, timeElapsedWrapper);
     view.append(mainWrapper, scoreWrapper);
 
     that.updateCoinScore();
     that.updateTotalScore();
     that.updateLifeCount();
+    that.updateTimeElapsed();
     that.updateWeapon('none', -1);
   };
 
@@ -65,6 +88,11 @@ function Score() {
 
   this.updateTotalScore = function() {
     view.setHTML(totalScoreWrapper, 'Score: ' + that.totalScore);
+  };
+
+  this.updateTimeElapsed = function() {
+    that.timeElapsed = setTimeout(add, 1000);
+    view.setHTML(timeElapsedWrapper, 'Time Elapsed: ' + that.timeElapsed);
   };
 
   this.updateLifeCount = function() {
@@ -105,9 +133,11 @@ function Score() {
     that.coinScore = 0;
     that.lifeCount = 5;
     that.totalScore = 0;
+    that.timeElapsed = 0;
     that.updateCoinScore();
     that.updateTotalScore();
     that.updateLifeCount();
+    that.updateTimeElapsed();
   };
 
   this.gameOverView = function() {
