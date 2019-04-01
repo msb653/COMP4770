@@ -24,7 +24,8 @@ function KingGame() {
   var doorKeys;
   var enemies;
   var powerUps;
-  var bullets;
+  var kingBullets;
+  var enemyBullets;
   var bulletFlag = false;
 
   var currentLevel;
@@ -45,7 +46,8 @@ function KingGame() {
     translatedDist = 0;
     enemies = [];
     powerUps = [];
-    bullets = [];
+    kingBullets = [];
+    enemyBullets = [];
     keys = [];
     doorKeys = [];
 
@@ -203,19 +205,24 @@ function KingGame() {
       powerUps[i].update();
     }
 
-    for (var i = 0; i < bullets.length; i++) {
-      bullets[i].draw();
-      if (bullets[i].type == 'swordRight') {
-        bullets[i].y = king.y + 15;
-        bullets[i].x = king.x + bullets[i].width;
+    for (var i = 0; i < kingBullets.length; i++) {
+    	kingBullets[i].draw();
+      if (kingBullets[i].type == 'swordRight') {
+    	  kingBullets[i].y = king.y + 15;
+    	  kingBullets[i].x = king.x + kingBullets[i].width;
       }
 
-      if (bullets[i].type == 'swordLeft') {
-        bullets[i].y = king.y + 15;
-        bullets[i].x = king.x - 20;
+      if (kingBullets[i].type == 'swordLeft') {
+    	  kingBullets[i].y = king.y + 15;
+    	  kingBullets[i].x = king.x - 20;
       }
-      bullets[i].update();
+      kingBullets[i].update();
     }
+    
+    for (var i = 0; i < enemyBullets.length; i++) {
+		  enemyBullets[i].draw();
+		  enemyBullets[i].update();
+	}
 
     for (let i = 0; i < enemies.length; i++) {
       enemies[i].draw();
@@ -240,7 +247,7 @@ function KingGame() {
           } else {
             bullet.init(enemies[i].x, fireHeight, -1);
           }
-          bullets.push(bullet);
+          enemyBullets.push(bullet);
           
           // Play fireball audio
             gameSound.play('fireball');
@@ -810,40 +817,52 @@ function KingGame() {
   };
 
   this.checkElementBulletCollision = function(element, row, column) {
-    for (var i = 0; i < bullets.length; i++) {
-      var collisionDirection = that.collisionCheck(bullets[i], element);
+
+	  for (var i = 0; i < enemyBullets.length; i++) {
+		  var collisionDirection = that.collisionCheck(enemyBullets[i], element);
+
+		  if (collisionDirection == 'b') {
+			  //if collision is from bottom of the bullet, it is grounded, so that it can be bounced
+			  enemyBullets[i].grounded = true;
+		  } else if (collisionDirection == 't' || collisionDirection == 'l' || collisionDirection == 'r') {
+			  enemyBullets.splice(i, 1);
+		  }
+	  }
+	  
+    for (var i = 0; i < kingBullets.length; i++) {
+      var collisionDirection = that.collisionCheck(kingBullets[i], element);
 
       if (collisionDirection == 'b') {
         //if collision is from bottom of the bullet, it is grounded, so that it can be bounced
-        bullets[i].grounded = true;
-        if (bullets[i].type == 'teleporter') {
-          king.x = bullets[i].x;
-          king.y = bullets[i].y - 32;
+    	  kingBullets[i].grounded = true;
+        if (kingBullets[i].type == 'teleporter') {
+          king.x = kingBullets[i].x;
+          king.y = kingBullets[i].y - 32;
           king.draw();
           that.checkKingPos();
           that.updateKing();
           gameSound.play('teleport');
-        } else if (bullets[i].type == 'destroyer') {
+        } else if (kingBullets[i].type == 'destroyer') {
           if (element.type == 1 || element.type == 2 || element.type == 3 || element.type == 4) {
             map[row][column] = 0;
             gameSound.play('explosion');
           }
         }
-        bullets.splice(i, 1);
+        kingBullets.splice(i, 1);
       } else if (collisionDirection == 't' || collisionDirection == 'l' || collisionDirection == 'r') {
-        if (bullets[i].type == 'teleporter') {
-          king.x = bullets[i].x;
-          king.y = bullets[i].y - 32;
+        if (kingBullets[i].type == 'teleporter') {
+          king.x = kingBullets[i].x;
+          king.y = kingBullets[i].y - 32;
           king.draw();
           that.updateKing();
           gameSound.play('teleport');
-        } else if (bullets[i].type == 'destroyer') {
+        } else if (kingBullets[i].type == 'destroyer') {
           if (element.type == 1 || element.type == 2 || element.type == 3 || element.type == 4) {
             map[row][column] = 0;
             gameSound.play('explosion');
           }
         }
-        bullets.splice(i, 1);
+        kingBullets.splice(i, 1);
       }
     }
   };
@@ -942,15 +961,15 @@ function KingGame() {
 
   this.checkBulletEnemyCollision = function() {
     for (var i = 0; i < enemies.length; i++) {
-      for (var j = 0; j < bullets.length; j++) {
-        if (enemies[i] && enemies[i].state != 'dead' && bullets[j].enemy != 1) {
+      for (var j = 0; j < kingBullets.length; j++) {
+        if (enemies[i] && enemies[i].state != 'dead' && kingBullets[j].enemy != 1) {
           //check for collision only if enemies exist and is not dead
-          var collWithBullet = that.collisionCheck(enemies[i], bullets[j]);
+          var collWithBullet = that.collisionCheck(enemies[i], kingBullets[j]);
         }
 
         if (collWithBullet) {
-          bullets[j] = null;
-          bullets.splice(j, 1);
+        	kingBullets[j] = null;
+        	kingBullets.splice(j, 1);
 
           enemies[i].hp -= 1;
 
@@ -969,14 +988,14 @@ function KingGame() {
   };
 
   this.checkBulletAllyCollision = function() {
-    for (var j = 0; j < bullets.length; j++) {
-      if (bullets[j].enemy != 0) {
-        var collWithBullet = that.collisionCheck(king, bullets[j]);
+    for (var j = 0; j < enemyBullets.length; j++) {
+      if (enemyBullets[j].enemy != 0) {
+        var collWithBullet = that.collisionCheck(king, enemyBullets[j]);
       }
 
       if (collWithBullet) {
-        bullets[j] = null;
-        bullets.splice(j, 1);
+    	  enemyBullets[j] = null;
+    	  enemyBullets.splice(j, 1);
 
         if (king.type == 'big') {
           king.type = 'small';
@@ -1255,7 +1274,7 @@ function KingGame() {
           bulletFlag = true;
           bullet.changeType('teleporter');
           bullet.init(king.x, king.y, direction);
-          bullets.push(bullet);
+          kingBullets.push(bullet);
           king.teleporters = king.teleporters - 1;
           score.updateWeapon('teleporter', king.teleporters);
           gameSound.play('woosh');
@@ -1266,7 +1285,7 @@ function KingGame() {
           bulletFlag = true;
           bullet.changeType('destroyer');
           bullet.init(king.x, king.y, direction);
-          bullets.push(bullet);
+          kingBullets.push(bullet);
           king.destroyers = king.destroyers - 1;
           score.updateWeapon('destroyer', king.destroyers);
           gameSound.play('woosh');
@@ -1277,7 +1296,7 @@ function KingGame() {
           bulletFlag = true;
           bullet.init(king.x, king.y, direction);
           bullet.changeType('arrow');
-          bullets.push(bullet);
+          kingBullets.push(bullet);
           king.arrows = king.arrows - 1;
           score.updateWeapon('bow', king.arrows);
           gameSound.play('bow');
@@ -1288,7 +1307,7 @@ function KingGame() {
           bulletFlag = true;
           bullet.changeType('fireball');
           bullet.init(king.x, king.y, direction);
-          bullets.push(bullet);
+          kingBullets.push(bullet);
           gameSound.play('fireball');
           setTimeout(function() {
             bulletFlag = false; //only lets king fire bullet after 500ms
@@ -1303,14 +1322,14 @@ function KingGame() {
           }
 
           bullet.init(king.x, king.y, direction);
-          bullets.push(bullet);
+          kingBullets.push(bullet);
           gameSound.play('sword');
-          var swordIndex = bullets.length;
+          var swordIndex = kingBullets.length;
           setTimeout(function() {
             //remove the sword "bullet" from the array after a quarter second
-            for (var i = 0; i < bullets.length; i++) {
-              if (bullets[i].type == 'swordRight' || bullets[i].type == 'swordLeft') {
-                bullets.splice(i, 1);
+            for (var i = 0; i < kingBullets.length; i++) {
+              if (kingBullets[i].type == 'swordRight' || kingBullets[i].type == 'swordLeft') {
+            	  kingBullets.splice(i, 1);
               }
             }
             bulletFlag = false; //only lets king fire bullet after 500ms
@@ -1425,7 +1444,8 @@ function KingGame() {
     gameSound = null;
 
     enemies = [];
-    bullets = [];
+    kingBullets = [];
+    enemyBullets = [];
     powerUps = [];
   };
 
