@@ -24,14 +24,20 @@ function CreatedLevels() {
     var mainWrapper = view.getMainWrapper();
     var deleteAllBtn = view.create('button');
     var deleteOneBtn = view.create('button');
+    view.addClass(deleteAllBtn, 'delete-btn');
+    view.addClass(deleteOneBtn, 'delete-btn');
+    var deleteWrapper = view.create('div');
+    view.append(deleteWrapper, deleteAllBtn);
+    view.append(deleteWrapper, deleteOneBtn);
+    view.addClass(deleteWrapper, 'delete-buttons');
+
     deleteAllBtn.innerHTML = 'Delete All Levels';
-    deleteOneBtn.innerHTML = 'Delete Level?';
+    deleteOneBtn.innerHTML = 'Delete Selected Level';
     levelsWrapper = view.create('div');
 
     view.addClass(levelsWrapper, 'levels-wrapper');
     view.style(levelsWrapper, { display: 'block' });
-    view.append(levelsWrapper, deleteAllBtn);
-    view.append(levelsWrapper, deleteOneBtn);
+    view.append(levelsWrapper, deleteWrapper);
     view.append(mainWrapper, levelsWrapper);
 
     deleteAllBtn.onclick = that.deleteAllMaps;
@@ -41,6 +47,7 @@ function CreatedLevels() {
   };
 
   var levelPlay = view.create('button');
+  view.addClass(levelPlay, 'play-btn');
   levelPlay.onclick = function() {
     that.startLevel(levelSelect.selectedIndex);
     that.removeCreatedLevelsScreen();
@@ -68,6 +75,7 @@ function CreatedLevels() {
         // })(i);
       }
       view.append(testDiv, levelSelect);
+      view.addClass(testDiv, 'level-dropdown');
       view.append(levelsWrapper, testDiv);
     } else {
       var noMapsMessage = view.create('div');

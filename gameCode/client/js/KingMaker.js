@@ -39,6 +39,7 @@ var KingMaker = (function() {
       backToMenuBtn = view.create('button');
       backToMenuBtn.innerHTML = 'Back';
 
+      view.addClass(backToMenuBtn, 'delete-btn');
       view.addClass(btnWrapper, 'btn-wrapper');
       view.addClass(startScreen, 'start-screen');
 
