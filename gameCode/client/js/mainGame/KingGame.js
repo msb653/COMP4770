@@ -644,7 +644,7 @@ function KingGame() {
             modal.style.display = 'none';
           }
         };
-        map[row][column] = 0;
+        map[row][column] = 15;
         gameSound.play('help');
 
         keys[39] = false;
