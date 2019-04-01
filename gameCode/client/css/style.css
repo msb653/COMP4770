@@ -3,7 +3,8 @@
   height: 530px;
   margin: 0 auto;
   border: 1px solid black;
-  background: url('../images/homePicture.jpg');
+  background: url('../images/castleHome.gif');
+  /* background-size: 100%; */
   position: relative;
 }
 
