@@ -16,6 +16,10 @@ var pbkdf2 = require('pbkdf2');
 
 var serv = require('http').Server(app);
 
+var fs = require('fs');
+
+var pathToJSONFile = '..\client\json.txt';
+
 //HTML
 app.get('/', function(req, res) {
   res.sendFile(__dirname + '/client/index.html');
@@ -639,6 +643,7 @@ var addUser = (data, cb) => {
 };
 
 var addLevel = (data, cb) => {
+    
   db.level.insert(
     {
       user: data.user,
@@ -713,6 +718,14 @@ io.sockets.on('connection', socket => {
       if (res) {
         socket.emit('saveLevelResponse', { success: false });
       } else {
+          var fileName = data.name + ".txt";
+          fs.writeFile(fileName, JSON.stringify(data.tileArray), 'utf8', function (err) {
+              if (err) {
+                  return console.log(err);
+              }
+
+              console.log("The file was saved!");
+          }); 
         addLevel(data, () => {
           socket.emit('saveLevelResponse', { success: true });
         });
