@@ -18,7 +18,7 @@ var serv = require('http').Server(app);
 
 var fs = require('fs');
 
-var pathToJSONFile = '..\client\json.txt';
+var pathToJSONFile = '..clientjson.txt';
 
 //HTML
 app.get('/', function(req, res) {
@@ -256,6 +256,12 @@ app.get('/gameCode/client/images/overworld.png', function(req, res) {
 });
 app.get('/gameCode/client/images/knightRight.gif', function(req, res) {
   res.sendFile(__dirname + '/client/images/knightRight.gif');
+});
+app.get('/gameCode/client/images/castleHome.gif', function(req, res) {
+  res.sendFile(__dirname + '/client/images/castleHome.gif');
+});
+app.get('/gameCode/client/images/caveLevel.gif', function(req, res) {
+  res.sendFile(__dirname + '/client/images/caveLevel.gif');
 });
 
 // Testing
@@ -646,7 +652,6 @@ var addUser = (data, cb) => {
 };
 
 var addLevel = (data, cb) => {
-    
   db.level.insert(
     {
       user: data.user,
@@ -758,14 +763,14 @@ io.sockets.on('connection', socket => {
       if (res) {
         socket.emit('saveLevelResponse', { success: false });
       } else {
-          var fileName = data.name + ".txt";
-          fs.writeFile(fileName, JSON.stringify(data.tileArray), 'utf8', function (err) {
-              if (err) {
-                  return console.log(err);
-              }
+        var fileName = data.name + '.txt';
+        fs.writeFile(fileName, JSON.stringify(data.tileArray), 'utf8', function(err) {
+          if (err) {
+            return console.log(err);
+          }
 
-              console.log("The file was saved!");
-          }); 
+          console.log('The file was saved!');
+        });
         addLevel(data, () => {
           socket.emit('saveLevelResponse', { success: true });
         });
