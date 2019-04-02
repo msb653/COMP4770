@@ -1531,7 +1531,6 @@ function KingGame() {
           window.location.reload();
         }
 
-        timeOutId = setTimeout(function() {
           currentLevel++;
           if (originalMaps[currentLevel] && currentLevel < 6) {
             gameScreen.className = originalMaps[currentLevel+5];
@@ -1539,7 +1538,6 @@ function KingGame() {
           } else {
             that.gameOver();
           }
-        }, 2000);
       }
     }
   };
