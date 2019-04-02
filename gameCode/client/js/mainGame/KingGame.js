@@ -19,7 +19,7 @@ function KingGame() {
   var element;
   var gameSound;
   var score;
-  
+
   var keys;
   var doorKeys;
   var enemies;
@@ -193,7 +193,7 @@ function KingGame() {
   //Main Game Loop
   this.startGame = function() {
     animationID = window.requestAnimationFrame(that.startGame);
-
+    gameSound.play('campaignSound');
     gameUI.clear(0, 0, maxWidth, height);
 
     if (instructionTick < 1000) {
@@ -209,23 +209,23 @@ function KingGame() {
     }
 
     for (var i = 0; i < kingBullets.length; i++) {
-    	kingBullets[i].draw();
+      kingBullets[i].draw();
       if (kingBullets[i].type == 'swordRight') {
-    	  kingBullets[i].y = king.y + 15;
-    	  kingBullets[i].x = king.x + kingBullets[i].width;
+        kingBullets[i].y = king.y + 15;
+        kingBullets[i].x = king.x + kingBullets[i].width;
       }
 
       if (kingBullets[i].type == 'swordLeft') {
-    	  kingBullets[i].y = king.y + 15;
-    	  kingBullets[i].x = king.x - 20;
+        kingBullets[i].y = king.y + 15;
+        kingBullets[i].x = king.x - 20;
       }
       kingBullets[i].update();
     }
-    
+
     for (var i = 0; i < enemyBullets.length; i++) {
-		  enemyBullets[i].draw();
-		  enemyBullets[i].update();
-	}
+      enemyBullets[i].draw();
+      enemyBullets[i].update();
+    }
 
     for (let i = 0; i < enemies.length; i++) {
       enemies[i].draw();
@@ -250,20 +250,22 @@ function KingGame() {
           } else {
             bullet.init(enemies[i].x, fireHeight, -1);
           }
-          
+
           // Change the bullet type depending on the enemy
-          if (enemies[i].type == 23) { // Use the water ball image for crab enemies
-        	  bullet.changeType('waterball');
+          if (enemies[i].type == 23) {
+            // Use the water ball image for crab enemies
+            bullet.changeType('waterball');
           }
-          
-          if (enemies[i].type == 24) { // Use the green fire ball image for boss
-        	  bullet.changeType('greenFire');
+
+          if (enemies[i].type == 24) {
+            // Use the green fire ball image for boss
+            bullet.changeType('greenFire');
           }
-          
+
           enemyBullets.push(bullet);
-          
+
           // Play fireball audio
-            gameSound.play('fireball');
+          gameSound.play('fireball');
 
           // Make the enemy wait until they can fire again
           (function(index) {
@@ -611,7 +613,7 @@ function KingGame() {
         king.velX = 0;
         king.jumping = false;
       }
-      if(element.type == 12){
+      if (element.type == 12) {
         var modal = document.getElementById('myModal2');
 
         // Get the <span> element that closes the modal
@@ -620,12 +622,9 @@ function KingGame() {
         // When the user clicks the button, open the modal
 
         modal.style.display = 'block';
-        setTimeout(
-            () => {
-              modal.style.display = 'none';
-            },
-            4 * 1000
-        );
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 4 * 1000);
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
           modal.style.display = 'none';
@@ -637,12 +636,10 @@ function KingGame() {
             modal.style.display = 'none';
           }
         };
-       // map[row][column] = 0;
+        // map[row][column] = 0;
         gameSound.play('help');
 
         keys[39] = false;
-
-
       }
 
       if (element.type == 13) {
@@ -657,12 +654,9 @@ function KingGame() {
         // When the user clicks the button, open the modal
 
         modal.style.display = 'block';
-        setTimeout(
-            () => {
-              modal.style.display = 'none';
-            },
-            4 * 1000
-        );
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 4 * 1000);
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
           modal.style.display = 'none';
@@ -729,54 +723,48 @@ function KingGame() {
       }
 
       // Handle weapon pick ups
-      if (element.type == 7 && score.coinScore >= 1) {
+      if (element.type == 7) {
         // Sword
         map[row][column] = 0;
         king.hasSword = true;
         king.weapon = 'sword';
         score.updateWeapon('sword', -1);
-
-        score.coinScore = score.coinScore - 1;
-        score.totalScore += 110;
-
-        score.updateCoinScore();
-        score.updateTotalScore();
+        // score.coinScore = score.coinScore - 2;
+        // score.totalScore += 110;
+        // score.updateCoinScore();
+        // score.updateTotalScore();
       }
 
-      if (element.type == 7 && score.coinScore < 1) {
-        var modal = document.getElementById('myModal5');
+      // if (element.type == 7 && score.coinScore < 1) {
+      //   var modal = document.getElementById('myModal5');
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName('close')[0];
+      //   // Get the <span> element that closes the modal
+      //   var span = document.getElementsByClassName('close')[0];
 
-        // When the user clicks the button, open the modal
+      //   // When the user clicks the button, open the modal
 
-        modal.style.display = 'block';
-        setTimeout(
-            () => {
-              modal.style.display = 'none';
-            },
-            4 * 1000
-        );
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-          modal.style.display = 'none';
-        };
+      //   modal.style.display = 'block';
+      //   setTimeout(() => {
+      //     modal.style.display = 'none';
+      //   }, 4 * 1000);
+      //   // When the user clicks on <span> (x), close the modal
+      //   span.onclick = function() {
+      //     modal.style.display = 'none';
+      //   };
 
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-          if (event.target == modal) {
-            modal.style.display = 'none';
-          }
-        };
-       // map[row][column] = 0;
-        gameSound.play('help');
+      //   // When the user clicks anywhere outside of the modal, close it
+      //   window.onclick = function(event) {
+      //     if (event.target == modal) {
+      //       modal.style.display = 'none';
+      //     }
+      //   };
+      //   // map[row][column] = 0;
+      //   gameSound.play('help');
 
-        keys[39] = false;
+      //   keys[39] = false;
+      // }
 
-      }
-
-      if (element.type == 8 && score.coinScore >= 5 ) {
+      if (element.type == 8 && score.coinScore >= 5) {
         // Bow
         map[row][column] = 0;
         king.hasBow = true;
@@ -788,9 +776,7 @@ function KingGame() {
 
         score.updateCoinScore();
         score.updateTotalScore();
-      }
-
-      if (element.type == 8 && score.coinScore < 5 ) { 
+      } else if (element.type == 8 && score.coinScore < 5) {
         var modal = document.getElementById('myModal4');
 
         // Get the <span> element that closes the modal
@@ -799,12 +785,9 @@ function KingGame() {
         // When the user clicks the button, open the modal
 
         modal.style.display = 'block';
-        setTimeout(
-            () => {
-              modal.style.display = 'none';
-            },
-            4 * 1000
-        );
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 4 * 1000);
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
           modal.style.display = 'none';
@@ -816,17 +799,16 @@ function KingGame() {
             modal.style.display = 'none';
           }
         };
-       // map[row][column] = 0;
+        // map[row][column] = 0;
         gameSound.play('help');
 
         keys[39] = false;
       }
 
-
       if (element.type == 9 && score.coinScore >= 10) {
         // Staff
         map[row][column] = 0;
-        
+
         king.hasStaff = true;
         king.weapon = 'staff';
         score.updateWeapon('staff', -1);
@@ -836,9 +818,7 @@ function KingGame() {
 
         score.updateCoinScore();
         score.updateTotalScore();
-      }
-
-      if (element.type == 9 && score.coinScore < 10) { 
+      } else if (element.type == 9 && score.coinScore < 10) {
         // Staff
         var modal = document.getElementById('myModal3');
 
@@ -848,12 +828,9 @@ function KingGame() {
         // When the user clicks the button, open the modal
 
         modal.style.display = 'block';
-        setTimeout(
-            () => {
-              modal.style.display = 'none';
-            },
-            4 * 1000
-        );
+        setTimeout(() => {
+          modal.style.display = 'none';
+        }, 4 * 1000);
         // When the user clicks on <span> (x), close the modal
         span.onclick = function() {
           modal.style.display = 'none';
@@ -865,11 +842,10 @@ function KingGame() {
             modal.style.display = 'none';
           }
         };
-       // map[row][column] = 0;
+        // map[row][column] = 0;
         gameSound.play('help');
 
         keys[39] = false;
-
       }
 
       if (element.type == 16) {
@@ -891,14 +867,13 @@ function KingGame() {
       }
 
       // Collision with an arrow
-      if (element.type == 10 ) {
+      if (element.type == 10) {
         map[row][column] = 0;
         king.weapon = 'bow';
         king.arrows = king.arrows + 10;
         score.updateWeapon('bow', king.arrows);
       }
 
-      
       // Collision with an open door (Ends the level)
       if (element.type == 13) {
         that.levelFinish(collisionDirection);
@@ -949,24 +924,23 @@ function KingGame() {
   };
 
   this.checkElementBulletCollision = function(element, row, column) {
+    for (var i = 0; i < enemyBullets.length; i++) {
+      var collisionDirection = that.collisionCheck(enemyBullets[i], element);
 
-	  for (var i = 0; i < enemyBullets.length; i++) {
-		  var collisionDirection = that.collisionCheck(enemyBullets[i], element);
+      if (collisionDirection == 'b') {
+        //if collision is from bottom of the bullet, it is grounded, so that it can be bounced
+        enemyBullets[i].grounded = true;
+      } else if (collisionDirection == 't' || collisionDirection == 'l' || collisionDirection == 'r') {
+        enemyBullets.splice(i, 1);
+      }
+    }
 
-		  if (collisionDirection == 'b') {
-			  //if collision is from bottom of the bullet, it is grounded, so that it can be bounced
-			  enemyBullets[i].grounded = true;
-		  } else if (collisionDirection == 't' || collisionDirection == 'l' || collisionDirection == 'r') {
-			  enemyBullets.splice(i, 1);
-		  }
-	  }
-	  
     for (var i = 0; i < kingBullets.length; i++) {
       var collisionDirection = that.collisionCheck(kingBullets[i], element);
 
       if (collisionDirection == 'b') {
         //if collision is from bottom of the bullet, it is grounded, so that it can be bounced
-    	  kingBullets[i].grounded = true;
+        kingBullets[i].grounded = true;
         if (kingBullets[i].type == 'teleporter') {
           king.x = kingBullets[i].x;
           king.y = kingBullets[i].y - 32;
@@ -1016,7 +990,6 @@ function KingGame() {
         score.updateTotalScore();
 
         gameSound.play('powerUp');
-        
       }
     }
   };
@@ -1100,8 +1073,8 @@ function KingGame() {
         }
 
         if (collWithBullet) {
-        	kingBullets[j] = null;
-        	kingBullets.splice(j, 1);
+          kingBullets[j] = null;
+          kingBullets.splice(j, 1);
 
           enemies[i].hp -= 1;
 
@@ -1126,8 +1099,8 @@ function KingGame() {
       }
 
       if (collWithBullet) {
-    	  enemyBullets[j] = null;
-    	  enemyBullets.splice(j, 1);
+        enemyBullets[j] = null;
+        enemyBullets.splice(j, 1);
 
         if (king.type == 'big') {
           king.type = 'small';
@@ -1285,7 +1258,7 @@ function KingGame() {
     if (keys[83]) {
       gameSound.toggleAudio();
       for (var i = 0; i < keys.length; i++) {
-          keys[i] = false;
+        keys[i] = false;
       }
     }
 
@@ -1461,7 +1434,7 @@ function KingGame() {
             //remove the sword "bullet" from the array after a quarter second
             for (var i = 0; i < kingBullets.length; i++) {
               if (kingBullets[i].type == 'swordRight' || kingBullets[i].type == 'swordLeft') {
-            	  kingBullets.splice(i, 1);
+                kingBullets.splice(i, 1);
               }
             }
             bulletFlag = false; //only lets king fire bullet after 500ms
@@ -1540,14 +1513,14 @@ function KingGame() {
           window.location.reload();
         }
 
-          currentLevel++;
-          if (originalMaps[currentLevel] && currentLevel < 6) {
-            // gameScreen.className = originalMaps[currentLevel+5];
-            document.getElementById("canvas").className = originalMaps[currentLevel+5];
-            that.init(originalMaps, currentLevel);
-          } else {
-            that.gameOver();
-          } 
+        currentLevel++;
+        if (originalMaps[currentLevel] && currentLevel < 6) {
+          // gameScreen.className = originalMaps[currentLevel+5];
+          document.getElementById('canvas').className = originalMaps[currentLevel + 5];
+          that.init(originalMaps, currentLevel);
+        } else {
+          that.gameOver();
+        }
       }
     }
   };
