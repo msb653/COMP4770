@@ -384,6 +384,9 @@ app.get('/gameCode/client/sounds/sword.wav', function(req, res) {
 app.get('/gameCode/client/sounds/silence.mp3', function(req, res) {
   res.sendFile(__dirname + '/client/sounds/silence.mp3');
 });
+app.get('/gameCode/client/sounds/campaignSound.mp3', function(req, res) {
+  res.sendFile(__dirname + '/client/sounds/campaignSound.mp3');
+});
 
 app.use('/client', express.static(__dirname + '/client'));
 
