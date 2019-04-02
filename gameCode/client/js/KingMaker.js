@@ -38,22 +38,25 @@ var KingMaker = (function() {
       gameScreen = view.getGameScreen();
       // startGameButton.innerHTML = 'Begin';
       // createdLevelsButton.innerHTML = 'seelevels';
-      editorButton.innerHTML = 'Level Editor';
+      editorButton.innerHTML = 'Continue';
       backToMenuBtn.innerHTML = 'Back';
 
       // view.addClass(backToMenuBtn, 'delete-btn');
       // view.addClass(btnWrapper, 'btn-wrapper');
       // view.addClass(startScreen, 'start-screen');
-
-      view.addClass(editorButton, 'editor-btn');
-      view.addClass(startGameButton, 'start-btn');
+      startGameButton.innerHTML = 'Play Now';
+      view.addClass(editorButton, 'w3-button w3-blue');
+      view.addClass(startGameButton, 'w3-button w3-red');
+      startScreen.style = 'padding-top: 250px; text-align: center;';
+      editorButton.style = 'margin-left: 10px;';
+      startGameButton.style = 'margin-right: 10px;';
       // view.addClass(createdLevelsButton, 'created-btn');
       view.addClass(backToMenuBtn, 'delete-btn');
       view.addClass(btnWrapper, 'btn-wrapper');
       view.addClass(startScreen, 'start-screen');
 
-      view.append(startScreen, editorButton);
       view.append(startScreen, startGameButton);
+      view.append(startScreen, editorButton);
       view.append(startScreen, createdLevelsButton);
       view.append(btnWrapper, backToMenuBtn);
       view.append(mainWrapper, startScreen);
