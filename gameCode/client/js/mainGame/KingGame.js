@@ -649,7 +649,7 @@ function KingGame() {
         that.levelFinish(collisionDirection);
       }
       if (element.type == 15) {
-        var modal = document.getElementById('myModal2');
+        var modal = document.getElementById('myModal');
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName('close')[0];
