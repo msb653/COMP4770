@@ -343,6 +343,9 @@ app.get('/gameCode/client/images/swordLeft.png', function(req, res) {
 app.get('/gameCode/client/images/waterBall.png', function(req, res) {
 	  res.sendFile(__dirname + '/client/images/waterBall.png');
 	});
+app.get('/gameCode/client/images/greenFire.png', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/greenFire.png');
+	});
 
 //Sounds
 app.get('/gameCode/client/sounds/jump.wav', function(req, res) {

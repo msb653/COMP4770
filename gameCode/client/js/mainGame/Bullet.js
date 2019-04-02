@@ -74,6 +74,10 @@ function Bullet() {
 		  element.src = 'images/waterball.png';
 		  this.type='waterball';
       }
+	  if (type == "greenFire") {
+		  element.src = 'images/greenFire.png';
+		  this.type='greenFire';
+      }
       if (type == "teleporter") {
 		  element.src = 'images/teleporter3.png';
 		  this.type='teleporter';

@@ -258,6 +258,10 @@ function KingGame() {
         	  bullet.changeType('waterball');
           }
           
+          if (enemies[i].type == 24) { // Use the green fire ball image for boss
+        	  bullet.changeType('greenFire');
+          }
+          
           enemyBullets.push(bullet);
           
           // Play fireball audio
