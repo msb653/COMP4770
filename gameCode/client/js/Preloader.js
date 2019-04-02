@@ -43,7 +43,8 @@ function Preloader() {
       25: 'images/swordLeft.png',
       26: 'images/enemy3.png',
       27: 'images/crab.png',
-      28: 'images/boss.png'
+      28: 'images/boss.png',
+      29: 'images/waterBall.png'
     };
 
     that.loadImages(imageSources);

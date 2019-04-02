@@ -252,6 +252,12 @@ function KingGame() {
           } else {
             bullet.init(enemies[i].x, fireHeight, -1);
           }
+          
+          // Change the bullet type depending on the enemy
+          if (enemies[i].type == 23) { // Use the water ball image for crab enemies
+        	  bullet.changeType('waterball');
+          }
+          
           enemyBullets.push(bullet);
           
           // Play fireball audio
