@@ -50,6 +50,7 @@ function Enemy() {
     this.width = 64;
     this.height = 64;
     this.velY = 1;
+    this.velX = 5;
     this.hp = 2;
   };
 
