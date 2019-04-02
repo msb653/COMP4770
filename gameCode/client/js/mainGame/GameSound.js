@@ -78,11 +78,11 @@ function GameSound() {
         // campaignSound.pause();
         // campaignSound.currentTime = 0;
         campaignSound.play();
-      }  else if (element == 'bwahaha') {
-      // campaignSound.pause();
-      // campaignSound.currentTime = 0;
-      bwahaha.play();
-    }
+      } else if (element == 'bwahaha') {
+        // campaignSound.pause();
+        // campaignSound.currentTime = 0;
+        bwahaha.play();
+      }
     }
   };
 
