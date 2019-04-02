@@ -625,6 +625,21 @@ var getLevels = (data, cb) => {
   });
 };
 
+var maps;
+
+var getCampaignLevels = (data, cb) => {
+  fs.readFile('json14.txt','utf8',function (err,contents) {
+              if (err) {
+                  return console.log(err);
+              }
+              cb(contents);
+          }); 
+
+//   .toArray((err, result) => {
+//     cb(result);
+//   });
+};
+
 var deleteLevels = (data, cb) => {
   db.level.find({ user: data.user }).toArray((err, result) => {
     db.level.remove({ user: data.user });
@@ -813,6 +828,16 @@ io.sockets.on('connection', socket => {
       socket.emit('levelsResponse', {
         success: true,
         levels: res
+      });
+    });
+  });
+
+  socket.on('requestCampaignLevels', data => {
+    getCampaignLevels(data, res => {
+      var maps = JSON.parse(res);
+      socket.emit('levelsCampaignResponse', {
+        success: true,
+        levels: maps
       });
     });
   });

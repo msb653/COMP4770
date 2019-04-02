@@ -418,7 +418,8 @@ function Editor() {
 
   
   this.saveMap = function () {
-	  that.generateMap();
+      that.generateMap();
+    //   console.log(map);
       socket.emit('saveLevel', {
           user: sessionStorage.getItem("username"),
           name: document.getElementById("levelName").value,
