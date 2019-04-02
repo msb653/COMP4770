@@ -1418,7 +1418,6 @@ function KingGame() {
           if (originalMaps[currentLevel] && currentLevel < 6) {
             gameScreen.className = originalMaps[currentLevel+5];
             that.init(originalMaps, currentLevel,gameScreen);
-            score.updateLevelNum(currentLevel);
           } else {
             that.gameOver();
           }
