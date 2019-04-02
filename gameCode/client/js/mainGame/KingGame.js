@@ -252,6 +252,12 @@ function KingGame() {
           } else {
             bullet.init(enemies[i].x, fireHeight, -1);
           }
+          
+          // Change the bullet type depending on the enemy
+          if (enemies[i].type == 23) { // Use the water ball image for crab enemies
+        	  bullet.changeType('waterball');
+          }
+          
           enemyBullets.push(bullet);
           
           // Play fireball audio
@@ -723,12 +729,12 @@ function KingGame() {
       // Handle weapon pick ups
       if (element.type == 7 && score.coinScore >= 1) {
         // Sword
+        map[row][column] = 0;
         king.hasSword = true;
         king.weapon = 'sword';
         score.updateWeapon('sword', -1);
-        map[row][column] = 0;
 
-        score.coinScore = score.coinScore - 2;
+        score.coinScore = score.coinScore - 1;
         score.totalScore += 110;
 
         score.updateCoinScore();
@@ -818,6 +824,7 @@ function KingGame() {
       if (element.type == 9 && score.coinScore >= 10) {
         // Staff
         map[row][column] = 0;
+        
         king.hasStaff = true;
         king.weapon = 'staff';
         score.updateWeapon('staff', -1);
@@ -1537,7 +1544,7 @@ function KingGame() {
             that.init(originalMaps, currentLevel,gameScreen);
           } else {
             that.gameOver();
-          }
+          } 
       }
     }
   };

@@ -70,6 +70,10 @@ function Bullet() {
 		  element.src = 'images/bullet.png';
 		  this.type='fireball';
       }
+	  if (type == "waterball") {
+		  element.src = 'images/waterball.png';
+		  this.type='waterball';
+      }
       if (type == "teleporter") {
 		  element.src = 'images/teleporter3.png';
 		  this.type='teleporter';
