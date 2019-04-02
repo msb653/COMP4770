@@ -41,7 +41,7 @@ function KingGame() {
 
   var socket = io();
 
-  this.init = function(levelMaps, level, gs) {
+  this.init = function(levelMaps, level) {
     height = 480;
     maxWidth = 0;
     viewPort = 1280;
@@ -57,8 +57,6 @@ function KingGame() {
     gameUI.setWidth(viewPort);
     gameUI.setHeight(height);
     gameUI.show();
-
-    gameScreen = gs;
 
     currentLevel = level;
     originalMaps = levelMaps;
@@ -1544,8 +1542,9 @@ function KingGame() {
 
           currentLevel++;
           if (originalMaps[currentLevel] && currentLevel < 6) {
-            gameScreen.className = originalMaps[currentLevel+5];
-            that.init(originalMaps, currentLevel,gameScreen);
+            // gameScreen.className = originalMaps[currentLevel+5];
+            document.getElementById("canvas").className = originalMaps[currentLevel+5];
+            that.init(originalMaps, currentLevel);
           } else {
             that.gameOver();
           } 

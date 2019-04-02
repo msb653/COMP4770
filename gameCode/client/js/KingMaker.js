@@ -107,7 +107,18 @@ var KingMaker = (function() {
 
       kingGame.clearInstances();
       view.addClass(gameScreen, levelMap[i]);
-      kingGame.init(levelMap, 1, gameScreen); //initiate level 1 of map
+      kingGame.init(levelMap, 1); //initiate level 1 of map
+
+      that.hideMainMenu();
+      editor.removeEditorScreen();
+      createdLevels.removeCreatedLevelsScreen();
+    };
+
+    this.startGameFromLevel = function(levelMap, i, j) {
+
+
+      view.addClass(gameScreen, levelMap[i]);
+      kingGame.init(levelMap, j); //initiate level 1 of map
 
       that.hideMainMenu();
       editor.removeEditorScreen();
