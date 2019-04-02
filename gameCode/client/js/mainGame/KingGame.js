@@ -829,7 +829,7 @@ function KingGame() {
         score.updateTotalScore();
       }
 
-      if (element.type == 9 && score.coinScore < 10) {
+      if (element.type == 9 && score.coinScore < 10) { 
         // Staff
         var modal = document.getElementById('myModal3');
 

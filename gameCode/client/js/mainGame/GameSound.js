@@ -66,7 +66,7 @@ function GameSound() {
 				woosh.pause();
 				woosh.currentTime = 0;
 				woosh.play();
-			} else if (element == 'sword') {
+			} else if (element == 'sword') { 
 				sword.pause();
 				sword.currentTime = 0;
 				sword.play();
