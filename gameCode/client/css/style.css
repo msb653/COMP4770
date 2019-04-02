@@ -45,7 +45,7 @@
   height: 480px;
   margin: 0 auto;
   border: 1px solid black;
-  background: url('../images/bg.png');
+  background: url('../images/forestHome.gif');
   position: relative;
   overflow: hidden;
   display: none;
@@ -81,7 +81,7 @@
   height: 480px;
   margin: 0 auto;
   border: 1px solid black;
-  background: url('../images/castle.png');
+  background: url('../images/castleHome.gif');
   position: relative;
   overflow: hidden;
   display: none;
@@ -92,7 +92,7 @@
   height: 480px;
   margin: 0 auto;
   border: 1px solid black;
-  background: url('../images/bg.png');
+  background: url('../images/forestHome.gif');
   position: relative;
   overflow: hidden;
   display: none;
@@ -103,7 +103,7 @@
   height: 480px;
   margin: 0 auto;
   border: 1px solid black;
-  background: url('../images/cave.png');
+  background: url('../images/caveLevel.gif');
   position: relative;
   overflow: hidden;
   display: none;
@@ -114,7 +114,7 @@
   height: 480px;
   margin: 0 auto;
   border: 1px solid black;
-  background: url('../images/lava.png');
+  background: url('../images/lavaHome.gif');
   position: relative;
   overflow: hidden;
   display: none;
@@ -125,7 +125,7 @@
   height: 480px;
   border: 1px solid black;
   border-top: none;
-  background: url('../images/bg.png');
+  background: url('../images/forestHome2.gif');
   display: none;
   margin: 0 auto;
 }
@@ -135,7 +135,7 @@
   height: 480px;
   border: 1px solid black;
   border-top: none;
-  background: url('../images/lava.png');
+  background: url('../images/lavaHome.gif');
   display: none;
   margin: 0 auto;
 }
@@ -230,7 +230,7 @@
 
 .total-timeElapsed {
   float: left;
-  padding-left: 40px; 
+  padding-left: 40px;
 }
 
 .cell {
@@ -420,7 +420,7 @@
   position: relative;
   overflow: hidden;
   display: none;
-  background: url('../images/bg.png');
+  background: url('../images/forestHome2.gif');
 }
 
 .btn-wrapper {
@@ -481,8 +481,6 @@
   font-weight: bold;
 }
 
-
-
 /* Modal Content */
 .modal {
   display: none; /* Hidden by default */
@@ -494,11 +492,11 @@
   width: 100%; /* Full width */
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
-  background-color: #FF0000; /* Fallback color */
+  background-color: #ff0000; /* Fallback color */
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 .modal-content {
-  background-color:#FF0000;;
+  background-color: #ff0000;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
