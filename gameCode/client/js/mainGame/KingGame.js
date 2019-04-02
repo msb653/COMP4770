@@ -1409,7 +1409,7 @@ function KingGame() {
 
         // sound when stage clears
         gameSound.play('stageClear');
-        if (originalMaps[2]== undefined) {
+        if (originalMaps[3] == undefined) {
           window.location.reload();
         }
 
