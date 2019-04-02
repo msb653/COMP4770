@@ -250,7 +250,6 @@ app.get('/gameCode/client/images/icon.gif', function(req, res) {
 app.get('/gameCode/client/images/openChest.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/openChest.png');
 });
-
 app.get('/gameCode/client/images/overworld.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/overworld.png');
 });
@@ -262,6 +261,15 @@ app.get('/gameCode/client/images/castleHome.gif', function(req, res) {
 });
 app.get('/gameCode/client/images/caveLevel.gif', function(req, res) {
   res.sendFile(__dirname + '/client/images/caveLevel.gif');
+});
+app.get('/gameCode/client/images/forestHome.gif', function(req, res) {
+  res.sendFile(__dirname + '/client/images/forestHome.gif');
+});
+app.get('/gameCode/client/images/forestHome2.gif', function(req, res) {
+  res.sendFile(__dirname + '/client/images/forestHome2.gif');
+});
+app.get('/gameCode/client/images/lavaHome.gif', function(req, res) {
+  res.sendFile(__dirname + '/client/images/lavaHome.gif');
 });
 
 // Testing
@@ -628,16 +636,16 @@ var getLevels = (data, cb) => {
 var maps;
 
 var getCampaignLevels = (data, cb) => {
-  fs.readFile('json14.txt','utf8',function (err,contents) {
-              if (err) {
-                  return console.log(err);
-              }
-              cb(contents);
-          }); 
+  fs.readFile('json14.txt', 'utf8', function(err, contents) {
+    if (err) {
+      return console.log(err);
+    }
+    cb(contents);
+  });
 
-//   .toArray((err, result) => {
-//     cb(result);
-//   });
+  //   .toArray((err, result) => {
+  //     cb(result);
+  //   });
 };
 
 var deleteLevels = (data, cb) => {
