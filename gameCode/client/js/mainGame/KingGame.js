@@ -641,7 +641,7 @@ function KingGame() {
         that.levelFinish(collisionDirection);
       }
       if (element.type == 15) {
-        var modal = document.getElementById('myModal');
+        var modal = document.getElementById('myModal2');
 
         // Get the <span> element that closes the modal
         var span = document.getElementsByClassName('close')[0];
@@ -721,29 +721,146 @@ function KingGame() {
       }
 
       // Handle weapon pick ups
-      if (element.type == 7) {
+      if (element.type == 7 && score.coinScore >= 1) {
         // Sword
         king.hasSword = true;
         king.weapon = 'sword';
         score.updateWeapon('sword', -1);
         map[row][column] = 0;
+
+        score.coinScore = score.coinScore - 2;
+        score.totalScore += 110;
+
+        score.updateCoinScore();
+        score.updateTotalScore();
       }
 
-      if (element.type == 8) {
+      if (element.type == 7 && score.coinScore < 1) {
+        var modal = document.getElementById('myModal5');
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName('close')[0];
+
+        // When the user clicks the button, open the modal
+
+        modal.style.display = 'block';
+        setTimeout(
+            () => {
+              modal.style.display = 'none';
+            },
+            4 * 1000
+        );
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = 'none';
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = 'none';
+          }
+        };
+       // map[row][column] = 0;
+        gameSound.play('help');
+
+        keys[39] = false;
+
+      }
+
+      if (element.type == 8 && score.coinScore >= 5 ) {
         // Bow
         map[row][column] = 0;
         king.hasBow = true;
         king.weapon = 'bow';
         king.arrows = king.arrows + 10;
         score.updateWeapon('bow', king.arrows);
+        score.coinScore = score.coinScore - 5;
+        score.totalScore += 150;
+
+        score.updateCoinScore();
+        score.updateTotalScore();
       }
 
-      if (element.type == 9) {
+      if (element.type == 8 && score.coinScore < 5 ) { 
+        var modal = document.getElementById('myModal4');
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName('close')[0];
+
+        // When the user clicks the button, open the modal
+
+        modal.style.display = 'block';
+        setTimeout(
+            () => {
+              modal.style.display = 'none';
+            },
+            4 * 1000
+        );
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = 'none';
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = 'none';
+          }
+        };
+       // map[row][column] = 0;
+        gameSound.play('help');
+
+        keys[39] = false;
+      }
+
+
+      if (element.type == 9 && score.coinScore >= 10) {
         // Staff
         map[row][column] = 0;
         king.hasStaff = true;
         king.weapon = 'staff';
         score.updateWeapon('staff', -1);
+
+        score.coinScore = score.coinScore - 10;
+        score.totalScore += 200;
+
+        score.updateCoinScore();
+        score.updateTotalScore();
+      }
+
+      if (element.type == 9 && score.coinScore < 10) {
+        // Staff
+        var modal = document.getElementById('myModal3');
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName('close')[0];
+
+        // When the user clicks the button, open the modal
+
+        modal.style.display = 'block';
+        setTimeout(
+            () => {
+              modal.style.display = 'none';
+            },
+            4 * 1000
+        );
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+          modal.style.display = 'none';
+        };
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            modal.style.display = 'none';
+          }
+        };
+       // map[row][column] = 0;
+        gameSound.play('help');
+
+        keys[39] = false;
+
       }
 
       if (element.type == 16) {
@@ -765,13 +882,14 @@ function KingGame() {
       }
 
       // Collision with an arrow
-      if (element.type == 10) {
+      if (element.type == 10 ) {
         map[row][column] = 0;
         king.weapon = 'bow';
         king.arrows = king.arrows + 10;
         score.updateWeapon('bow', king.arrows);
       }
 
+      
       // Collision with an open door (Ends the level)
       if (element.type == 13) {
         that.levelFinish(collisionDirection);
