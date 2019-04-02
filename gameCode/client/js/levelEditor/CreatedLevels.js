@@ -44,6 +44,8 @@ function CreatedLevels() {
     deleteOneBtn.onclick = that.deleteOneMap;
 
     storage = new Storage();
+
+    var canvas = view.getGameScreen();
   };
 
   var levelPlay = view.create('button');
@@ -125,9 +127,12 @@ function CreatedLevels() {
     var kingMakerInstance = KingMaker.getInstance();
     var levelName = level.name;
     var loadMap = level.tileArray;
-    var map = { 1: loadMap }; //always only one level in saved maps.
+    var map = { 
+        1: loadMap,
+        2: level.backgroundImage 
+                }; //always only one level in saved maps.
 
-    kingMakerInstance.startGame(map);
+    kingMakerInstance.startGame(map,2);
   };
 
   this.showCreatedLevelsScreen = function() {

@@ -29,6 +29,7 @@ function KingGame() {
   var bulletFlag = false;
 
   var currentLevel;
+  var gameScreen;
 
   var animationID;
   var timeOutId;
@@ -38,7 +39,9 @@ function KingGame() {
   var instructionTick = 0; //showing instructions counter
   var that = this;
 
-  this.init = function(levelMaps, level) {
+  var socket = io();
+
+  this.init = function(levelMaps, level, gs) {
     height = 480;
     maxWidth = 0;
     viewPort = 1280;
@@ -54,6 +57,8 @@ function KingGame() {
     gameUI.setWidth(viewPort);
     gameUI.setHeight(height);
     gameUI.show();
+
+    gameScreen = gs;
 
     currentLevel = level;
     originalMaps = levelMaps;
@@ -1410,8 +1415,9 @@ function KingGame() {
 
         timeOutId = setTimeout(function() {
           currentLevel++;
-          if (originalMaps[currentLevel]) {
-            that.init(originalMaps, currentLevel);
+          if (originalMaps[currentLevel] && currentLevel < 6) {
+            gameScreen.className = originalMaps[currentLevel+5];
+            that.init(originalMaps, currentLevel,gameScreen);
             score.updateLevelNum(currentLevel);
           } else {
             that.gameOver();

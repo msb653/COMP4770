@@ -10,6 +10,13 @@ var View = (function() {
       return element;
     };
 
+    this.getGameScreen = function() {
+      var element = document.getElementsByClassName('game-screen')[0];
+
+      return element;
+    };
+
+
     this.create = function(elementName) {
       var element = document.createElement(elementName);
 
