@@ -179,7 +179,8 @@ function Editor() {
       'flyer',
       'enemy3',
       'crab',
-      'boss'
+      'boss',
+        'launcher'
     ];
  
     var element;
@@ -403,6 +404,9 @@ function Editor() {
 
           case 'boss':
             value = 24;
+            break;
+          case 'launcher':
+            value = 25;
             break;
 
           default:

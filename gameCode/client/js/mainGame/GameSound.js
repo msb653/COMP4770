@@ -10,6 +10,7 @@ function GameSound() {
   var jump;
   var mainMenuSound;
   var teleport;
+  var bwahaha;
   var explosion;
   var muted;
   var campaignSound;
@@ -20,6 +21,7 @@ function GameSound() {
     kingDie = new Audio('sounds/king-death.wav');
     bow = new Audio('sounds/bow.wav');
     jump = new Audio('sounds/jump.wav');
+    bwahaha = new Audio('sounds/bwahaha.mp3');
     gameOver = new Audio('sounds/gameOver.wav');
     fireball = new Audio('sounds/fireball.wav');
     mainMenuSound = new Audio('sounds/MainMenuSound.wav');
@@ -76,7 +78,11 @@ function GameSound() {
         // campaignSound.pause();
         // campaignSound.currentTime = 0;
         campaignSound.play();
-      }
+      }  else if (element == 'bwahaha') {
+      // campaignSound.pause();
+      // campaignSound.currentTime = 0;
+      bwahaha.play();
+    }
     }
   };
 

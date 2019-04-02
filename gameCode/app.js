@@ -357,6 +357,9 @@ app.get('/gameCode/client/sounds/bow.wav', function(req, res) {
 app.get('/gameCode/client/sounds/king-death.wav', function(req, res) {
   res.sendFile(__dirname + '/client/sounds/king-death.wav');
 });
+app.get('/gameCode/client/sounds/bwahaha.mp3', function(req, res) {
+  res.sendFile(__dirname + '/client/sounds/bwahaha.mp3');
+});
 app.get('/gameCode/client/sounds/gameOver.wav', function(req, res) {
   res.sendFile(__dirname + '/client/sounds/gameOver.wav');
 });

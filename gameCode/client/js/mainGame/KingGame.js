@@ -646,6 +646,7 @@ function KingGame() {
         that.levelFinish(collisionDirection);
       }
       if (element.type == 15) {
+        gameSound.play("bwahaha");
         var modal = document.getElementById('myModal');
 
         // Get the <span> element that closes the modal
