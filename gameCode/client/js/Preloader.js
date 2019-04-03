@@ -1,19 +1,12 @@
 function Preloader() {
   var view = View.getInstance();
 
-  var loadingPercentage;
-
   var imageSources;
   var soundSources;
 
   var that = this;
 
   this.init = function() {
-    loadingPercentage = view.create('div');
-
-    view.addClass(loadingPercentage, 'loading-percentage');
-    view.setHTML(loadingPercentage, '0%');
-    view.appendToBody(loadingPercentage);
 
     imageSources = {
       1: 'images/bg.png',
@@ -68,10 +61,8 @@ function Preloader() {
         loadedImages++;
         percentage = Math.floor((loadedImages * 100) / totalImages);
 
-        view.setHTML(loadingPercentage, percentage + '%'); //displaying percentage
 
         if (loadedImages >= totalImages) {
-          view.removeFromBody(loadingPercentage);
           that.initMainApp();
         }
       };

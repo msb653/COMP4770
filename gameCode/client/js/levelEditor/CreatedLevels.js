@@ -83,7 +83,7 @@ function CreatedLevels() {
       var noMapsMessage = view.create('div');
 
       view.addClass(noMapsMessage, 'no-maps');
-      view.setHTML(noMapsMessage, 'No levels found. Created levels will be listed here.');
+      view.setHTML(noMapsMessage, 'You haven\'t created any levels yet!');
       view.append(levelsWrapper, noMapsMessage);
     }
   };
