@@ -14,7 +14,6 @@ function Editor() {
   var elementwrapper;
   var sizeWrapper;
   var backgroundWrapper;
-  var clearWrapper;
   var saveWrapper;
 
   var map;
@@ -37,7 +36,7 @@ function Editor() {
     
 
     that.createLevelEditor();
-    that.drawGrid(3840); //draws grid of size 3840px by default at start
+    that.drawGrid(4000); //draws grid of size 3840px by default at start
     that.showElements();
     view.append(mainWrapper, viewPort);
     bgImage = 'forest';
@@ -122,11 +121,10 @@ function Editor() {
     elementWrapper = view.create('div');
     sizeWrapper = view.create('div');
     backgroundWrapper = view.create('div');
-    clearWrapper = view.create('div');
     saveWrapper = view.create('div');
     
     sizeText = view.create('div');
-    sizeText.innerHTML = 'Select The Level Size: ';
+    sizeText.innerHTML = 'Select The Level Width: ';
     view.addClass(sizeText, 'editor-text');
     view.append(sizeWrapper, sizeText);
     
@@ -138,7 +136,6 @@ function Editor() {
     clearText = view.create('div');
     clearText.innerHTML = 'Clear The Level: ';
     view.addClass(clearText, 'editor-text');
-    view.append(clearWrapper, clearText);
     
     saveText = view.create('div');
     saveText.innerHTML = 'Enter The Level\'s Name: ';
@@ -149,13 +146,11 @@ function Editor() {
     view.addClass(elementWrapper, 'element-wrapper');
     view.addClass(sizeWrapper, 'element-wrapper');
     view.addClass(backgroundWrapper, 'element-wrapper');
-    view.addClass(clearWrapper, 'element-wrapper');
     view.addClass(saveWrapper, 'element-wrapper');
     
     view.append(mainWrapper, elementWrapper);
     view.append(mainWrapper, sizeWrapper);
     view.append(mainWrapper, backgroundWrapper);
-    view.append(mainWrapper, clearWrapper);
     view.append(mainWrapper, saveWrapper);
 
     var elements = [
@@ -214,9 +209,9 @@ function Editor() {
     view.addClass(saveMap, 'play-btn');
     
     
-    gridSmallBtn.innerHTML = 'Small';
-    gridMediumBtn.innerHTML = 'Medium';
-    gridLargeBtn.innerHTML = 'Large';
+    gridSmallBtn.innerHTML = '50 Cells';
+    gridMediumBtn.innerHTML = '125 Cells';
+    gridLargeBtn.innerHTML = '200 Cells';
     
     view.addClass(gridSmallBtn, 'size-btn');
     view.addClass(gridMediumBtn, 'size-btn');
@@ -244,7 +239,6 @@ function Editor() {
     view.style(elementWrapper, { display: 'block' });
     view.style(sizeWrapper, { display: 'block' });
     view.style(backgroundWrapper, { display: 'block' });
-    view.style(clearWrapper, { display: 'block' });
     view.style(saveWrapper, { display: 'block' });
 
     view.append(sizeWrapper, gridSmallBtn);
@@ -254,9 +248,10 @@ function Editor() {
     view.append(backgroundWrapper, forestBtn);
     view.append(backgroundWrapper, caveBtn);
     view.append(backgroundWrapper, lavaBtn);
-    view.append(clearWrapper, clearMap);
     view.append(saveWrapper, nameField);
-    view.append(saveWrapper, saveMap)
+    view.append(saveWrapper, saveMap);
+    view.append(saveWrapper, clearText);
+    view.append(saveWrapper, clearMap);
 
     saveMap.addEventListener('click', that.saveMap);
     clearMap.addEventListener('click', that.resetEditor);
@@ -271,12 +266,12 @@ function Editor() {
 
   that.gridSmall = function() {
     view.remove(gameWorld, grid);
-    that.drawGrid(1280); //small grid size
+    that.drawGrid(1600); //small grid size
   };
 
   that.gridMedium = function() {
     view.remove(gameWorld, grid);
-    that.drawGrid(3840); //medium grid size
+    that.drawGrid(4000); //medium grid size
   };
 
   that.gridLarge = function() {
