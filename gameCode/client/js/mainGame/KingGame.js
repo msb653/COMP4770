@@ -1076,6 +1076,7 @@ function KingGame() {
 
             //sound when king dies
             gameSound.play('kingDie');
+            gameSound.pause('campaignSound');
 
             timeOutId = setTimeout(function() {
               if (score.lifeCount == 0) {
@@ -1164,6 +1165,7 @@ function KingGame() {
 
           //sound when king dies
           gameSound.play('kingDie');
+          gameSound.pause('campaignSound');
 
           timeOutId = setTimeout(function() {
             if (score.lifeCount == 0) {
@@ -1192,6 +1194,7 @@ function KingGame() {
 
       //sound when king dies
       gameSound.play('kingDie');
+      gameSound.pause('campaignSound');
 
       score.lifeCount--;
       score.updateLifeCount();
@@ -1534,6 +1537,8 @@ function KingGame() {
         tickCounter = 0;
         king.frame = 0;
 
+        gameSound.pause('campaignSound');
+        
         // sound when stage clears
         gameSound.play('stageClear');
         if (originalMaps[3] == undefined) {

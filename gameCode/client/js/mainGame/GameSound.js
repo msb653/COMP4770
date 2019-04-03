@@ -78,20 +78,58 @@ function GameSound() {
         sword.currentTime = 0;
         sword.play();
       } else if (element == 'campaignSound') {
-        // campaignSound.pause();
-        // campaignSound.currentTime = 0;
         campaignSound.play();
       } else if (element == 'bwahaha') {
-        // campaignSound.pause();
-        // campaignSound.currentTime = 0;
         bwahaha.play();
       } else if (element == 'levelcomplete') {
-        // campaignSound.pause();
-        // campaignSound.currentTime = 0;
         levelcomplete.play();
       }
     }
   };
+  
+  this.pause = function(element) {
+	      if (element == 'kingDie') {
+	        kingDie.pause();
+	        kingDie.currentTime = 0;
+	      } else if (element == 'bow') {
+	        bow.pause();
+	        bow.currentTime = 0;
+	      } else if (element == 'jump') {
+	        jump.pause();
+	        jump.currentTime = 0;
+	      } else if (element == 'gameOver') {
+	        gameOver.pause();
+	        gameOver.currentTime = 0;
+	      } else if (element == 'fireball') {
+	        gameOver.pause();
+	        gameOver.currentTime = 0;
+	      } else if (element == 'mainMenuSound') {
+	        mainMenuSound.pause();
+	        mainMenuSound.currentTime = 0;
+	      } else if (element == 'teleport') {
+	        teleport.pause();
+	        teleport.currentTime = 0;
+	      } else if (element == 'explosion') {
+	        explosion.pause();
+	        explosion.currentTime = 0;
+	      } else if (element == 'woosh') {
+	        woosh.pause();
+	        woosh.currentTime = 0;
+	      } else if (element == 'sword') {
+	        sword.pause();
+	        sword.currentTime = 0;
+	      } else if (element == 'campaignSound') {
+	    	  campaignSound.pause();
+	    	  campaignSound.currentTime = 0;	      } 
+	      else if (element == 'bwahaha') {
+	    	  bwahaha.pause();
+	    	  bwahaha.currentTime = 0;
+	      } else if (element == 'levelcomplete') {
+	    	  levelcomplete.pause();
+	    	  levelcomplete.currentTime = 0;
+	      }
+	    
+	  };
 
   this.toggleAudio = function() {
     if (muted == true) {
