@@ -444,8 +444,7 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             if (doorKeys.length == 0) {
               gameSound.play('levelcomplete');
-              map[row][column] = 13;
-              that.checkElementKingCollision(element, row, column);
+
               var modal = document.getElementById('myModal6');
 
               // Get the <span> element that closes the modal
@@ -468,6 +467,10 @@ function KingGame() {
                   modal.style.display = 'none';
                 }
               };
+              map[row][column] = 13;
+
+              that.checkElementKingCollision(element, row, column);
+
             }
 
             break;
@@ -670,7 +673,6 @@ function KingGame() {
       }
       if (element.type == 15) {
         gameSound.play("bwahaha");
-
         var modal = document.getElementById('myModal');
 
         // Get the <span> element that closes the modal
@@ -1080,8 +1082,6 @@ function KingGame() {
                 that.gameOver();
               } else {
                 that.resetGame();
-
-
               }
             }, 3000);
             break;
@@ -1519,7 +1519,7 @@ function KingGame() {
       king.x -= 32;
       king.velY = 2;
       king.frame = 0;
-    } gameSound.play('levelcomplete');
+    }
 
     king.frame = 0;
 
@@ -1535,7 +1535,7 @@ function KingGame() {
         king.frame = 0;
 
         // sound when stage clears
-
+        gameSound.play('stageClear');
         if (originalMaps[3] == undefined) {
           window.location.reload();
         }
@@ -1565,7 +1565,6 @@ function KingGame() {
   };
 
   this.resetGame = function() {
-   // campaignSound.pause;
     that.clearInstances();
     that.init(originalMaps, currentLevel);
   };
