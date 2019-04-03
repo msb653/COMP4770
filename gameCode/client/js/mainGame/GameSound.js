@@ -11,6 +11,7 @@ function GameSound() {
   var mainMenuSound;
   var teleport;
   var bwahaha;
+  var levelcomplete;
   var explosion;
   var muted;
   var campaignSound;
@@ -22,6 +23,8 @@ function GameSound() {
     bow = new Audio('sounds/bow.wav');
     jump = new Audio('sounds/jump.wav');
     bwahaha = new Audio('sounds/bwahaha.mp3');
+    levelcomplete = new Audio('sounds/levelcomplete.mp3');
+
     gameOver = new Audio('sounds/gameOver.wav');
     fireball = new Audio('sounds/fireball.wav');
     mainMenuSound = new Audio('sounds/MainMenuSound.wav');
@@ -82,6 +85,10 @@ function GameSound() {
         // campaignSound.pause();
         // campaignSound.currentTime = 0;
         bwahaha.play();
+      } else if (element == 'levelcomplete') {
+        // campaignSound.pause();
+        // campaignSound.currentTime = 0;
+        levelcomplete.play();
       }
     }
   };
