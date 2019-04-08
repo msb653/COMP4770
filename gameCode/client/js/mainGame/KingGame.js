@@ -1216,7 +1216,7 @@ function KingGame() {
 
     king.checkKingType();
 
-    if (keys[38] || keys[32]) {
+    if (keys[38]) {
       //up arrow
       if (!king.jumping && king.grounded) {
         king.jumping = true;
@@ -1294,7 +1294,7 @@ function KingGame() {
 
     // W key
     // Handle weapon cycling
-    if (keys[87]) {
+    if (keys[32]) {
       // Currently holding a sword
       if (king.weapon == 'sword') {
         if (king.hasBow) {
@@ -1310,7 +1310,7 @@ function KingGame() {
           king.weapon = 'destroyer';
           score.updateWeapon('destroyer', king.destroyers);
         }
-        keys[87] = false;
+        keys[32] = false;
         return;
       }
 
@@ -1329,7 +1329,7 @@ function KingGame() {
           king.weapon = 'sword';
           score.updateWeapon('sword', -1);
         }
-        keys[87] = false;
+        keys[32] = false;
         return;
       }
 
@@ -1348,7 +1348,7 @@ function KingGame() {
           king.weapon = 'bow';
           score.updateWeapon('bow', king.arrows);
         }
-        keys[87] = false;
+        keys[32] = false;
         return;
       }
 
@@ -1367,7 +1367,7 @@ function KingGame() {
           king.weapon = 'staff';
           score.updateWeapon('staff', -1);
         }
-        keys[87] = false;
+        keys[32] = false;
         return;
       }
 
@@ -1386,7 +1386,7 @@ function KingGame() {
           king.weapon = 'teleporter';
           score.updateWeapon('teleporter', king.teleporters);
         }
-        keys[87] = false;
+        keys[32] = false;
         return;
       }
     }
