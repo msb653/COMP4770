@@ -271,6 +271,9 @@ app.get('/gameCode/client/images/forestHome2.gif', function(req, res) {
 app.get('/gameCode/client/images/lavaHome.gif', function(req, res) {
   res.sendFile(__dirname + '/client/images/lavaHome.gif');
 });
+app.get('/gameCode/client/images/unchecked.png', function(req, res) {
+  res.sendFile(__dirname + '/client/images/unchecked.png');
+});
 
 // Testing
 app.get('/gameCode/client/js/View.js', function(req, res) {
@@ -619,9 +622,9 @@ var changePassword = (data, cb) => {
 
 var isValidPassword = (data, cb) => {
   hashedPassword = getHash(data.password);
-  db.account.find({ username: data.username, password: hashedPassword }, (err, res) => {
+  db.account.find({ username: data.username, password: hashedPassword }).toArray( (err, res) => {
     if (res.length > 0) {
-      cb(true, { user: data.username, levelCompleted: data.levelCompleted  });
+      cb(true, { user: data.username}, res);
     } else cb(false);
   });
 };
@@ -748,10 +751,10 @@ io.sockets.on('connection', socket => {
   // create a player with a socket id
 
   socket.on('signIn', data => {
-    isValidPassword(data, (res, user) => {
+    isValidPassword(data, (res, user, result) => {
       if (res) {
         Player.onConnect(socket);
-        socket.emit('signInResponse', { success: true, user: user.user, levelCompleted: user.levelCompleted });
+        socket.emit('signInResponse', { success: true, user: user.user, levelCompleted: result[0].levelCompleted });
       } else {
         socket.emit('signInResponse', { success: false });
       }
