@@ -130,7 +130,8 @@
         socket.emit('signUp', {
           username: signDivCreateUserName.value,
           password: signDivCreatePassword.value,
-          volume: 0
+          volume: 0,
+          levelCompleted: 1
         });
       };
 
@@ -145,6 +146,7 @@
         if (data.success) {
           // loginContainer.hidden = true;
           sessionStorage.setItem('username', data.user);
+          sessionStorage.setItem('levelCompleted', data.levelCompleted);
           location.href = '../gameCode/client/gameMenu.html';
         } else alert('Sign in unsuccessful.');
       });
@@ -153,6 +155,7 @@
         if (data.success) {
           // alert('Sign up successul.');
           sessionStorage.setItem('username', data.user);
+          sessionStorage.setItem('levelCompleted', data.levelCompleted);
           location.href = '../gameCode/client/gameMenu.html';
         } else alert('Username is already taken');
       });

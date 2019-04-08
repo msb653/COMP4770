@@ -58,6 +58,12 @@ function KingGame() {
     gameUI.setHeight(height);
     gameUI.show();
 
+    socket.on('levelCompletedResponse', function (data) {
+            if (data.save) {
+                sessionStorage.setItem('levelCompleted', data.levelCompleted);
+            } else alert('Unable to save progress');
+        });
+
     currentLevel = level;
     originalMaps = levelMaps;
     map = JSON.parse(levelMaps[currentLevel]);
@@ -1075,6 +1081,7 @@ function KingGame() {
             score.updateLifeCount();
 
             //sound when king dies
+            gameSound.pause('campaignSound');
             gameSound.play('kingDie');
             gameSound.pause('campaignSound');
 
@@ -1164,6 +1171,7 @@ function KingGame() {
           score.updateLifeCount();
 
           //sound when king dies
+          gameSound.pause('campaignSound');
           gameSound.play('kingDie');
           gameSound.pause('campaignSound');
 
@@ -1193,6 +1201,7 @@ function KingGame() {
       that.pauseGame();
 
       //sound when king dies
+      gameSound.pause('campaignSound');
       gameSound.play('kingDie');
       gameSound.pause('campaignSound');
 
@@ -1540,12 +1549,21 @@ function KingGame() {
         gameSound.pause('campaignSound');
         
         // sound when stage clears
+        gameSound.pause('campaignSound');
         gameSound.play('stageClear');
+
+        currentLevel++;
+        
         if (originalMaps[3] == undefined) {
           window.location.reload();
         }
-
-        currentLevel++;
+        else{
+            socket.emit('levelCompleted', {
+                user: sessionStorage.getItem('username'),
+                levelCompleted: currentLevel
+            });
+        }
+        
         if (originalMaps[currentLevel] && currentLevel < 6) {
           // gameScreen.className = originalMaps[currentLevel+5];
           document.getElementById('canvas').className = originalMaps[currentLevel + 5];
@@ -1563,6 +1581,7 @@ function KingGame() {
 
   this.gameOver = function() {
     // Play game over audio
+    gameSound.pause('campaignSound');
     gameSound.play('gameOver');
     score.gameOverView();
     gameUI.makeBox(0, 0, maxWidth, height);

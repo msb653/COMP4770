@@ -621,7 +621,7 @@ var isValidPassword = (data, cb) => {
   hashedPassword = getHash(data.password);
   db.account.find({ username: data.username, password: hashedPassword }, (err, res) => {
     if (res.length > 0) {
-      cb(true, { user: data.username });
+      cb(true, { user: data.username, levelCompleted: data.levelCompleted  });
     } else cb(false);
   });
 };
@@ -630,8 +630,8 @@ var isUsernameTaken = (data, cb) => {
   db.account.find({ username: data.username }, (err, res) => {
     if (res.length > 0) {
       cb(true);
-    } else cb(false, { user: data.username });
-  });
+    } else cb(false, { user: data.username, levelCompleted: data.levelCompleted });
+  }); 
 };
 
 var isLevelnameTaken = (data, cb) => {
@@ -663,6 +663,19 @@ var getCampaignLevels = (data, cb) => {
   //   });
 };
 
+var saveLevelCompleted = (data, cb) => {
+    db.account.find({ username: data.user }, (err, res) => {
+    if (res.length > 0) {
+      var myquery = { username: data.user };
+      var newvalues = { $set: { levelCompleted: data.levelCompleted } };
+      db.account.update(myquery, newvalues, (err, res) => {
+        if (err) throw err;
+      });
+      cb(true);
+    } else cb(false, { user: data.user });
+  });
+}; 
+
 var deleteLevels = (data, cb) => {
   db.level.find({ user: data.user }).toArray((err, result) => {
     db.level.remove({ user: data.user });
@@ -679,7 +692,7 @@ var deleteOneLevel = (data, cb) => {
 
 var addUser = (data, cb) => {
   hashedPassword = getHash(data.password);
-  db.account.insert({ username: data.username, password: hashedPassword, volume: data.volume }, err => {
+  db.account.insert({ username: data.username, password: hashedPassword, volume: data.volume, levelCompleted: data.levelCompleted }, err => {;
     if (!err) {
       console.log(hashedPassword);
       cb();
@@ -738,7 +751,7 @@ io.sockets.on('connection', socket => {
     isValidPassword(data, (res, user) => {
       if (res) {
         Player.onConnect(socket);
-        socket.emit('signInResponse', { success: true, user: user.user });
+        socket.emit('signInResponse', { success: true, user: user.user, levelCompleted: user.levelCompleted });
       } else {
         socket.emit('signInResponse', { success: false });
       }
@@ -753,7 +766,7 @@ io.sockets.on('connection', socket => {
         if (data.username != '') {
           if (data.password != '') {
             addUser(data, () => {
-              socket.emit('signUpResponse', { success: true, user: user.user });
+              socket.emit('signUpResponse', { success: true, user: user.user, levelCompleted: data.levelCompleted });
             });
           } else socket.emit('emptyPasswordResponse', { success: false });
         } else socket.emit('checkEmptyResponse', { success: false });
@@ -862,6 +875,23 @@ io.sockets.on('connection', socket => {
         success: true,
         levels: maps
       });
+    });
+  });
+
+  socket.on('levelCompleted', data => {
+    saveLevelCompleted(data, res => {
+        if (res) {
+            socket.emit('levelCompletedResponse', {
+                save: true,
+                levelCompleted: data.levelCompleted
+            });
+        }
+        else {
+            socket.emit('levelCompletedResponse', {
+                save: false,
+                levelCompleted: data.levelCompleted
+            });
+        }
     });
   });
 
