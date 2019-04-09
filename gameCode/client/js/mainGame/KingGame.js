@@ -1575,6 +1575,7 @@ function KingGame() {
         
         if (originalMaps[3] == undefined) {
           window.location.reload();
+          return;
         }
         else{
             socket.emit('levelCompleted', {
@@ -1590,8 +1591,53 @@ function KingGame() {
         } else {
           that.gameOver();
         }
+        
+        this.updateHighscores(currentLevel-1, score.totalScore, score.getTotalSeconds());
+        score.totalScore = 0;
+        score.resetTime();
+        score.updateTotalScore();
+        score.updateTimeElapsed();
       }
     }
+  };
+  
+  // Update High scores upon campaign level completion
+  this.updateHighscores = function(levelNumber, tempScore, tempTime) {
+	  
+	  var recordScore = tempScore;
+	  var recordTime = tempTime;
+	  var highscore;
+	  
+	  // Update the highscores in the database
+	  socket.emit('requestHighscore', {
+	      user: sessionStorage.getItem('username'),
+	      level: levelNumber
+	    });
+
+	    socket.on('highscoreResponse', function(data) {
+	      if (data.success) {
+	        highscore = data.highscores;
+	        recordTime = highscore[0].time;
+	        recordScore = highscore[0].score;
+	        if (recordScore < tempScore) {
+	        	recordScore = tempScore;
+	        }
+	        if (recordTime > tempTime) {
+	        	recordTime = tempTime;
+	        }  
+	        
+	        socket.emit('saveHighscore', {
+	            user: sessionStorage.getItem('username'),
+	            level: levelNumber,
+	            time:  recordTime,
+	            score: recordScore
+	        });	
+	        
+	      } else { 
+	    	  alert('Request unsuccessful.');
+	      }    
+	    });  
+   
   };
 
   this.saveCheckPoint = function () { 

@@ -10,7 +10,7 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </head>
     <body>
-        <audio controls id="player" autoplay="true" loop>
+	<audio controls id="player" autoplay="true" loop>
             <source src="../client/sounds/MainMenuSound.wav">
         </audio>
         <div class="menuContainer">
@@ -19,7 +19,7 @@
             <input id="levelEditor" type="submit" class="levelEditorButton" value="Level Editor"></input><br><br>
             <input id="loadLevel" type="submit" class="loadLevelButton" value="Load Level"></input><br><br>
             <input id="overworld" type="submit" class="overworldButton" value="Play Overworld"></input><br><br>
-            <input id="achievements" type="submit" class="achievementsButton" value="Achievements" onclick="achievements()"></input><br><br>
+            <input id="help_button" type="submit" class="achievementsButton" value="Achievements"></input><br><br>
             <div class="bs-example">
                     <input id="submit-button" type="submit" class="btn btn-lg btn-primary launch-modal" value="Options">
                     <div id="myModal" class="modal fade">
@@ -104,6 +104,15 @@
             </div><br>
             <input id="logout" type="submit" class="logoutButton" value="Logout"></input><br><br><br>
         </div>
+        <div id="help">
+		<table id="highscoreTable">
+			<tr>
+				<th>Level</th>
+				<th>High Score</th>
+				<th>Fastest Time</th>
+			</tr>
+		</table>
+	</div>
 
         <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
         <script type="text/javascript">
@@ -121,6 +130,76 @@
                     alert("Action with modal opened or closed");
                 });
             });
+        </script>
+        
+        <script>
+        var socket = io();
+        this.getHighscores = function() {
+        	socket.emit('requestHighscores', {
+        	      user: sessionStorage.getItem('username')
+        	    });
+
+        	    socket.on('highscoresResponse', function(data) {
+        	      if (data.success) {
+        	        highscore = data.highscores;
+        	        var table = document.getElementById("highscoreTable");
+        	        
+        	        for (i = 0; i < highscore.length; i++) {
+        	        	var row = table.insertRow(-1);
+        	        	
+        	        	var cell1 = row.insertCell(0);
+        	        	var cell2 = row.insertCell(1);
+        	        	var cell3 = row.insertCell(2);
+        	        	
+        	        	cell1.innerHTML = highscore[i].level;
+        	        	cell2.innerHTML = highscore[i].score;
+        	        	if (highscore[i].time == 100000) {
+        	        		cell3.innerHTML = "Not Completed";
+        	        	} else {
+        	        		cell3.innerHTML = highscore[i].time;
+        	        	};
+        	        	
+        	        }
+        	        
+        	        // Sort the table
+        	      var store = [];
+        	    for(var i=0, len=table.rows.length; i<len; i++){
+        	        var row = table.rows[i];
+        	        var sortnr = parseFloat(row.cells[0].textContent || row.cells[0].innerText);
+        	        if(!isNaN(sortnr)) store.push([sortnr, row]);
+        	    }
+        	    store.sort(function(x,y){
+        	        return x[0] - y[0];
+        	    });
+        	    for(var i=0, len=store.length; i<len; i++){
+        	    	table.appendChild(store[i][1]);
+        	    }
+        	    store = null;
+        	        
+        	      } else { 
+        	    	  alert('Request unsuccessful.');
+        	      }    
+        	    });  
+        }
+        getHighscores();
+        </script>
+        
+        <script>
+        $(document).ready(function() {
+            $("#help_button").click(function() {
+            	
+                $("#help").slideToggle(1000, function() {
+                    if($("#help_button").val() == "Close Achievements")
+                    {
+                        $("#help_button").val("Achievements");
+                    }
+                    else
+                    {
+                        $("#help_button").val("Close Achievements");
+                    }
+                });
+            });
+        });
         </script>
         <script>
             var socket = io();
@@ -156,7 +235,7 @@
 			overworld.onclick = function () {
             	location.href = "../client/overworld.html";
         	}
-
+			
             logout.onclick = function () {
                 socket.emit('disconnect');
                 location.href = "/";
@@ -207,12 +286,6 @@
                 })
             }
 
-            function achievements() {
-                // var menuContainer = document.getElementById('totalScore');
-                // var menuContainer = document.getElementById('totalScoreWrapper');
-                alert("This is from JavaScript");
-            }
-            
             socket.on('savePasswordResponse', function (data) {
                 if (data.success) {
                     alert('Save successful.');

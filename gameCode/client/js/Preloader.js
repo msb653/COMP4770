@@ -38,7 +38,8 @@ function Preloader() {
       27: 'images/crab.png',
       28: 'images/boss.png',
       29: 'images/waterBall.png',
-      30: 'images/greenFire.png'
+      30: 'images/greenFire.png',
+      31: 'images/highscores.jpg'
     };
 
     that.loadImages(imageSources);

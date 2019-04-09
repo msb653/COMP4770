@@ -274,6 +274,9 @@ app.get('/gameCode/client/images/lavaHome.gif', function(req, res) {
 app.get('/gameCode/client/images/unchecked.png', function(req, res) {
   res.sendFile(__dirname + '/client/images/unchecked.png');
 });
+app.get('/gameCode/client/images/highscores.jpg', function(req, res) {
+	  res.sendFile(__dirname + '/client/images/highscores.jpg');
+	});
 
 // Testing
 app.get('/gameCode/client/js/View.js', function(req, res) {
@@ -699,6 +702,10 @@ var addUser = (data, cb) => {
     if (!err) {
       console.log(hashedPassword);
       cb();
+      db.highscores.insert({ user: data.username, level: 1, time: 100000, score: 0 });
+      db.highscores.insert({ user: data.username, level: 2, time: 100000, score: 0 });
+      db.highscores.insert({ user: data.username, level: 3, time: 100000, score: 0 });
+      db.highscores.insert({ user: data.username, level: 4, time: 100000, score: 0 });
     } else {
       console.log('Error: ', err);
     }
@@ -900,10 +907,56 @@ io.sockets.on('connection', socket => {
         }
     });
   });
+  
+//Highscore handling
+  socket.on('requestHighscore', data => {
+	    getHighscore(data, res => {
+	      socket.emit('highscoreResponse', {
+	        success: true,
+	        highscores: res
+	      });
+	    });
+  });
+  
+  var getHighscore = (data, cb) => {
+	  db.highscores.find({ user: data.user, level: data.level }).toArray((err, result) => {
+	    cb(result);
+	  });
+	};
+  
+  socket.on('saveHighscore', data => {
+	        updateHighscore(data, () => {
+	          socket.emit('saveHighscoreResponse', { success: true });
+	        });
+  });
+
+var updateHighscore = (data, cb) => {
+	var myQuery = {user: data.user, level: data.level};
+	var newValues = { $set: {time: data.time, score: data.score }};
+	  db.highscores.update(myQuery, newValues, {upsert: true}, (err, res) => {
+		  if (err) throw err;
+	  });
+	  cb(true);
+	};
 
   socket.emit('serverMsg', {
     msg: 'hello'
   });
+  
+  // Get all highscore info for a user  
+  socket.on('requestHighscores', data => {
+	    getHighscores(data, res => {
+	      socket.emit('highscoresResponse', {
+	        success: true,
+	        highscores: res
+	      });
+	    });
+  });
+  var getHighscores = (data, cb) => {
+	  db.highscores.find({ user: data.user}).toArray((err, result) => {
+	    cb(result);
+	  });
+	};
 
   socket.on('disconnect', () => {
     delete SOCKET_LIST[socket.id];

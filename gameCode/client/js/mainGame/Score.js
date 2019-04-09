@@ -138,4 +138,11 @@ function Score() {
   this.gameOverView = function() {
     view.style(scoreWrapper, { background: 'black' });
   };
+  
+  this.resetTime = function() {
+	    totalSeconds = 0;
+};
+this.getTotalSeconds = function() {
+	    return totalSeconds;
+};
 }

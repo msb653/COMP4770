@@ -227,3 +227,42 @@ hr {
   height: 40px;
   background-color: gold;
 }
+
+#help{
+    background-image: url('./images/highscores.jpg');
+    height:200px;
+    width:633px;
+    display:none;
+    position:fixed;
+    top:50%;
+    left:50%;
+    margin:-150px 0 0 -150px;
+
+}
+
+table {  
+	text-align: center;
+    color: yellow;
+    font-family: Helvetica, Arial, sans-serif;
+    width:633px;
+    border-collapse: 
+    collapse; border-spacing: 0; 
+
+}
+
+td, th {  
+    border: 3px solid  black; 
+    height: 40px; 
+}
+
+th {  
+    font-weight: bold;
+    background: rgba(256, 256, 256, 0.5);
+}
+
+td {  
+	font-weight: bold;
+     background: rgba(256, 256, 256, 0.2);
+     -webkit-text-stroke-width: 0.3px;
+     -webkit-text-stroke-color: black;
+}
