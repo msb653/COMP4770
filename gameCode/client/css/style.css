@@ -365,6 +365,12 @@
   background: url('../images/elements.png') -608px 0;
 }
 
+.checkpoint {
+  width: 31px;
+  height: 31px;
+  background: url('../images/elements.png') -640px 0;
+}
+
 .wizard {
   width: 31px;
   height: 31px;

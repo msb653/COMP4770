@@ -27,10 +27,16 @@ function King() {
 
   var that = this;
 
-  this.init = function() {
-    that.x = 10;
+  this.init = function(x, y, checkpoint) {
+    if(checkpoint){
+        that.x = x*32+32;
+        that.y = y*32;
+        console.log("x="+that.x+" y="+that.y);
+    }else{
+        that.x = 10;
     that.y = gameUI.getHeight() - 40 - 40;
-
+    }
+    
     kingSprite = new Image();
     kingSprite.src = 'images/knight.png';
     this.hasSword = false;

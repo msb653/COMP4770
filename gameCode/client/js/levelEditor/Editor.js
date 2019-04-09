@@ -23,6 +23,10 @@ function Editor() {
   var tileSize = 32;
   var scrollMargin = 0;
 
+  var checkY = 0;
+  var checkX = 0;
+  var checkpoint = false;
+
   var selectedElement = [];
 
   var that = this;
@@ -84,7 +88,10 @@ function Editor() {
 
         td.onmousedown = (function(i, j) {
           return function() {
-            selectedElement.push(this);
+              if (this.className == "checkpoint") {
+                  checkpoint = false;
+              }
+              selectedElement.push(this);
             view.addClass(this, 'active');
             mousedown = true;
           };
@@ -93,6 +100,10 @@ function Editor() {
         td.onmouseover = (function(i, j) {
           return function() {
             if (mousedown) {
+                if (this.className == "checkpoint") {
+                  checkpoint = false;
+              }
+              selectedElement.push(this);
               selectedElement.push(this);
               view.addClass(this, 'active');
             }
@@ -175,7 +186,8 @@ function Editor() {
       'enemy3',
       'crab',
       'boss',
-        'launcher'
+      'launcher',
+      'checkpoint'
     ];
  
     var element;
@@ -301,8 +313,18 @@ function Editor() {
       after clicking the required element, it loops through the array and sets the class name 
       of that cell, changing the background of the cell.
     */
-
+    var cell = false;
     for (var i = 0; i < selectedElement.length; i++) {
+        if(element == "checkpoint" && checkpoint == true && cell == false){
+            alert("There can only be one checkpoint in a level.");
+            cell = true;
+            element = 'cell';
+        }
+        else if(element == "checkpoint" && checkpoint == false){
+            checkpoint = true;
+        }
+
+        
       view.addClass(selectedElement[i], element);
     }
 
@@ -381,6 +403,12 @@ function Editor() {
               value = 17;
               break;
               
+          case 'checkpoint':
+              value = 18;
+              checkX = j;
+              checkY = i;
+              break;
+              
           case 'enemy1':
             value = 20;
             break;
@@ -400,6 +428,7 @@ function Editor() {
           case 'boss':
             value = 24;
             break;
+
           case 'launcher':
             value = 25;
             break;
@@ -418,12 +447,14 @@ function Editor() {
   
   this.saveMap = function () {
       that.generateMap();
-    //   console.log(map);
       socket.emit('saveLevel', {
           user: sessionStorage.getItem("username"),
           name: document.getElementById("levelName").value,
           tileArray:  JSON.stringify(map),
-          backgroundImage: bgImage
+          backgroundImage: bgImage,
+          checkX: checkX,
+          checkY: checkY,
+          checkpoint: checkpoint
       });
   };
   socket.on('saveLevelResponse', function (data) {

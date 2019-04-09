@@ -129,8 +129,11 @@ function CreatedLevels() {
     var loadMap = level.tileArray;
     var map = { 
         1: loadMap,
-        2: level.backgroundImage 
-                }; //always only one level in saved maps.
+        2: level.backgroundImage,
+        11: level.checkX,
+        16: level.checkY,
+        21: false
+    }; //always only one level in saved maps.
 
     kingMakerInstance.startGame(map,2);
   };

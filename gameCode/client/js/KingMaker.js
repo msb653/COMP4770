@@ -76,9 +76,9 @@ var KingMaker = (function() {
         that.startGameFromLevel(map, bg, sessionStorage.getItem("levelCompleted"));
       };
 
-    //   if (window.location.pathname == '/gameCode/client/levelEditor.html') {
-    //     editorButton.click();
-    //   }
+      if (window.location.pathname == '/gameCode/client/levelEditor.html') {
+        that.startEditor();
+      }
       if (window.location.pathname == '/gameCode/client/loadLevel.html') {
         createdLevelsButton.click();
       }

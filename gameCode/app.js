@@ -711,7 +711,10 @@ var addLevel = (data, cb) => {
       user: data.user,
       name: data.name,
       tileArray: data.tileArray,
-      backgroundImage: data.backgroundImage
+      backgroundImage: data.backgroundImage,
+      checkY: data.checkY,
+      checkX: data.checkX,
+      checkpoint: data.checkpoint
     },
     function(err) {
       cb();
@@ -817,14 +820,14 @@ io.sockets.on('connection', socket => {
       if (res) {
         socket.emit('saveLevelResponse', { success: false });
       } else {
-        var fileName = data.name + '.txt';
-        fs.writeFile(fileName, JSON.stringify(data.tileArray), 'utf8', function(err) {
-          if (err) {
-            return console.log(err);
-          }
+        // var fileName = data.name + '.txt';
+        // fs.writeFile(fileName, JSON.stringify(data.tileArray), 'utf8', function(err) {
+        //   if (err) {
+        //     return console.log(err);
+        //   }
 
-          console.log('The file was saved!');
-        });
+        //   console.log('The file was saved!');
+        // });
         addLevel(data, () => {
           socket.emit('saveLevelResponse', { success: true });
         });

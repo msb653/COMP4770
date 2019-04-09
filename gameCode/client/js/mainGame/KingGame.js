@@ -89,9 +89,15 @@ function KingGame() {
     if (!king) {
       //so that when level changes, it uses the same instance
       king = new King();
-      king.init();
+      king.init(levelMaps[level+10], levelMaps[level+15], levelMaps[level+20]);
     } else {
-      king.x = 10;
+        if(levelMaps[level+20]){
+            king.x = levelMaps[level+10]*32;
+            king.y = levelMaps[level+15]*32;
+        }
+        else{
+            king.x = 10;
+        }
       king.frame = 0;
     }
     element = new Element();
@@ -527,6 +533,14 @@ function KingGame() {
             that.checkElementKingCollision(element, row, column);
             break;
 
+          case 18: //checkpoint
+            element.x = column * tileSize;
+            element.y = row * tileSize;
+            element.checkpoint();
+            element.draw();
+            that.checkElementKingCollision(element, row, column);
+            break;
+
           case 20: // Wizard
             var enemy = new Enemy();
             enemy.wizard();
@@ -910,6 +924,11 @@ function KingGame() {
       // Collision with an open door (Ends the level)
       if (element.type == 13) {
         that.levelFinish(collisionDirection);
+      }
+
+      if(element.type == 18){
+          map[row][column] = 0;
+          that.saveCheckPoint(row, column);
       }
     }
   };
@@ -1573,6 +1592,10 @@ function KingGame() {
         }
       }
     }
+  };
+
+  this.saveCheckPoint = function () { 
+        originalMaps[currentLevel+20] = true;
   };
 
   this.pauseGame = function() {

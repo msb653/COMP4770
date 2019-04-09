@@ -147,6 +147,14 @@ function Element() {
       that.height = 32;
       that.sX = 15 * that.width;
   };
+
+  this.checkpoint = function() {
+      element.src = 'images/elements.png';
+      that.type = 18;
+      that.width = 32;
+      that.height = 32;
+      that.sX = 20 * that.width;
+  };
   
   this.draw = function() {
     gameUI.draw(element, that.sX, that.sY, that.width, that.height, that.x, that.y, that.width, that.height);
