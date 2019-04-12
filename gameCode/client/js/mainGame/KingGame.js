@@ -39,6 +39,8 @@ function KingGame() {
   var instructionTick = 0; //showing instructions counter
   var that = this;
 
+  let subtractKeys = 0;
+
   var socket = io();
 
   this.init = function(levelMaps, level) {
@@ -76,37 +78,73 @@ function KingGame() {
     score.displayScore();
     score.updateWeapon('none', -1);
 
-    for (var row = 0; row < map.length; row++) {
-      for (var column = 0; column < map[row].length; column++) {
-        switch (map[row][column]) {
-          case 11: //Key
-            doorKeys.push(1);
-            break;
-        }
-      }
+    if(levelMaps[parseInt(level)+20]){
+        subtractKeys = that.doorKeyRemover(map,levelMaps[level+10],levelMaps[level+15]);
     }
-
+    
     if (!king) {
       //so that when level changes, it uses the same instance
       king = new King();
-      king.init(levelMaps[level+10], levelMaps[level+15], levelMaps[level+20]);
+      if(levelMaps[level+20]){
+            king.x = levelMaps[parseInt(level)+10]*32;
+            king.y = levelMaps[parseInt(level)+15]*32;
+            
+        }
+        else{
+            king.x = 10;
+        }
+      king.init(levelMaps[parseInt(level)+10], levelMaps[parseInt(level)+15], levelMaps[level+20]);
+
     } else {
         if(levelMaps[level+20]){
-            king.x = levelMaps[level+10]*32;
-            king.y = levelMaps[level+15]*32;
+            king.x = levelMaps[parseInt(level)+10]*32;
+            king.y = levelMaps[parseInt(level)+15]*32;
+            
         }
         else{
             king.x = 10;
         }
       king.frame = 0;
     }
+
+    for (var row = 0; row < map.length; row++) {
+      for (var column = 0; column < map[row].length; column++) {
+        switch (map[row][column]) {
+          case 11: //Key
+          if(subtractKeys <= 0){
+             doorKeys.push(1);
+          }
+          else{
+              subtractKeys--;
+          }
+            
+            break;
+        }
+      }
+    }
+
     element = new Element();
     gameSound = new GameSound();
     gameSound.init();
 
     that.calculateMaxWidth();
     that.bindKeyPress();
+    gameUI.scrollWindow(-king.x,0);
+    translatedDist = king.x;
     that.startGame();
+  };
+
+  that.doorKeyRemover = function(map,x,y) {
+      var ret = 0;
+      for(var i = 0; i < map.length; i++){
+          for(var j = 0; j < x; j++){
+              if (map[i][j] == 11){
+                ret++;
+              }
+          }
+      }
+      console.log(ret);
+      return ret;
   };
 
   that.calculateMaxWidth = function() {
@@ -606,6 +644,7 @@ function KingGame() {
         }
       }
     }
+    
   };
 
   this.collisionCheck = function(objA, objB) {
