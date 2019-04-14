@@ -774,7 +774,7 @@ function KingGame() {
         king.velY *= -1;
         if (element.type == 5) {
           var powerUp = new PowerUp();
-          if (king.type == 'small') {
+          if (king.type == 'normal') {
             powerUp.crown(element.x, element.y);
             powerUps.push(powerUp);
           }
@@ -1068,19 +1068,15 @@ function KingGame() {
     for (var i = 0; i < powerUps.length; i++) {
       var collWithKing = that.collisionCheck(powerUps[i], king);
       if (collWithKing) {
-        if (powerUps[i].type == 30 && king.type == 'small') {
-          //mushroom
-          king.type = 'big';
-        } else if (powerUps[i].type == 31) {
-          //flower
-          king.type = 'fire';
+        if (powerUps[i].type == 30 && king.type == 'normal') {
+          // Picking up the crown powerup
+          king.type = 'golden';
         }
         powerUps.splice(i, 1);
 
         score.totalScore += 1000;
         score.updateTotalScore();
 
-        gameSound.play('powerUp');
       }
     }
   };
@@ -1105,31 +1101,11 @@ function KingGame() {
         } else if (collWithKing == 'r' || collWithKing == 'l' || collWithKing == 'b') {
           enemies[i].velX *= -1;
 
-          if (king.type == 'big') {
-            king.type = 'small';
-            king.invulnerable = true;
-            collWithKing = undefined;
-
-            //sound when king powerDowns
-            gameSound.play('powerDown');
-
-            setTimeout(function() {
-              king.invulnerable = false;
-            }, 1000);
-          } else if (king.type == 'fire') {
-            king.type = 'big';
-            king.invulnerable = true;
-
-            collWithKing = undefined;
-
-            //sound when king powerDowns
-            gameSound.play('powerDown');
-
-            setTimeout(function() {
-              king.invulnerable = false;
-            }, 1000);
-          } else if (king.type == 'small') {
-            //kill king if collision occurs when he is small
+          if (king.type == 'golden') {
+            king.type = 'normal';
+            
+          } else if (king.type == 'normal') {
+            //kill king if collision occurs when he is normal
             that.pauseGame();
 
             king.frame = 0;
@@ -1195,31 +1171,10 @@ function KingGame() {
         enemyBullets[j] = null;
         enemyBullets.splice(j, 1);
 
-        if (king.type == 'big') {
-          king.type = 'small';
-          king.invulnerable = true;
-          collWithKing = undefined;
-
-          //sound when king powerDowns
-          gameSound.play('powerDown');
-
-          setTimeout(function() {
-            king.invulnerable = false;
-          }, 1000);
-        } else if (king.type == 'fire') {
-          king.type = 'big';
-          king.invulnerable = true;
-
-          collWithKing = undefined;
-
-          //sound when king powerDowns
-          gameSound.play('powerDown');
-
-          setTimeout(function() {
-            king.invulnerable = false;
-          }, 1000);
-        } else if (king.type == 'small') {
-          //kill king if collision occurs when he is small
+        if (king.type == 'golden') {
+          king.type = 'normal';
+        } else if (king.type == 'normal') {
+          //kill king if collision occurs when he is normal
           that.pauseGame();
 
           king.frame = 0;
@@ -1281,7 +1236,6 @@ function KingGame() {
     var friction = 0.9;
     var gravity = 0.2;
 
-    king.checkKingType();
 
     if (keys[38]) {
       //up arrow

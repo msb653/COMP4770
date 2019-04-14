@@ -124,7 +124,7 @@ function CreatedLevels() {
   this.startLevel = function(i) {
     var level = levels[i];
 
-    var kingMakerInstance = KingMaker.getInstance();
+    var mainGameInstance = MainGame.getInstance();
     var levelName = level.name;
     var loadMap = level.tileArray;
     var map = { 
@@ -135,7 +135,7 @@ function CreatedLevels() {
         21: false
     }; //always only one level in saved maps.
 
-    kingMakerInstance.startGame(map,2);
+    mainGameInstance.startGame(map,2);
   };
 
   this.showCreatedLevelsScreen = function() {

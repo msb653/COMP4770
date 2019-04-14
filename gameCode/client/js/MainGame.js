@@ -1,9 +1,9 @@
 //Main Class through which both the game and level editor are instantiated
 
-var KingMaker = (function() {
+var MainGame = (function() {
   var instance;
 
-  function KingMaker() {
+  function MainGame() {
     var view = View.getInstance();
 
     var mainWrapper;
@@ -189,7 +189,7 @@ var KingMaker = (function() {
   return {
     getInstance: function() {
       if (instance == null) {
-        instance = new KingMaker();
+        instance = new MainGame();
       }
 
       return instance;

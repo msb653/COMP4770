@@ -71,8 +71,8 @@ function Preloader() {
   };
 
   this.initMainApp = function() {
-    var kingMakerInstance = KingMaker.getInstance();
-    kingMakerInstance.init();
+    var mainGameInstance = MainGame.getInstance();
+    mainGameInstance.init();
   };
 }
 

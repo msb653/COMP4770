@@ -318,8 +318,8 @@ app.get('/gameCode/client/js/levelEditor/Editor.js', function(req, res) {
 app.get('/gameCode/client/js/levelEditor/CreatedLevels.js', function(req, res) {
   res.sendFile(__dirname + '/client/js/levelEditor/CreatedLevels.js');
 });
-app.get('/gameCode/client/js/KingMaker.js', function(req, res) {
-  res.sendFile(__dirname + '/client/js/KingMaker.js');
+app.get('/gameCode/client/js/MainGame.js', function(req, res) {
+  res.sendFile(__dirname + '/client/js/MainGame.js');
 });
 app.get('/gameCode/client/js/Preloader.js', function(req, res) {
   res.sendFile(__dirname + '/client/js/Preloader.js');
