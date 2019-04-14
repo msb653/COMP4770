@@ -78,14 +78,14 @@ function KingGame() {
     score.displayScore();
     score.updateWeapon('none', -1);
 
-    if(levelMaps[parseInt(level)+20]){
-        subtractKeys = that.doorKeyRemover(map,levelMaps[level+10],levelMaps[level+15]);
+    if(levelMaps[parseInt(level)+20] !== undefined){
+        subtractKeys = that.doorKeyRemover(map,levelMaps[parseInt(level)+10],levelMaps[parseInt(level)+15]);
     }
     
     if (!king) {
       //so that when level changes, it uses the same instance
       king = new King();
-      if(levelMaps[level+20]){
+      if(levelMaps[parseInt(level)+20] !== undefined){
             king.x = levelMaps[parseInt(level)+10]*32;
             king.y = levelMaps[parseInt(level)+15]*32;
             
@@ -93,10 +93,10 @@ function KingGame() {
         else{
             king.x = 10;
         }
-      king.init(levelMaps[parseInt(level)+10], levelMaps[parseInt(level)+15], levelMaps[level+20]);
+      king.init(levelMaps[parseInt(level)+10], levelMaps[parseInt(level)+15], levelMaps[parseInt(level)+20]);
 
     } else {
-        if(levelMaps[level+20]){
+        if(levelMaps[parseInt(level)+20] !== undefined){
             king.x = levelMaps[parseInt(level)+10]*32;
             king.y = levelMaps[parseInt(level)+15]*32;
             
@@ -1578,7 +1578,6 @@ function KingGame() {
         }
         
         if (originalMaps[currentLevel] && currentLevel < 6) {
-          // gameScreen.className = originalMaps[currentLevel+5];
           document.getElementById('canvas').className = originalMaps[currentLevel + 5];
           that.init(originalMaps, currentLevel);
         } else {
