@@ -132,7 +132,7 @@
             }
         }
 
-        let cx = 420; //blaze it
+        let cx = 420; 
         let cy = 90;
 
         let fx = 220;
@@ -160,38 +160,14 @@
             context.drawImage(avatarImage, x, y, 75, 75);
         }
 
-        //0 x scalar
-        //1 y scalar
-        //2 destination node
-        //index current node
-
-        let mUp = [
-            [-1, 0, 4],
-            [1, -0.005, 2],
-            [0, 0, 4],
-            [-1, -0.5, 2]
-        ];
-        let mDown = [
-            [1, 0.009, 3],
-            [1, 0, 0],
-            [1, 0.5, 3],
-            [0, 0, 4]
-        ];
-        let mLeft = [
-            [-1, 0, 1],
-            [0, 0, 4],
-            [-1, 0.005, 1],
-            [-1, -0.01, 0]
-        ];
-        let mRight = [
-            [1, 0.008, 3],
-            [1, 0, 0],
-            [0, 0, 4],
-            [0, 0, 4]
-        ];
+        //mDirection[currentNode] = destination node
+        let mUp = [4, 2, 4, 2];
+        let mDown = [3, 0, 3, 4];
+        let mLeft = [1, 4, 1, 0];
+        let mRight = [3, 0, 4, 4];
 
         function moveAvatar(m, current) {
-            if (m[current][2] != 4) {
+            if (m[current] != 4) {
                 moving = true;
                 x = locations[current][0];
                 y = locations[current][1];
@@ -199,13 +175,12 @@
                 let x1 = x;
                 let y1 = y;
                 
-                let x2 = locations[m[current][2]][0];
-                let y2 = locations[m[current][2]][1];
+                let x2 = locations[m[current]][0];
+                let y2 = locations[m[current]][1];
 
                 let dx = x2 - x1;
                 let dy = y2 - y1;
 
-                console.log(avatarLocation);
                 let id = setInterval(function () {
                     if(x < x2 && x1 < x2){
                         x++;
@@ -226,7 +201,7 @@
 
         function stopMoving(id, current, m) {
             clearInterval(id);
-            avatarLocation = m[current][2];
+            avatarLocation = m[current];
             moving = false;
         }
 
