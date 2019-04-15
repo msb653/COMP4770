@@ -129,12 +129,43 @@ function GameSound() {
 	    	  levelcomplete.currentTime = 0;
 	      }
 	    
-	  };
+      };
+      
+    this.pauseAll = function () {
+        kingDie.pause();
+        kingDie.currentTime = 0;
+        bow.pause();
+        bow.currentTime = 0;
+        jump.pause();
+        jump.currentTime = 0;
+        gameOver.pause();
+        gameOver.currentTime = 0;
+        gameOver.pause();
+        gameOver.currentTime = 0;
+        mainMenuSound.pause();
+        mainMenuSound.currentTime = 0;
+        teleport.pause();
+        teleport.currentTime = 0;
+        explosion.pause();
+        explosion.currentTime = 0;
+        woosh.pause();
+        woosh.currentTime = 0;
+        sword.pause();
+        sword.currentTime = 0;
+        campaignSound.pause();
+        campaignSound.currentTime = 0;
+        bwahaha.pause();
+        bwahaha.currentTime = 0;
+        levelcomplete.pause();
+        levelcomplete.currentTime = 0;
+
+    };
 
   this.toggleAudio = function() {
     if (muted == true) {
       alert('Audio unmuted.');
     } else {
+        that.pauseAll();
       alert('Audio muted.');
     }
     muted = !muted;
