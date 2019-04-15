@@ -73,7 +73,7 @@ var MainGame = (function() {
       continueButton.onclick = function() {
         map = that.loadMainGameMap();
         let bg = parseInt(sessionStorage.getItem("levelCompleted"),10)+5;
-        that.startGameFromLevel(map, bg, sessionStorage.getItem("levelCompleted"));
+        that.startGameFromLevel(map, bg, parseInt(sessionStorage.getItem("levelCompleted")));
       };
 
       if (window.location.pathname == '/gameCode/client/levelEditor.html') {
@@ -120,6 +120,10 @@ var MainGame = (function() {
     };
 
     this.startGameFromLevel = function(levelMap, i, j) {
+      view.style(backToMenuBtn, { display: 'block' });
+
+      kingGame.clearInstances();
+        console.log("i="+i+"j="+j);
       view.addClass(gameScreen, levelMap[i]);
       kingGame.init(levelMap, j); 
 

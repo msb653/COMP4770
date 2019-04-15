@@ -43,8 +43,6 @@ function CreatedLevels() {
     deleteAllBtn.onclick = that.deleteAllMaps;
     deleteOneBtn.onclick = that.deleteOneMap;
 
-    storage = new Storage();
-
     var canvas = view.getGameScreen();
   };
 
@@ -89,7 +87,6 @@ function CreatedLevels() {
   };
 
   this.deleteAllMaps = function() {
-    storage.clear();
     socket.emit('deleteLevel', {
       user: sessionStorage.getItem('username')
     });
@@ -99,7 +96,6 @@ function CreatedLevels() {
   };
 
   this.deleteOneMap = function() {
-    storage.clear();
     socket.emit('deleteOneLevel', {
       user: sessionStorage.getItem('username'),
       name: levels[levelSelect.selectedIndex].name

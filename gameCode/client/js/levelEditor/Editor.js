@@ -339,6 +339,8 @@ function Editor() {
     selectedElement = [];
   };
 
+
+
 //     this.drawElementIndex = function(element,i,j) {
 //     //   view.addClass(selectedElement[i*200+j], element);
 //     selectedElement[i*200+j].className = element;

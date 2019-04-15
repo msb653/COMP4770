@@ -967,7 +967,7 @@ function KingGame() {
 
       if(element.type == 18){
           map[row][column] = 0;
-          that.saveCheckPoint(row, column);
+          that.saveCheckPoint();
       }
     }
   };
